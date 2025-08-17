@@ -1,47 +1,61 @@
 package logica;
 
+import java.time.LocalDate;
+
 public class Colaboracion {
-    private int monto;
-    private String fechaAporte;
-    private Boolean esColaborador;
+    private float monto;
+    private LocalDate fechaAporte;
     private TipoRetorno tipoRetorno;
+    private Propuesta propuesta;
+    private Colaborador colaborador;
 
     public Colaboracion(){}
-    public Colaboracion(int monto, String fechaAporte, Boolean esColaborador) {
+
+    public Colaboracion(float monto, LocalDate fechaAporte, TipoRetorno tipoRetorno, Propuesta propuesta, Colaborador colaborador) {
         this.monto = monto;
         this.fechaAporte = fechaAporte;
-        this.esColaborador = esColaborador;
+        this.tipoRetorno = tipoRetorno;
+        this.propuesta = propuesta;
+        this.colaborador = colaborador;
     }
 
-    public int getMonto() {
+    public float getMonto() {
         return monto;
     }
 
-    public String getFechaAporte() {
+    public void setMonto(float monto) {
+        this.monto = monto;
+    }
+
+    public LocalDate getFechaAporte() {
         return fechaAporte;
     }
 
-    public Boolean getEsColaborador() {
-        return esColaborador;
+    public void setFechaAporte(LocalDate fechaAporte) {
+        this.fechaAporte = fechaAporte;
     }
 
     public TipoRetorno getTipoRetorno() {
         return tipoRetorno;
     }
 
-    public void setMonto(int monto) {
-        this.monto = monto;
-    }
-
-    public void setFechaAporte(String fechaAporte) {
-        this.fechaAporte = fechaAporte;
-    }
-
-    public void setEsColaborador(Boolean esColaborador) {
-        this.esColaborador = esColaborador;
-    }
-
     public void setTipoRetorno(TipoRetorno tipoRetorno) {
         this.tipoRetorno = tipoRetorno;
+    }
+
+    public Propuesta getPropuesta() {
+        return propuesta;
+    }
+
+    public void setPropuesta(Propuesta propuesta) {
+        this.propuesta = propuesta;
+    }
+
+    public Colaborador getColaborador() {
+        return colaborador;
+    }
+
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
     }
 }

@@ -1,10 +1,10 @@
 package logica;
 
 public enum TipoEstado {
-    Ingresada,
-    Publicada,
-    EnFinanciacion,
-    Financiada,
-    NoFinanciada,
-    Cancelada;
+    INGRESADA,
+    PUBLICADA,
+    ENFINANCIACION,
+    FINANCIADA,
+    NOFINANCIADA,
+    CANCELADA;
 }

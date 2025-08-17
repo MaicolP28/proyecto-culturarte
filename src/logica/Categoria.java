@@ -1,31 +1,33 @@
 package logica;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Categoria {
-    private TipoCategoria nombre;
-    private List<Categoria> subCategoria;
+    private String nombre;
+    private ArrayList<Categoria> subCategorias;
 
     public Categoria() {}
-    public Categoria(TipoCategoria nombre) {
+
+    public Categoria(String nombre) {
 
         this.nombre = nombre;
+        this.subCategorias = new ArrayList<Categoria>();
 
     }
-    public TipoCategoria getNombre() {
 
+    public String getNombre() {
         return nombre;
     }
-    public void setNombre(TipoCategoria nombre) {
 
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public List<Categoria> getSubCategoria() {
-        return subCategoria;
+    public ArrayList<Categoria> getSubCategoria() {
+        return subCategorias;
     }
 
-    public void setSubCategoria(List<Categoria> subCategoria) {
-        this.subCategoria = subCategoria;
+    public void addSubCategoria(Categoria subCategoria) {
+        this.subCategorias.add(subCategoria);
     }
 }

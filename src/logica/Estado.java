@@ -1,40 +1,32 @@
 package logica;
 
-import java.util.List;
+import java.time.LocalDate;
 
 public class Estado {
-    private String fecha;
-    private List<TipoEstado> estado;
-    private Categoria categoria;
+    private LocalDate fecha;
+    private TipoEstado estado;
 
     public Estado() {}
-    public Estado(String fecha, List<TipoEstado> estado, Categoria categoria) {
+
+    public Estado(LocalDate fecha, TipoEstado estado) {
         this.fecha = fecha;
         this.estado = estado;
-        this.categoria = categoria;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public List<TipoEstado> getEstado() {
+    public TipoEstado getEstado() {
         return estado;
     }
 
-    public void setEstado(List<TipoEstado> estado) {
+    public void setEstado(TipoEstado estado) {
         this.estado = estado;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
 }

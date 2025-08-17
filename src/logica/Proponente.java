@@ -3,8 +3,6 @@ package logica;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Proponente extends Usuario {
     private String direccion;
@@ -14,7 +12,7 @@ public class Proponente extends Usuario {
     
     public Proponente() {}
 
-    public Proponente(String nickname, String nombre, String apellido, String email, Date fechaNacimiento, File imagen, String direccion, String linkWeb, String biografia) {
+    public Proponente(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen, String direccion, String linkWeb, String biografia) {
         super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
         this.direccion = direccion;
         this.linkWeb = linkWeb;
@@ -56,7 +54,7 @@ public class Proponente extends Usuario {
         this.linkWeb = linkWeb;
     }
 
-    public void setPropuestas(Propuesta propuesta) {
+    public void addPropuestas(Propuesta propuesta) {
         this.propuestas.add(propuesta);
     }
 

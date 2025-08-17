@@ -1,23 +1,22 @@
 package logica;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Usuario {
     private String nickname;
     private String nombre;
     private String apellido;
     private String email;
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private ArrayList<Propuesta> propuestasSeguidas;
     private ArrayList<Usuario> usuariosSeguidos;
     private File imagen;
 
     public Usuario() { }
 
-    public Usuario(String nickname, String nombre, String apellido, String email, Date fechaNacimiento, File imagen) {
+    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -40,7 +39,7 @@ public class Usuario {
         return usuariosSeguidos;
     }
 
-    public void setUsuariosSeguidos(Usuario usuario) {
+    public void addUsuariosSeguidos(Usuario usuario) {
         this.usuariosSeguidos.add(usuario);
     }
 
@@ -48,15 +47,15 @@ public class Usuario {
         return propuestasSeguidas;
     }
 
-    public void setPropuestas(Propuesta propuesta) {
+    public void addPropuestas(Propuesta propuesta) {
         this.propuestasSeguidas.add(propuesta);
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
