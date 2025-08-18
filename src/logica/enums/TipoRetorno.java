@@ -1,4 +1,4 @@
-package logica;
+package logica.enums;
 
 public enum TipoRetorno {
     ENTRADAGRATIS,
