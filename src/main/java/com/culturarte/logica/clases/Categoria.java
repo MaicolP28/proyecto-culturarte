@@ -1,4 +1,4 @@
-package logica.clases;
+package com.culturarte.logica.clases;
 
 import java.util.ArrayList;
 

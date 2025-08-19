@@ -1,4 +1,4 @@
-package logica.enums;
+package com.culturarte.logica.enums;
 
 public enum TipoEstado {
     INGRESADA,
