@@ -4,6 +4,11 @@
  */
 package com.culturarte.presentacion;
 
+import com.culturarte.logica.Fabrica;
+import com.culturarte.logica.IControlador;
+import javax.swing.JDesktopPane;
+
+
 /**
  *
  * @author maicol
@@ -11,12 +16,41 @@ package com.culturarte.presentacion;
 public class MenuPrincipal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuPrincipal.class.getName());
-
+    
+    // Controlador
+    private IControlador IC;
+    private JDesktopPane desktop;
+    private AltaUsuario iframeAltaUsuario;
+    private ConsultarColaboradores iframeConsultarColaboradores;
+    
+    // InternalFrames
+    
+    
     /**
      * Creates new form MenuPrincipal
      */
     public MenuPrincipal() {
         initComponents();
+        desktop = new JDesktopPane();
+        setContentPane(desktop);
+
+        this.setLocationRelativeTo(null);
+        
+        // Pidiendo Controlador
+        Fabrica fab = Fabrica.getInstancia();
+        IC = fab.getIControlador();
+        
+        // Creando InternalFrames
+        iframeAltaUsuario = new AltaUsuario(IC);
+        iframeAltaUsuario.setVisible(false);
+        iframeConsultarColaboradores = new ConsultarColaboradores(IC);
+        iframeConsultarColaboradores.setVisible(false);
+        
+        // Añadiendo al ContentPane
+        this.getContentPane().add(iframeAltaUsuario);
+        this.getContentPane().add(iframeConsultarColaboradores);
+        
+        
     }
 
     /**
@@ -30,18 +64,112 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        miAltaUsuario = new javax.swing.JMenuItem();
+        miConsultarProponente = new javax.swing.JMenuItem();
+        miConsultarColaborador = new javax.swing.JMenuItem();
+        miSeguirUsuario = new javax.swing.JMenuItem();
+        miDejarDeSeguir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        miAltaPropuesta = new javax.swing.JMenuItem();
+        miModificarPropuesta = new javax.swing.JMenuItem();
+        miConsultarPropuesta = new javax.swing.JMenuItem();
+        miConsultarPropPorEstado = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        miRegistrarColaboracion = new javax.swing.JMenuItem();
+        miConsultarColaboracion = new javax.swing.JMenuItem();
+        miCancelarColaboracion = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        miAltaCategoria = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Culturarte - Estación de Trabajo");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        setLocation(new java.awt.Point(0, 0));
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setSize(new java.awt.Dimension(800, 600));
 
         jMenu1.setText("Usuarios");
+        jMenu1.setFont(new java.awt.Font("Liberation Sans", 0, 17)); // NOI18N
+        jMenu1.setMargin(new java.awt.Insets(3, 10, 3, 10));
+
+        miAltaUsuario.setText("Alta");
+        miAltaUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAltaUsuarioActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miAltaUsuario);
+
+        miConsultarProponente.setText("Consultar Proponente");
+        miConsultarProponente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsultarProponenteActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miConsultarProponente);
+
+        miConsultarColaborador.setText("Consultar Colaborador");
+        miConsultarColaborador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsultarColaboradorActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miConsultarColaborador);
+
+        miSeguirUsuario.setText("Seguir usuario");
+        jMenu1.add(miSeguirUsuario);
+
+        miDejarDeSeguir.setText("Dejar de seguir Usuario");
+        jMenu1.add(miDejarDeSeguir);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Propuestas");
+        jMenu2.setFont(new java.awt.Font("Liberation Sans", 0, 17)); // NOI18N
+        jMenu2.setMargin(new java.awt.Insets(3, 10, 3, 10));
+
+        miAltaPropuesta.setText("Alta");
+        jMenu2.add(miAltaPropuesta);
+
+        miModificarPropuesta.setText("Modificar");
+        jMenu2.add(miModificarPropuesta);
+
+        miConsultarPropuesta.setText("Consultar");
+        miConsultarPropuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsultarPropuestaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miConsultarPropuesta);
+
+        miConsultarPropPorEstado.setText("Consultar por estado");
+        jMenu2.add(miConsultarPropPorEstado);
+
         jMenuBar1.add(jMenu2);
 
+        jMenu4.setText("Colaboraciones");
+        jMenu4.setFont(new java.awt.Font("Liberation Sans", 0, 17)); // NOI18N
+        jMenu4.setMargin(new java.awt.Insets(3, 10, 3, 10));
+
+        miRegistrarColaboracion.setText("Registrar");
+        jMenu4.add(miRegistrarColaboracion);
+
+        miConsultarColaboracion.setText("Consultar");
+        jMenu4.add(miConsultarColaboracion);
+
+        miCancelarColaboracion.setText("Cancelar");
+        jMenu4.add(miCancelarColaboracion);
+
+        jMenuBar1.add(jMenu4);
+
         jMenu3.setText("Categorias");
+        jMenu3.setFont(new java.awt.Font("Liberation Sans", 0, 17)); // NOI18N
+        jMenu3.setMargin(new java.awt.Insets(3, 10, 3, 10));
+
+        miAltaCategoria.setText("Alta");
+        jMenu3.add(miAltaCategoria);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -50,15 +178,31 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 566, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void miAltaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAltaUsuarioActionPerformed
+        iframeAltaUsuario.setVisible(true);
+    }//GEN-LAST:event_miAltaUsuarioActionPerformed
+
+    private void miConsultarProponenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarProponenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_miConsultarProponenteActionPerformed
+
+    private void miConsultarPropuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarPropuestaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_miConsultarPropuestaActionPerformed
+
+    private void miConsultarColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarColaboradorActionPerformed
+        iframeConsultarColaboradores.setVisible(true);
+    }//GEN-LAST:event_miConsultarColaboradorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,6 +233,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem miAltaCategoria;
+    private javax.swing.JMenuItem miAltaPropuesta;
+    private javax.swing.JMenuItem miAltaUsuario;
+    private javax.swing.JMenuItem miCancelarColaboracion;
+    private javax.swing.JMenuItem miConsultarColaboracion;
+    private javax.swing.JMenuItem miConsultarColaborador;
+    private javax.swing.JMenuItem miConsultarPropPorEstado;
+    private javax.swing.JMenuItem miConsultarProponente;
+    private javax.swing.JMenuItem miConsultarPropuesta;
+    private javax.swing.JMenuItem miDejarDeSeguir;
+    private javax.swing.JMenuItem miModificarPropuesta;
+    private javax.swing.JMenuItem miRegistrarColaboracion;
+    private javax.swing.JMenuItem miSeguirUsuario;
     // End of variables declaration//GEN-END:variables
 }

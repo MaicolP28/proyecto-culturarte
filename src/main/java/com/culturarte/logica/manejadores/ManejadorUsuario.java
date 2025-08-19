@@ -1,6 +1,6 @@
-package logica.manejadores;
+package com.culturarte.logica.manejadores;
 
-import logica.clases.Usuario;
+import com.culturarte.logica.clases.Usuario;
 
 import java.util.HashMap;
 

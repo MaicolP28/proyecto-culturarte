@@ -1,7 +1,7 @@
-package logica.clases;
+package com.culturarte.logica.clases;
 
-import logica.enums.TipoEstado;
-import logica.enums.TipoRetorno;
+import com.culturarte.logica.enums.TipoEstado;
+import com.culturarte.logica.enums.TipoRetorno;
 
 import java.io.File;
 import java.time.LocalDate;

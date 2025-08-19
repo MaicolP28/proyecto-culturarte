@@ -1,6 +1,6 @@
-package logica.clases;
+package com.culturarte.logica.clases;
 
-import logica.enums.TipoEstado;
+import com.culturarte.logica.enums.TipoEstado;
 
 import java.time.LocalDate;
 

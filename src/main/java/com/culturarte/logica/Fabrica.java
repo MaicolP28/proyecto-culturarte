@@ -1,9 +1,4 @@
-package logica;
-
-import logica.controladores.ControladorPropuestas;
-import logica.controladores.ControladorUsuario;
-import logica.controladores.IControladorPropuestas;
-import logica.controladores.IControladorUsuario;
+package com.culturarte.logica;
 
 public class Fabrica {
 
@@ -19,7 +14,6 @@ public class Fabrica {
         return instancia;
     }
 
-    public IControladorUsuario getIControladorUsuario() { return new ControladorUsuario(); }
-    public IControladorPropuestas  getIControladorPropuestas() { return new ControladorPropuestas(); }
+    public IControlador getIControlador() { return new Controlador(); }
 
 }

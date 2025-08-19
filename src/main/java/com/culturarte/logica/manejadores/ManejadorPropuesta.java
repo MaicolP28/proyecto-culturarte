@@ -1,6 +1,6 @@
-package logica.manejadores;
+package com.culturarte.logica.manejadores;
 
-import logica.clases.Propuesta;
+import com.culturarte.logica.clases.Propuesta;
 
 import java.util.HashMap;
 
