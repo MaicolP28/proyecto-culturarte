@@ -19,10 +19,16 @@ public class ManejadorUsuario {
     }
 
     public void agregarUsuario(Usuario usuario) {
-        usuariosNick.put(usuario.getNombre(), usuario);
+        usuariosNick.put(usuario.getNickname(), usuario);
     }
 
     public Usuario buscarUsuario(String nick) {
         return ((Usuario) usuariosNick.get(nick));
     }
+
+    public HashMap<String, Usuario> getUsuariosNick() {
+        return usuariosNick;
+    }
+    
+    
 }

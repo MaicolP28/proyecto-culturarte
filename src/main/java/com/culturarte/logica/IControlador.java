@@ -4,12 +4,17 @@
  */
 package com.culturarte.logica;
 
+import com.culturarte.exepciones.UsuarioYaExiste;
+import java.time.LocalDate;
+import java.io.File;
+
 /**
  *
  * @author maicol
  */
 public interface IControlador {
     
-    
+    public abstract void altaColaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen) throws UsuarioYaExiste;
+    public abstract void altaProponente(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen, String direccion, String linkWeb, String bibliografia) throws UsuarioYaExiste;
     
 }
