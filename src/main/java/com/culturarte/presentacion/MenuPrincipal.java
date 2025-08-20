@@ -20,8 +20,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // Controlador
     private IControlador IC;
     private JDesktopPane desktop;
+    private AltaCategoria iframeAltaCategoria;
+    private AltaPropuesta iframeAltaPropuesta;
     private AltaUsuario iframeAltaUsuario;
+    private CancelarColaboraciones iframeCancelarColaboraciones;
+    private ConsultarColaboraciones iframeConsultarColaboraciones;
     private ConsultarColaboradores iframeConsultarColaboradores;
+    private ConsultarProponente iframeConsultarProponente;
+    private ConsultarPropuestas iframeConsultarPropuestas;
+    private ConsultarPropuestasPorEstado iframeConsultarPropuestasPorEstado;
+    private DejarDeSeguirUsuario iframeDejarDeSeguirUsuario;
+    private ModificarPropuesta iframeModificarPropuesta;
+    private RegistrarColaboraciones iframeRegistrarColaboraciones;
+    private SeguirUsuario iframeSeguirUsuario;
     
     // InternalFrames
     
@@ -41,15 +52,47 @@ public class MenuPrincipal extends javax.swing.JFrame {
         IC = fab.getIControlador();
         
         // Creando InternalFrames
+        iframeAltaCategoria = new AltaCategoria(IC);
+        iframeAltaCategoria.setVisible(false);
+        iframeAltaPropuesta= new AltaPropuesta(IC);
+        iframeAltaPropuesta.setVisible(false);
         iframeAltaUsuario = new AltaUsuario(IC);
         iframeAltaUsuario.setVisible(false);
+        iframeCancelarColaboraciones = new CancelarColaboraciones(IC);
+        iframeCancelarColaboraciones.setVisible(false);
+        iframeConsultarColaboraciones = new ConsultarColaboraciones(IC);
+        iframeConsultarColaboraciones.setVisible(false);
         iframeConsultarColaboradores = new ConsultarColaboradores(IC);
         iframeConsultarColaboradores.setVisible(false);
+        iframeConsultarProponente = new ConsultarProponente(IC);
+        iframeConsultarProponente.setVisible(false);
+        iframeConsultarPropuestas = new ConsultarPropuestas(IC);
+        iframeConsultarPropuestas.setVisible(false);
+        iframeConsultarPropuestasPorEstado = new ConsultarPropuestasPorEstado(IC);;
+        iframeConsultarPropuestasPorEstado.setVisible(false);
+        iframeDejarDeSeguirUsuario = new DejarDeSeguirUsuario(IC);
+        iframeDejarDeSeguirUsuario.setVisible(false);
+        iframeModificarPropuesta = new ModificarPropuesta(IC);
+        iframeModificarPropuesta.setVisible(false);
+        iframeRegistrarColaboraciones = new RegistrarColaboraciones(IC);
+        iframeRegistrarColaboraciones.setVisible(false);
+        iframeSeguirUsuario = new SeguirUsuario(IC);
+        iframeSeguirUsuario.setVisible(false);
         
         // Añadiendo al ContentPane
+        this.getContentPane().add(iframeAltaCategoria);
+        this.getContentPane().add(iframeAltaPropuesta);
         this.getContentPane().add(iframeAltaUsuario);
+        this.getContentPane().add(iframeCancelarColaboraciones);
+        this.getContentPane().add(iframeConsultarColaboraciones);
         this.getContentPane().add(iframeConsultarColaboradores);
-        
+        this.getContentPane().add(iframeConsultarProponente);
+        this.getContentPane().add(iframeConsultarPropuestas);
+        this.getContentPane().add(iframeConsultarPropuestasPorEstado);
+        this.getContentPane().add(iframeDejarDeSeguirUsuario);
+        this.getContentPane().add(iframeModificarPropuesta);
+        this.getContentPane().add(iframeRegistrarColaboraciones);
+        this.getContentPane().add(iframeSeguirUsuario);
         
     }
 
@@ -118,9 +161,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu1.add(miConsultarColaborador);
 
         miSeguirUsuario.setText("Seguir usuario");
+        miSeguirUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSeguirUsuarioActionPerformed(evt);
+            }
+        });
         jMenu1.add(miSeguirUsuario);
 
         miDejarDeSeguir.setText("Dejar de seguir Usuario");
+        miDejarDeSeguir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miDejarDeSeguirActionPerformed(evt);
+            }
+        });
         jMenu1.add(miDejarDeSeguir);
 
         jMenuBar1.add(jMenu1);
@@ -130,9 +183,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu2.setMargin(new java.awt.Insets(3, 10, 3, 10));
 
         miAltaPropuesta.setText("Alta");
+        miAltaPropuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAltaPropuestaActionPerformed(evt);
+            }
+        });
         jMenu2.add(miAltaPropuesta);
 
         miModificarPropuesta.setText("Modificar");
+        miModificarPropuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miModificarPropuestaActionPerformed(evt);
+            }
+        });
         jMenu2.add(miModificarPropuesta);
 
         miConsultarPropuesta.setText("Consultar");
@@ -144,6 +207,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu2.add(miConsultarPropuesta);
 
         miConsultarPropPorEstado.setText("Consultar por estado");
+        miConsultarPropPorEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsultarPropPorEstadoActionPerformed(evt);
+            }
+        });
         jMenu2.add(miConsultarPropPorEstado);
 
         jMenuBar1.add(jMenu2);
@@ -153,12 +221,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu4.setMargin(new java.awt.Insets(3, 10, 3, 10));
 
         miRegistrarColaboracion.setText("Registrar");
+        miRegistrarColaboracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegistrarColaboracionActionPerformed(evt);
+            }
+        });
         jMenu4.add(miRegistrarColaboracion);
 
         miConsultarColaboracion.setText("Consultar");
+        miConsultarColaboracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsultarColaboracionActionPerformed(evt);
+            }
+        });
         jMenu4.add(miConsultarColaboracion);
 
         miCancelarColaboracion.setText("Cancelar");
+        miCancelarColaboracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miCancelarColaboracionActionPerformed(evt);
+            }
+        });
         jMenu4.add(miCancelarColaboracion);
 
         jMenuBar1.add(jMenu4);
@@ -168,6 +251,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu3.setMargin(new java.awt.Insets(3, 10, 3, 10));
 
         miAltaCategoria.setText("Alta");
+        miAltaCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAltaCategoriaActionPerformed(evt);
+            }
+        });
         jMenu3.add(miAltaCategoria);
 
         jMenuBar1.add(jMenu3);
@@ -193,16 +281,52 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miAltaUsuarioActionPerformed
 
     private void miConsultarProponenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarProponenteActionPerformed
-        // TODO add your handling code here:
+        iframeConsultarProponente.setVisible(true);
     }//GEN-LAST:event_miConsultarProponenteActionPerformed
 
     private void miConsultarPropuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarPropuestaActionPerformed
-        // TODO add your handling code here:
+        iframeConsultarPropuestas.setVisible(true);
     }//GEN-LAST:event_miConsultarPropuestaActionPerformed
 
     private void miConsultarColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarColaboradorActionPerformed
         iframeConsultarColaboradores.setVisible(true);
     }//GEN-LAST:event_miConsultarColaboradorActionPerformed
+
+    private void miDejarDeSeguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDejarDeSeguirActionPerformed
+        iframeDejarDeSeguirUsuario.setVisible(true);
+    }//GEN-LAST:event_miDejarDeSeguirActionPerformed
+
+    private void miSeguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSeguirUsuarioActionPerformed
+        iframeSeguirUsuario.setVisible(true);
+    }//GEN-LAST:event_miSeguirUsuarioActionPerformed
+
+    private void miAltaPropuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAltaPropuestaActionPerformed
+        iframeAltaPropuesta.setVisible(true);
+    }//GEN-LAST:event_miAltaPropuestaActionPerformed
+
+    private void miModificarPropuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miModificarPropuestaActionPerformed
+        iframeModificarPropuesta.setVisible(true);
+    }//GEN-LAST:event_miModificarPropuestaActionPerformed
+
+    private void miConsultarPropPorEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarPropPorEstadoActionPerformed
+        iframeConsultarPropuestasPorEstado.setVisible(true);
+    }//GEN-LAST:event_miConsultarPropPorEstadoActionPerformed
+
+    private void miRegistrarColaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegistrarColaboracionActionPerformed
+        iframeRegistrarColaboraciones.setVisible(true);
+    }//GEN-LAST:event_miRegistrarColaboracionActionPerformed
+
+    private void miConsultarColaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultarColaboracionActionPerformed
+        iframeConsultarColaboraciones.setVisible(true);
+    }//GEN-LAST:event_miConsultarColaboracionActionPerformed
+
+    private void miCancelarColaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCancelarColaboracionActionPerformed
+        iframeCancelarColaboraciones.setVisible(true);
+    }//GEN-LAST:event_miCancelarColaboracionActionPerformed
+
+    private void miAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAltaCategoriaActionPerformed
+        iframeAltaCategoria.setVisible(true);
+    }//GEN-LAST:event_miAltaCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
