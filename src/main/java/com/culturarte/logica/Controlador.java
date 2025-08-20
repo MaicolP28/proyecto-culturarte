@@ -6,15 +6,19 @@ package com.culturarte.logica;
 
 import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.logica.clases.*;
+import com.culturarte.logica.datatypes.DTProponente;
 import com.culturarte.logica.manejadores.ManejadorUsuario;
 import java.io.File;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
  * @author maicol
  */
 public class Controlador implements IControlador{
+    
+    private ArrayList<DTProponente> proponentes;
     
     public Controlador() {
         
@@ -41,5 +45,11 @@ public class Controlador implements IControlador{
         }
         mu.agregarUsuario(new Proponente(nickname, nombre, apellido, email, fechaNacimiento, imagen, direccion, linkWeb, bibliografia));
     }
-    
+     
+    @Override
+    public ArrayList<DTProponente> listarProponentes(){
+        ArrayList<DTProponente> lista = new ArrayList<>();
+        
+        
+    }
 }
