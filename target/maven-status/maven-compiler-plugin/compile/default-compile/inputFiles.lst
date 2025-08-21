@@ -1,3 +1,4 @@
+/home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/exepciones/CategoriaYaExiste.java
 /home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/exepciones/UsuarioYaExiste.java
 /home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/logica/Controlador.java
 /home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/logica/Fabrica.java
@@ -11,6 +12,7 @@
 /home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/logica/clases/Usuario.java
 /home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/logica/enums/TipoEstado.java
 /home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/logica/enums/TipoRetorno.java
+/home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/logica/manejadores/ManejadorCategoria.java
 /home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/logica/manejadores/ManejadorPropuesta.java
 /home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/logica/manejadores/ManejadorUsuario.java
 /home/maicol/NetBeansProjects/proyecto-culturarte/src/main/java/com/culturarte/presentacion/AltaCategoria.java
