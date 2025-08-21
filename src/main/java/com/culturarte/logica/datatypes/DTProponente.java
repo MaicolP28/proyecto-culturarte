@@ -4,11 +4,8 @@
  */
 package com.culturarte.logica.datatypes;
 
-import com.culturarte.logica.clases.Propuesta;
-import com.culturarte.logica.clases.Usuario;
 import java.io.File;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 /**
  *
@@ -24,12 +21,10 @@ public class DTProponente {
     private String direccion;
     private String biografia;
     private String linkWeb;
-    private ArrayList<Propuesta> propuestas;
     
     public DTProponente() {}
     
-    public DTProponente(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen, String direccion, String linkWeb, String biografia, 
-                        ArrayList<Propuesta> propuestas) {
+    public DTProponente(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen, String direccion, String linkWeb, String biografia) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -39,7 +34,6 @@ public class DTProponente {
         this.direccion = direccion;
         this.linkWeb = linkWeb;
         this.biografia = biografia;
-        this.propuestas = propuestas;
     }
 
     //Getters
@@ -79,10 +73,6 @@ public class DTProponente {
         return linkWeb;
     }
 
-    public ArrayList<Propuesta> getPropuestas() {
-        return propuestas;
-    }
-    
     //Setters
     public void setNickname(String nickname) {
         this.nickname = nickname;
@@ -119,9 +109,4 @@ public class DTProponente {
     public void setLinkWeb(String linkWeb) {
         this.linkWeb = linkWeb;
     }
-    
-    public void setPropuestas(ArrayList<Propuesta> propuestas) {
-        this.propuestas = propuestas;
-    }
-
 }
