@@ -115,4 +115,20 @@ public class Propuesta {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+    
+    public File getImagen(){
+        return imagen;
+    }
+    
+    public ArrayList<Colaboracion> getColaboraciones(){
+        return colaboraciones;
+    }
+    
+    public ArrayList<String> getNicknameColaboradores(){
+        ArrayList<String> listaNicks = new ArrayList<>();
+        for(Colaboracion c : colaboraciones){
+            listaNicks.add(c.getColaborador().getNickname());
+        }
+        return listaNicks;
+    }
 }
