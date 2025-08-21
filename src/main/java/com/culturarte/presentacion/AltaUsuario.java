@@ -344,7 +344,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JBaceptarMouseClicked
 
     private void JBcancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JBcancelarMouseClicked
-        // TODO add your handling code here:
+       this.dispose();
     }//GEN-LAST:event_JBcancelarMouseClicked
 
     private void JBseleccionarimgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JBseleccionarimgMouseClicked
