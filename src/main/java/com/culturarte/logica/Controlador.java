@@ -7,10 +7,15 @@ package com.culturarte.logica;
 import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.logica.clases.*;
 import com.culturarte.logica.datatypes.DTProponente;
+import com.culturarte.logica.datatypes.DTPropuesta;
+import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.manejadores.ManejadorUsuario;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -18,7 +23,8 @@ import java.util.ArrayList;
  */
 public class Controlador implements IControlador{
     
-    private ArrayList<DTProponente> proponentes;
+    private Map<String, Proponente> proponentes;
+    private Map<String, Propuesta> propuestas;
     
     public Controlador() {
         
@@ -47,9 +53,29 @@ public class Controlador implements IControlador{
     }
      
     @Override
-    public ArrayList<DTProponente> listarProponentes(){
-        ArrayList<DTProponente> lista = new ArrayList<>();
-        
-        
+    public Map<String, DTProponente> listarProponentes(){
+        Map<String, DTProponente> lista = new HashMap<>();
+        Iterator it = lista.keySet().iterator();
+        for(Map.Entry<String, Proponente> entry : proponentes.entrySet())
+        {
+            Proponente p = entry.getValue();
+            DTProponente dtp = new DTProponente(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNacimiento(), p.getImagen(), p.getDireccion(), p.getLinkWeb(), p.getBiografia());
+            lista.put(p.getNickname(), dtp);
+        }
+        return lista;        
+    }
+    
+    @Override
+    public Map<TipoEstado, ArrayList<DTPropuesta>> listarPropuestasProponentes(String nickname){
+        Map<TipoEstado, ArrayList<DTPropuesta>> lista = new HashMap<>();
+        Iterator it = lista.keySet().iterator();
+        for(Map.Entry<String, Propuesta> entry : propuestas.entrySet()){
+            Propuesta p = entry.getValue();
+            DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(),
+            p.getImagen(), p.getColaboraciones(), p.getNicknameColaboradores(), p.getEstadoActual(), p.getCategoria());
+        }
+        return lista;
     }
 }
+
+
