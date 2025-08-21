@@ -5,6 +5,9 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.exepciones.UsuarioYaExiste;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.io.*;
 import javax.swing.*;
@@ -77,11 +80,6 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         setVisible(true);
 
         JBaceptar.setText("Aceptar");
-        JBaceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JBaceptarMouseClicked(evt);
-            }
-        });
         JBaceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBaceptarActionPerformed(evt);
@@ -89,18 +87,13 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         });
 
         JBcancelar.setText("Cancelar");
-        JBcancelar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JBcancelarMouseClicked(evt);
+        JBcancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBcancelarActionPerformed(evt);
             }
         });
 
         JBseleccionarimg.setText("Seleccionar Imagen");
-        JBseleccionarimg.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JBseleccionarimgMouseClicked(evt);
-            }
-        });
         JBseleccionarimg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBseleccionarimgActionPerformed(evt);
@@ -109,11 +102,6 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
 
         buttonGroup1.add(JRBproponente);
         JRBproponente.setText("Proponente");
-        JRBproponente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JRBproponenteMouseClicked(evt);
-            }
-        });
         JRBproponente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JRBproponenteActionPerformed(evt);
@@ -312,11 +300,48 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBaceptarActionPerformed
-        // TODO add your handling code here:
+        String nick = JTnick.getText().trim();
+        String nombre = JTnombre.getText().trim();
+        String apellido = JTapellido.getText().trim();
+        String email = JTEmail.getText().trim();
+        LocalDate fechaNac = jDateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String direccion = null;
+        String web = null;
+        String biografia = null;
+        File imagen = new File(JTarchivo.getText());
+
+        try {
+        if (JRBproponente.isSelected()) {
+            direccion = JTdireccion.getText().trim();
+            web = JTlinkweb.getText().trim();
+            biografia = JTbiografia.getText().trim();
+
+            controlador.altaProponente(nick, nombre, apellido, email, fechaNac, imagen, direccion, web, biografia);
+
+        } else if (JRBcolaborador.isSelected()) {
+            controlador.altaColaborador(nick, nombre, apellido, email, fechaNac, imagen);
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un rol (Proponente o Colaborador)");
+            return;
+        }
+        } catch (UsuarioYaExiste e) {
+            JOptionPane.showMessageDialog(this, "El usuario ya existe: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.");
+        JBcancelarActionPerformed(evt);
     }//GEN-LAST:event_JBaceptarActionPerformed
 
     private void JBseleccionarimgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBseleccionarimgActionPerformed
-        // TODO add your handling code here:
+        JFileChooser archivo = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes", "jpg", "png", "jpeg");
+        archivo.setFileFilter(filtro);
+    
+        int ventana = archivo.showOpenDialog(this);
+        if (ventana == JFileChooser.APPROVE_OPTION) {
+            File file = archivo.getSelectedFile();
+            JTarchivo.setText(file.getAbsolutePath());
+        }
     }//GEN-LAST:event_JBseleccionarimgActionPerformed
 
     private void JTnickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTnickActionPerformed
@@ -334,28 +359,6 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
     private void JTEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTEmailActionPerformed
-
-    private void JBaceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JBaceptarMouseClicked
-        String nick= new String(JTnick.getText());
-        String nombre= new String(JTnombre.getText());
-        String apellido= new String(JTapellido.getText());
-        String email= new String(JTEmail.getText());
-        Date fechanac= new Date(jDateChooser2.getDateFormatString());
-    }//GEN-LAST:event_JBaceptarMouseClicked
-
-    private void JBcancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JBcancelarMouseClicked
-       this.dispose();
-    }//GEN-LAST:event_JBcancelarMouseClicked
-
-    private void JBseleccionarimgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JBseleccionarimgMouseClicked
-        JFileChooser archivo = new JFileChooser();
-        
-        int ventana =archivo.showOpenDialog(null);
-        if(ventana == JFileChooser.APPROVE_OPTION){
-            File file = archivo.getSelectedFile();
-            this.JTarchivo.setText(String.valueOf(file));
-        }
-    }//GEN-LAST:event_JBseleccionarimgMouseClicked
 
     private void JTlinkwebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTlinkwebActionPerformed
         // TODO add your handling code here:
@@ -375,6 +378,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         this.JTlinkweb.setVisible(false);
         this.jLabel6.setVisible(false);
         this.jLabel9.setVisible(false);
+        this.jLabel6.setVisible(false);
         this.jLabel7.setVisible(false);
     }//GEN-LAST:event_JRBcolaboradorActionPerformed
 
@@ -387,13 +391,22 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         this.jLabel7.setVisible(true);
     }//GEN-LAST:event_JRBproponenteActionPerformed
 
-    private void JRBproponenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRBproponenteMouseClicked
-
-    }//GEN-LAST:event_JRBproponenteMouseClicked
-
     private void JTarchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTarchivoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTarchivoActionPerformed
+
+    private void JBcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBcancelarActionPerformed
+        this.JTnick.setText("");
+        this.JTnombre.setText("");
+        this.JTapellido.setText("");
+        this.JTEmail.setText("");
+        this.JTarchivo.setText("");
+        this.JTdireccion.setText("");
+        this.JTbiografia.setText("");
+        this.JTlinkweb.setText("");
+        this.jDateChooser2.setDate(null);
+        this.setVisible(false);
+    }//GEN-LAST:event_JBcancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
