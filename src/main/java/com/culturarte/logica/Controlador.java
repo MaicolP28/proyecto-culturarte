@@ -13,6 +13,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 /**
  *
  * @author maicol
@@ -44,11 +45,12 @@ public class Controlador implements IControlador{
         }
         mu.agregarUsuario(new Proponente(nickname, nombre, apellido, email, fechaNacimiento, imagen, direccion, linkWeb, bibliografia));
     }
+    
     @Override
     public void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste{
         ManejadorCategoria mc = ManejadorCategoria.getInstancia();
         
-        if (mc.buscarCategoria(nombre) == null) {
+        if (mc.buscarCategoria(nombre) != null) {
             throw new CategoriaYaExiste("Ya existe esta categoria");
         }
         
@@ -61,25 +63,23 @@ public class Controlador implements IControlador{
             }
         }
         
-        
-        
-        
     }
     
     @Override
-    public DefaultMutableTreeNode listarCategorias() {
+    public DefaultTreeModel listarCategorias() {
         ManejadorCategoria mc = ManejadorCategoria.getInstancia();
-        
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorías");
+        DefaultTreeModel model = new DefaultTreeModel (raiz);
+        
         ArrayList<Categoria> categorias = mc.getCategoriasRaiz();
         for (Categoria categoria : categorias) {
             raiz.add(crearNodoCategoria(categoria));
         }
-        return raiz;
+        return model;
     }
     
     private DefaultMutableTreeNode crearNodoCategoria(Categoria cat) {
-        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(cat);
+        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(cat.getNombre());
         for (Categoria sub : cat.getSubCategorias()) {
             nodo.add(crearNodoCategoria(sub));
         }
