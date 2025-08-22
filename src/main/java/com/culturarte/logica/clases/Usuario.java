@@ -1,41 +1,85 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.culturarte.logica.clases;
 
-import java.io.File;
+import jakarta.persistence.*;
+import jakarta.persistence.Id;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Usuario {
-    private String nickname;
+
+/**
+ *
+ * @author fabriciorivero
+ */
+
+@Entity
+@Table(name = "usuarios")
+public class Usuario implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @Column(nullable = false, unique = true)
+    private String nickname;   
+
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
     private String apellido;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private LocalDate fechaNacimiento;
-    private ArrayList<Propuesta> propuestasSeguidas;
-    private ArrayList<Usuario> usuariosSeguidos;
-    private File imagen;
+
+    @Column(nullable = false)
+    private String imagen;
+
+    @ManyToMany
+    @JoinTable(
+        name = "propuestasSeguidas",
+        joinColumns = @JoinColumn(name = "usuario_nickname"),
+        inverseJoinColumns = @JoinColumn(name = "propuesta_id")
+    )
+    private List<Propuesta> propuestasSeguidas = new ArrayList<>();
+
+    // Relación de seguir otros usuarios
+    @ManyToMany
+    @JoinTable(
+        name = "usuariosSeguidos",
+        joinColumns = @JoinColumn(name = "usuario_nickname"),
+        inverseJoinColumns = @JoinColumn(name = "seguido_nickname")
+    )
+    private List<Usuario> usuariosSeguidos = new ArrayList<>();
 
     public Usuario() { }
 
-    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen) {
+    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
-        this.propuestasSeguidas = new ArrayList<>();
-        this.usuariosSeguidos = new ArrayList<>();
     }
 
-    public File getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(File imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 
-    public ArrayList<Usuario> getUsuariosSeguidos() {
+    
+    public List<Usuario> getUsuariosSeguidos() {
         return usuariosSeguidos;
     }
 
@@ -43,7 +87,7 @@ public class Usuario {
         this.usuariosSeguidos.add(usuario);
     }
 
-    public ArrayList<Propuesta> getPropuestas() {
+    public List<Propuesta> getPropuestas() {
         return propuestasSeguidas;
     }
 
@@ -90,5 +134,4 @@ public class Usuario {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
 }
