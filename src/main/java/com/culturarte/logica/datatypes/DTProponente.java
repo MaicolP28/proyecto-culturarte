@@ -111,6 +111,7 @@ public class DTProponente {
         this.linkWeb = linkWeb;
     }
     
+    @Override
     public String toString(){
         String fecha = fechaNacimiento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         return nickname + " - " + nombre + " - " + apellido + " - " + email + " - (" + fecha + ") - " + direccion + " - " + biografia + " - " + linkWeb;

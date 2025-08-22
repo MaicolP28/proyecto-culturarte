@@ -6,15 +6,10 @@ package com.culturarte.logica.datatypes;
 
 import com.culturarte.logica.clases.Categoria;
 import com.culturarte.logica.clases.Colaboracion;
-import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Estado;
-import com.culturarte.logica.clases.Proponente;
-import com.culturarte.logica.enums.TipoRetorno;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.Map;
 
 /**
  *
@@ -47,5 +42,21 @@ public class DTPropuesta {
         this.colaboradores = colaboradores;
         this.estadoActual = estadoActual;
         this.categoria = categoria;
+    }
+    
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Titulo: ").append(titulo).append("\n");
+        sb.append("Descripcion: ").append(descripcion).append("\n");
+        sb.append("Lugar: ").append(lugar).append("\n");
+        sb.append("Fecha Prevista: ").append(fechaPrevista).append("\n");
+        sb.append("Precio Entrada: ").append(precioEntrada).append("\n");
+        sb.append("Monto Necesario: ").append(montoNecesario).append("\n");
+        sb.append("Colaboraciones: ").append(colaboraciones).append("\n");
+        sb.append("Colaboradores: ").append(colaboradores).append("\n");
+        sb.append("Estado: ").append(estadoActual).append("\n");
+        sb.append("Categoria: ").append(categoria).append("\n");
+        //Falta el monto Recaurdado
+        return sb.toString();
     }
 }

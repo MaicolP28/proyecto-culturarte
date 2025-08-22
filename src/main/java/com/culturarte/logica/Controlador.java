@@ -14,7 +14,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -23,8 +22,8 @@ import java.util.Map;
  */
 public class Controlador implements IControlador{
     
-    private Map<String, Proponente> proponentes;
-    private Map<String, Propuesta> propuestas;
+    private Map<String, Proponente> proponentes = new HashMap<>();
+    private Map<String, Propuesta> propuestas = new HashMap<>();
     
     public Controlador() {
         
@@ -67,15 +66,14 @@ public class Controlador implements IControlador{
     @Override
     public Map<TipoEstado, ArrayList<DTPropuesta>> getDTPropuestasProponentes(String nickname){
         Map<TipoEstado, ArrayList<DTPropuesta>> lista = new HashMap<>();
-        for(Map.Entry<String, Propuesta> entry : propuestas.entrySet()){
-            Propuesta p = entry.getValue();
-            DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(),
-            p.getImagen(), p.getColaboraciones(), p.getNicknameColaboradores(), p.getEstadoActual(), p.getCategoria());
+      for(Propuesta p : propuestas.values()){
+        if(p.getProponente().getNickname().equals(nickname)){
+            DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(),
+            p.getColaboraciones(), p.getNicknameColaboradores(), p.getEstadoActual(), p.getCategoria());
             TipoEstado est = p.getEstadoActual().getEstado();
             lista.computeIfAbsent(est, k -> new ArrayList<>()).add(dtp);
         }
+    }
         return lista;
     }
 }
-
-
