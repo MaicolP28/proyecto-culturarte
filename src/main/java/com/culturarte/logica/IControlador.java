@@ -21,6 +21,6 @@ public interface IControlador {
     
     public abstract void altaColaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen) throws UsuarioYaExiste;
     public abstract void altaProponente(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen, String direccion, String linkWeb, String bibliografia) throws UsuarioYaExiste;
-    public abstract Map<String, DTProponente> listarProponentes();
-    public abstract Map<TipoEstado, ArrayList<DTPropuesta>> listarPropuestasProponentes(String nickname);
+    public abstract Map<String, DTProponente> getDTProponentes();
+    public abstract Map<TipoEstado, ArrayList<DTPropuesta>> getDTPropuestasProponentes(String nickname);
 }

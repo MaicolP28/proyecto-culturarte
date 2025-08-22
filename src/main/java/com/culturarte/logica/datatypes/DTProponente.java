@@ -6,6 +6,7 @@ package com.culturarte.logica.datatypes;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -108,5 +109,10 @@ public class DTProponente {
 
     public void setLinkWeb(String linkWeb) {
         this.linkWeb = linkWeb;
+    }
+    
+    public String toString(){
+        String fecha = fechaNacimiento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return nickname + " - " + nombre + " - " + apellido + " - " + email + " - (" + fecha + ") - " + direccion + " - " + biografia + " - " + linkWeb;
     }
 }

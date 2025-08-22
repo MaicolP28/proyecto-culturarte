@@ -53,9 +53,8 @@ public class Controlador implements IControlador{
     }
      
     @Override
-    public Map<String, DTProponente> listarProponentes(){
+    public Map<String, DTProponente> getDTProponentes(){
         Map<String, DTProponente> lista = new HashMap<>();
-        Iterator it = lista.keySet().iterator();
         for(Map.Entry<String, Proponente> entry : proponentes.entrySet())
         {
             Proponente p = entry.getValue();
@@ -66,13 +65,14 @@ public class Controlador implements IControlador{
     }
     
     @Override
-    public Map<TipoEstado, ArrayList<DTPropuesta>> listarPropuestasProponentes(String nickname){
+    public Map<TipoEstado, ArrayList<DTPropuesta>> getDTPropuestasProponentes(String nickname){
         Map<TipoEstado, ArrayList<DTPropuesta>> lista = new HashMap<>();
-        Iterator it = lista.keySet().iterator();
         for(Map.Entry<String, Propuesta> entry : propuestas.entrySet()){
             Propuesta p = entry.getValue();
             DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(),
             p.getImagen(), p.getColaboraciones(), p.getNicknameColaboradores(), p.getEstadoActual(), p.getCategoria());
+            TipoEstado est = p.getEstadoActual().getEstado();
+            lista.computeIfAbsent(est, k -> new ArrayList<>()).add(dtp);
         }
         return lista;
     }
