@@ -2,6 +2,7 @@ com/culturarte/logica/enums/TipoEstado.class
 com/culturarte/presentacion/ConsultarPropuestas.class
 com/culturarte/presentacion/AltaCategoria$2.class
 com/culturarte/presentacion/MenuPrincipal$11.class
+com/culturarte/presentacion/AltaPropuesta$6.class
 com/culturarte/presentacion/AltaUsuario$13.class
 com/culturarte/presentacion/AltaUsuario$8.class
 com/culturarte/presentacion/ConsultarColaboraciones.class
@@ -10,6 +11,7 @@ com/culturarte/presentacion/MenuPrincipal$5.class
 com/culturarte/logica/manejadores/ManejadorCategoria.class
 com/culturarte/presentacion/ModificarPropuesta.class
 com/culturarte/presentacion/ConsultarProponente.class
+com/culturarte/presentacion/AltaPropuesta$2.class
 com/culturarte/logica/clases/Colaborador.class
 com/culturarte/exepciones/PropuestaYaExiste.class
 com/culturarte/presentacion/MenuPrincipal.class
@@ -27,8 +29,10 @@ com/culturarte/presentacion/MenuPrincipal$10.class
 com/culturarte/presentacion/AltaCategoria$1.class
 com/culturarte/logica/manejadores/ManejadorPropuesta.class
 com/culturarte/logica/manejadores/ManejadorUsuario.class
+com/culturarte/presentacion/AltaPropuesta$3.class
 com/culturarte/logica/clases/Estado.class
 com/culturarte/logica/Fabrica.class
+com/culturarte/presentacion/AltaPropuesta$4.class
 com/culturarte/presentacion/MenuPrincipal$13.class
 com/culturarte/presentacion/AltaCategoria$4.class
 com/culturarte/presentacion/CancelarColaboraciones.class
@@ -37,7 +41,9 @@ com/culturarte/presentacion/ConsultarPropuestasPorEstado.class
 com/culturarte/presentacion/MenuPrincipal$3.class
 com/culturarte/presentacion/AltaCategoria.class
 com/culturarte/presentacion/MenuPrincipal$12.class
+com/culturarte/presentacion/AltaPropuesta$5.class
 com/culturarte/presentacion/AltaCategoria$3.class
+com/culturarte/presentacion/AltaPropuesta$1.class
 com/culturarte/presentacion/MenuPrincipal$4.class
 com/culturarte/presentacion/DejarDeSeguirUsuario.class
 com/culturarte/presentacion/MenuPrincipal$7.class
