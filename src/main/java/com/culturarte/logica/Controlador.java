@@ -6,12 +6,16 @@ package com.culturarte.logica;
 
 import com.culturarte.exepciones.CategoriaYaExiste;
 import com.culturarte.exepciones.UsuarioYaExiste;
+import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.logica.clases.*;
+import com.culturarte.logica.enums.TipoRetorno;
 import com.culturarte.logica.manejadores.ManejadorCategoria;
 import com.culturarte.logica.manejadores.ManejadorUsuario;
+import com.culturarte.logica.manejadores.ManejadorPropuesta;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 /**
@@ -86,4 +90,21 @@ public class Controlador implements IControlador{
         return nodo;
     }
     
+
+    @Override
+    public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, Proponente proponente, Categoria categoria)
+    throws PropuestaYaExiste {
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        
+        if (mp.buscarPropuesta(titulo) != null) {
+            throw new PropuestaYaExiste("Ya existe esta Propuesta");
+        }
+        
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Usuario u = mu.buscarUsuario(proponente.getNickname());
+        Propuesta p = new Propuesta(titulo,descripcion,lugar,fechaPrevista, precioEntrada, montoNecesario, tipoRetornos, imagen, proponente,categoria);
+        mp.agregarPropuesta(p);
+        u.addPropuestas(p);
+    }
+     
 }

@@ -11,6 +11,7 @@ com/culturarte/logica/manejadores/ManejadorCategoria.class
 com/culturarte/presentacion/ModificarPropuesta.class
 com/culturarte/presentacion/ConsultarProponente.class
 com/culturarte/logica/clases/Colaborador.class
+com/culturarte/exepciones/PropuestaYaExiste.class
 com/culturarte/presentacion/MenuPrincipal.class
 com/culturarte/exepciones/UsuarioYaExiste.class
 com/culturarte/exepciones/CategoriaYaExiste.class

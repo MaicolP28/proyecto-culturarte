@@ -26,4 +26,8 @@ public class ManejadorPropuesta {
     public Propuesta getPropuesta(String titulo){
         return propuestasTitulo.get(titulo);
     }
+    
+    public Propuesta buscarPropuesta(String titulo) {
+        return ((Propuesta) propuestasTitulo.get(titulo));
+    }
 }
