@@ -64,7 +64,7 @@ public class Controlador implements IControlador{
         return retorno;        
     }
     
-    
+
     @Override
     public DTProponente getDTProponente(String nickname){
         // Datos usuario, datos proponente, Propuestas (nombre, estado, lista colaboradores, monto recaudado, monto necesario)
