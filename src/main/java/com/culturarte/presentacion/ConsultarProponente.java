@@ -5,6 +5,13 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.logica.datatypes.DTProponente;
+import com.culturarte.logica.datatypes.DTPropuesta;
+import com.culturarte.logica.enums.TipoEstado;
+import java.util.ArrayList;
+import java.util.Map;
+import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -13,15 +20,30 @@ import com.culturarte.logica.IControlador;
 public class ConsultarProponente extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
+    private JComboBox<String> comboProponentes;
+    private String proponenteSeleccionado;
+    private JTextArea jTextAreaProponente;
     
-    /**
-     * Creates new form ConsultarProponente
-     */
-    public ConsultarProponente(IControlador IC) {
-        initComponents();
-        controlador = IC;
-    }
+    public ConsultarProponente(IControlador controlador) {
+    initComponents(); 
+    this.controlador = controlador;
+    
+    comboProponentes = new JComboBox<>();
+    
+}
+        
+    private void cargarProponentes() {
+    Map<String, DTProponente> proponentes = controlador.getDTProponentes();
 
+    comboProponentes.removeAllItems(); // limpia cualquier elemento previo
+
+    for (DTProponente p : proponentes.values()) {
+        comboProponentes.addItem(p.getNickname()); // agregamos solo el nickname
+    }
+}
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,27 +53,72 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ListaProponentes = new javax.swing.JComboBox<>();
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Consultar Proponente");
 
+        ListaProponentes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListaProponentesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(106, Short.MAX_VALUE)
+                .addComponent(ListaProponentes, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(106, 106, 106))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ListaProponentes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ListaProponentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaProponentesActionPerformed
+        String proponenteSeleccionado = (String) ListaProponentes.getSelectedItem();
+        if(proponenteSeleccionado != null)
+            mostrarInfoProponente(proponenteSeleccionado);
+    }//GEN-LAST:event_ListaProponentesActionPerformed
+
+    private void mostrarInfoProponente(String nickname){
+        DTProponente p = controlador.getDTProponentes().get(nickname);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Info Proponente: \n ================").append(p.toString()).append("\n\n");
+        
+        Map<TipoEstado, ArrayList<DTPropuesta>> propuestas = controlador.getDTPropuestasProponentes(nickname);
+
+        for (Map.Entry<TipoEstado, ArrayList<DTPropuesta>> entry : propuestas.entrySet()) {
+            sb.append("\n=== ").append(entry.getKey()).append(" ===\n");
+            for (DTPropuesta dp : entry.getValue()) {
+                sb.append(dp.toString()).append("\n--------------------\n");
+            }
+        }
+
+    jTextAreaProponente.setText(sb.toString());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ListaProponentes;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

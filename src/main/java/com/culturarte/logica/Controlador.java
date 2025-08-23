@@ -1,20 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.culturarte.logica;
 
 import com.culturarte.exepciones.CategoriaYaExiste;
 import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.logica.clases.*;
+import com.culturarte.logica.datatypes.DTProponente;
+import com.culturarte.logica.datatypes.DTPropuesta;
+import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.enums.TipoRetorno;
-import com.culturarte.logica.manejadores.ManejadorCategoria;
-import com.culturarte.logica.manejadores.ManejadorUsuario;
-import com.culturarte.logica.manejadores.ManejadorPropuesta;
+import com.culturarte.logica.manejadores.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.EnumSet;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -23,6 +22,9 @@ import javax.swing.tree.DefaultTreeModel;
  * @author maicol
  */
 public class Controlador implements IControlador{
+    
+    private Map<String, Proponente> proponentes = new HashMap<>();
+    private Map<String, Propuesta> propuestas = new HashMap<>();
     
     public Controlador() {
         
@@ -49,8 +51,34 @@ public class Controlador implements IControlador{
         }
         mu.agregarUsuario(new Proponente(nickname, nombre, apellido, email, fechaNacimiento, imagen, direccion, linkWeb, bibliografia));
     }
+     
+    @Override
+    public Map<String, DTProponente> getDTProponentes(){
+        Map<String, DTProponente> lista = new HashMap<>();
+        for(Map.Entry<String, Proponente> entry : proponentes.entrySet())
+        {
+            Proponente p = entry.getValue();
+            DTProponente dtp = new DTProponente(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNacimiento(), p.getImagen(), p.getDireccion(), p.getLinkWeb(), p.getBiografia());
+            lista.put(p.getNickname(), dtp);
+        }
+        return lista;        
+    }
     
     @Override
+    public Map<TipoEstado, ArrayList<DTPropuesta>> getDTPropuestasProponentes(String nickname){
+        Map<TipoEstado, ArrayList<DTPropuesta>> lista = new HashMap<>();
+      for(Propuesta p : propuestas.values()){
+        if(p.getProponente().getNickname().equals(nickname)){
+            DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(),
+            p.getColaboraciones(), p.getNicknameColaboradores(), p.getEstadoActual(), p.getCategoria());
+            TipoEstado est = p.getEstadoActual().getEstado();
+            lista.computeIfAbsent(est, k -> new ArrayList<>()).add(dtp);
+        }
+    }
+        return lista;
+    }
+    
+
     public void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste{
         ManejadorCategoria mc = ManejadorCategoria.getInstancia();
         
