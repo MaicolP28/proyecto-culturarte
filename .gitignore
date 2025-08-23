@@ -38,3 +38,5 @@ nbdist/
 *.bak
 *.swp
 
+
+.DS_Store
