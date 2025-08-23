@@ -120,17 +120,21 @@ public class Controlador implements IControlador{
     
 
     @Override
-    public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, Proponente proponente, Categoria categoria)
+    public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, String proponente, String categoria)
     throws PropuestaYaExiste {
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        ManejadorCategoria mc = ManejadorCategoria.getInstancia();
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         
         if (mp.buscarPropuesta(titulo) != null) {
             throw new PropuestaYaExiste("Ya existe esta Propuesta");
         }
         
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        Usuario u = mu.buscarUsuario(proponente.getNickname());
-        Propuesta p = new Propuesta(titulo,descripcion,lugar,fechaPrevista, precioEntrada, montoNecesario, tipoRetornos, imagen, proponente,categoria);
+        Proponente u = (Proponente) mu.buscarUsuario(proponente);
+        
+        Categoria c = mc.buscarCategoria(categoria);
+        
+        Propuesta p = new Propuesta(titulo,descripcion,lugar,fechaPrevista, precioEntrada, montoNecesario, tipoRetornos, imagen, u,c);
         mp.agregarPropuesta(p);
         u.addPropuestas(p);
     }

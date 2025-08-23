@@ -32,5 +32,5 @@ public interface IControlador {
     public abstract Map<TipoEstado, ArrayList<DTPropuesta>> getDTPropuestasProponentes(String nickname);
     public abstract void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste;
     public abstract DefaultTreeModel listarCategorias();
-    public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, Proponente proponente, Categoria categoria) throws PropuestaYaExiste;
+    public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, String proponente, String categoria) throws PropuestaYaExiste;
 }
