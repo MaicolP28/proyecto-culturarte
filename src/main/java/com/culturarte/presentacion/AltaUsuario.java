@@ -8,10 +8,8 @@ import com.culturarte.logica.IControlador;
 import com.culturarte.exepciones.UsuarioYaExiste;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 import java.io.*;
 import javax.swing.*;
-import java.awt.event.*;
 import javax.swing.filechooser.*;
 
 /**
@@ -305,30 +303,29 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         String apellido = JTapellido.getText().trim();
         String email = JTEmail.getText().trim();
         LocalDate fechaNac = jDateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        String direccion = null;
-        String web = null;
-        String biografia = null;
         File imagen = new File(JTarchivo.getText());
 
         try {
-        if (JRBproponente.isSelected()) {
-            direccion = JTdireccion.getText().trim();
-            web = JTlinkweb.getText().trim();
-            biografia = JTbiografia.getText().trim();
+            if (JRBproponente.isSelected()) {
+                String direccion = JTdireccion.getText().trim();
+                String web = JTlinkweb.getText().trim();
+                String biografia = JTbiografia.getText().trim();
 
-            controlador.altaProponente(nick, nombre, apellido, email, fechaNac, imagen, direccion, web, biografia);
+                controlador.altaProponente(nick, nombre, apellido, email, fechaNac, imagen, direccion, web, biografia);
+                JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.");
 
-        } else if (JRBcolaborador.isSelected()) {
-            controlador.altaColaborador(nick, nombre, apellido, email, fechaNac, imagen);
-        } else {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un rol (Proponente o Colaborador)");
-            return;
-        }
+            } else if (JRBcolaborador.isSelected()) {
+                controlador.altaColaborador(nick, nombre, apellido, email, fechaNac, imagen);
+                JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un rol (Proponente o Colaborador)");
+                return;
+            }
         } catch (UsuarioYaExiste e) {
             JOptionPane.showMessageDialog(this, "El usuario ya existe: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.");
+        
         JBcancelarActionPerformed(evt);
     }//GEN-LAST:event_JBaceptarActionPerformed
 

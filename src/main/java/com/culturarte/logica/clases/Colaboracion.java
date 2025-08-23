@@ -60,4 +60,8 @@ public class Colaboracion {
     public void setColaborador(Colaborador colaborador) {
         this.colaborador = colaborador;
     }
+    
+    public String getColaboradorNick() {
+        return colaborador.getNickname();
+    }
 }

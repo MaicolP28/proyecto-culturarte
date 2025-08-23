@@ -23,9 +23,6 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class Controlador implements IControlador{
     
-    private Map<String, Proponente> proponentes = new HashMap<>();
-    private Map<String, Propuesta> propuestas = new HashMap<>();
-    
     public Controlador() {
         
     }
@@ -53,29 +50,37 @@ public class Controlador implements IControlador{
     }
      
     @Override
-    public Map<String, DTProponente> getDTProponentes(){
-        Map<String, DTProponente> lista = new HashMap<>();
-        for(Map.Entry<String, Proponente> entry : proponentes.entrySet())
-        {
-            Proponente p = entry.getValue();
-            DTProponente dtp = new DTProponente(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNacimiento(), p.getImagen(), p.getDireccion(), p.getLinkWeb(), p.getBiografia());
-            lista.put(p.getNickname(), dtp);
+    public ArrayList<String> getNomProponentes(){
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ArrayList<String> retorno = new ArrayList<>();
+        
+        for (Usuario usu : mu.getUsuariosNick().values()) {
+            if (usu instanceof Proponente) {
+                retorno.add(usu.getNickname());
+            }
         }
-        return lista;        
+        
+        retorno.sort(String.CASE_INSENSITIVE_ORDER); // Ordena la lista
+        return retorno;        
     }
     
+    
     @Override
-    public Map<TipoEstado, ArrayList<DTPropuesta>> getDTPropuestasProponentes(String nickname){
-        Map<TipoEstado, ArrayList<DTPropuesta>> lista = new HashMap<>();
-      for(Propuesta p : propuestas.values()){
-        if(p.getProponente().getNickname().equals(nickname)){
-            DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(),
-            p.getColaboraciones(), p.getNicknameColaboradores(), p.getEstadoActual(), p.getCategoria());
-            TipoEstado est = p.getEstadoActual().getEstado();
-            lista.computeIfAbsent(est, k -> new ArrayList<>()).add(dtp);
+    public DTProponente getDTProponente(String nickname){
+        // Datos usuario, datos proponente, Propuestas (nombre, estado, lista colaboradores, monto recaudado, monto necesario)
+        
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+       
+        Proponente p =(Proponente) mu.buscarUsuario(nickname);
+       
+        DTProponente dtp = new DTProponente(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNacimiento(), p.getImagen(), p.getDireccion(), p.getLinkWeb(), p.getBiografia());
+        
+        for (Propuesta prop : p.getPropuestas()) {
+            dtp.addPropuesta(new DTPropuesta(prop.getTitulo(), prop.getEstadoActual().getEstado() , prop.getNicknameColaboradores(), prop.getMontoRecaudado(), prop.getMontoNecesario()));
         }
-    }
-        return lista;
+       
+        return dtp;
     }
     
 

@@ -127,8 +127,16 @@ public class Propuesta {
     public ArrayList<String> getNicknameColaboradores(){
         ArrayList<String> listaNicks = new ArrayList<>();
         for(Colaboracion c : colaboraciones){
-            listaNicks.add(c.getColaborador().getNickname());
+            listaNicks.add(c.getColaboradorNick());
         }
         return listaNicks;
+    }
+    
+    public float getMontoRecaudado() {
+        float montoRecuadado = 0;
+        for(Colaboracion c : colaboraciones){
+            montoRecuadado += c.getMonto();
+        }
+        return montoRecuadado;
     }
 }

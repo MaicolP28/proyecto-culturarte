@@ -7,6 +7,7 @@ package com.culturarte.logica.datatypes;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,6 +23,7 @@ public class DTProponente {
     private String direccion;
     private String biografia;
     private String linkWeb;
+    private ArrayList<DTPropuesta> propuestas;
     
     public DTProponente() {}
     
@@ -73,6 +75,10 @@ public class DTProponente {
     public String getLinkWeb() {
         return linkWeb;
     }
+    
+    public ArrayList<DTPropuesta> getPropuestas() {
+        return propuestas;
+    }
 
     //Setters
     public void setNickname(String nickname) {
@@ -109,6 +115,10 @@ public class DTProponente {
 
     public void setLinkWeb(String linkWeb) {
         this.linkWeb = linkWeb;
+    }
+    
+    public void addPropuesta(DTPropuesta propuesta) {
+        propuestas.add(propuesta);
     }
     
     @Override
