@@ -9,6 +9,7 @@ import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.logica.datatypes.DTProponente;
 import java.util.ArrayList;
 import com.culturarte.exepciones.PropuestaYaExiste;
+import com.culturarte.logica.datatypes.DTColaborador;
 import com.culturarte.logica.enums.TipoRetorno;
 import java.time.LocalDate;
 import java.io.File;
@@ -27,5 +28,8 @@ public interface IControlador {
     public abstract DTProponente getDTProponente(String nickname);
     public abstract void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste;
     public abstract DefaultTreeModel listarCategorias();
-    public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, String proponente, String categoria) throws PropuestaYaExiste;
+    public abstract void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, String proponente, String categoria) throws PropuestaYaExiste;
+    public abstract ArrayList<String> getNickColaboradores();
+    public abstract DTColaborador getDTColaborador(String nickname);
+
 }

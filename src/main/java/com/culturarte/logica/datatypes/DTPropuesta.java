@@ -27,6 +27,7 @@ public class DTPropuesta {
     private ArrayList<String> colaboradores;
     private TipoEstado estadoActual;
     private Categoria categoria;
+    private String nickProponente;
     
     public DTPropuesta(){}
     
@@ -47,6 +48,14 @@ public class DTPropuesta {
         this.titulo = titulo;
         this.estadoActual = estado;
         this.colaboradores = colaboradores;
+        this.montoRecaudado = montoRecaudado;
+        this.montoNecesario = montoNecesario;
+    }
+    
+    public DTPropuesta(String titulo, TipoEstado estado, String nickProponente, float montoRecaudado, float montoNecesario) {
+        this.titulo = titulo;
+        this.estadoActual = estado;
+        this.nickProponente = nickProponente;
         this.montoRecaudado = montoRecaudado;
         this.montoNecesario = montoNecesario;
     }

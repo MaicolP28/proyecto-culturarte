@@ -132,6 +132,10 @@ public class Propuesta {
         return listaNicks;
     }
     
+    public String getProponenteNick() {
+        return proponente.getNickname();
+    }
+    
     public float getMontoRecaudado() {
         float montoRecuadado = 0;
         for(Colaboracion c : colaboraciones){

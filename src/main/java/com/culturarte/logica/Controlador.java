@@ -4,6 +4,7 @@ import com.culturarte.exepciones.CategoriaYaExiste;
 import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.logica.clases.*;
+import com.culturarte.logica.datatypes.DTColaborador;
 import com.culturarte.logica.datatypes.DTProponente;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoEstado;
@@ -48,6 +49,22 @@ public class Controlador implements IControlador{
         }
         mu.agregarUsuario(new Proponente(nickname, nombre, apellido, email, fechaNacimiento, imagen, direccion, linkWeb, bibliografia));
     }
+    
+        
+    @Override
+    public ArrayList<String> getNickColaboradores(){
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ArrayList<String> retorno = new ArrayList<>();
+        
+        for (Usuario usu : mu.getUsuariosNick().values()) {
+            if (usu instanceof Colaborador) {
+                retorno.add(usu.getNickname());
+            }
+        }
+        
+        retorno.sort(String.CASE_INSENSITIVE_ORDER); // Ordena la lista
+        return retorno;   
+    }
      
     @Override
     public ArrayList<String> getNomProponentes(){
@@ -62,6 +79,23 @@ public class Controlador implements IControlador{
         
         retorno.sort(String.CASE_INSENSITIVE_ORDER); // Ordena la lista
         return retorno;        
+    }
+    
+    @Override
+    public DTColaborador getDTColaborador(String nickname) {
+        
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+       
+        Colaborador c =(Colaborador) mu.buscarUsuario(nickname);
+       
+        DTColaborador dtc = new DTColaborador(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNacimiento(), c.getImagen());
+        
+        for (Propuesta prop : c.getPropuestas()) {
+            dtc.addPropuesta(new DTPropuesta(prop.getTitulo(), prop.getEstadoActual().getEstado() , prop.getProponenteNick(), prop.getMontoRecaudado(), prop.getMontoNecesario()));
+        }
+       
+        return dtc;
     }
     
     
@@ -143,5 +177,6 @@ public class Controlador implements IControlador{
         mp.agregarPropuesta(p);
         u.addPropuestas(p);
     }
+
      
 }
