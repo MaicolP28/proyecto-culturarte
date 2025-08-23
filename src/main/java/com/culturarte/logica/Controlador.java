@@ -1,21 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.culturarte.logica;
 
+import com.culturarte.exepciones.CategoriaYaExiste;
 import com.culturarte.exepciones.UsuarioYaExiste;
+import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.logica.clases.*;
 import com.culturarte.logica.datatypes.DTProponente;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoEstado;
-import com.culturarte.logica.manejadores.ManejadorUsuario;
+import com.culturarte.logica.enums.TipoRetorno;
+import com.culturarte.logica.manejadores.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.EnumSet;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 /**
  *
  * @author maicol
@@ -76,4 +77,62 @@ public class Controlador implements IControlador{
     }
         return lista;
     }
+    
+
+    public void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste{
+        ManejadorCategoria mc = ManejadorCategoria.getInstancia();
+        
+        if (mc.buscarCategoria(nombre) != null) {
+            throw new CategoriaYaExiste("Ya existe esta categoria");
+        }
+        
+        if (catPadre == null) {
+            mc.agregarCategoriaRaiz(new Categoria(nombre, null));
+        } else {
+            Categoria padre = mc.buscarCategoria(catPadre);
+            if (padre != null) {
+                padre.addSubCategoria(new Categoria(nombre, padre));
+            }
+        }
+        
+    }
+    
+    @Override
+    public DefaultTreeModel listarCategorias() {
+        ManejadorCategoria mc = ManejadorCategoria.getInstancia();
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorías");
+        DefaultTreeModel model = new DefaultTreeModel (raiz);
+        
+        ArrayList<Categoria> categorias = mc.getCategoriasRaiz();
+        for (Categoria categoria : categorias) {
+            raiz.add(crearNodoCategoria(categoria));
+        }
+        return model;
+    }
+    
+    private DefaultMutableTreeNode crearNodoCategoria(Categoria cat) {
+        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(cat.getNombre());
+        for (Categoria sub : cat.getSubCategorias()) {
+            nodo.add(crearNodoCategoria(sub));
+        }
+        return nodo;
+    }
+    
+
+    @Override
+    public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, Proponente proponente, Categoria categoria)
+    throws PropuestaYaExiste {
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        
+        if (mp.buscarPropuesta(titulo) != null) {
+            throw new PropuestaYaExiste("Ya existe esta Propuesta");
+        }
+        
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Usuario u = mu.buscarUsuario(proponente.getNickname());
+        Propuesta p = new Propuesta(titulo,descripcion,lugar,fechaPrevista, precioEntrada, montoNecesario, tipoRetornos, imagen, proponente,categoria);
+        mp.agregarPropuesta(p);
+        u.addPropuestas(p);
+    }
+     
 }
