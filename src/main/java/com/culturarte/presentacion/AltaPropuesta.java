@@ -6,12 +6,14 @@ package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
 import com.culturarte.exepciones.PropuestaYaExiste;
+import com.culturarte.logica.enums.TipoRetorno;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.io.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.EnumSet;
 import javax.swing.filechooser.*;
 /**
  *
@@ -256,12 +258,15 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         String titulo = jTtitulo.getText().trim();
         String descripcion = jTdescripcion.getText().trim();
         String lugar = jTlugar.getText().trim();
-        String montoE = jTmontoE.getText().trim();
-        String montoN = jTmontoN.getText().trim();
+        String montoES = jTmontoE.getText().trim();
+        float montoE = Float.parseFloat(montoES); 
+        String montoNS = jTmontoN.getText().trim();
+        float montoN = Float.parseFloat(montoNS); 
         LocalDate fechaPrev = jDfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Proponente proponente = jCProponente.getItemAt(1);
-        Categoria tipoEsp = jCTipoEsp.getItemAt(1);
-        EnumSet<TipoRetorno> tipoRet = jCTipoRet.getItemAt(1);
+        String proponente = jCProponente.getItemAt(1);
+        String tipoEsp = jCTipoEsp.getItemAt(1);
+        TipoRetorno seleccionado = (TipoRetorno) jCTipoRet.getSelectedItem();
+        EnumSet<TipoRetorno> tipoRet = EnumSet.of(seleccionado);
         File imagen = new File(jTimagen.getText());
 
         try {
