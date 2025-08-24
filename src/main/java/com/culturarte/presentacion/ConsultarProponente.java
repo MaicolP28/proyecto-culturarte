@@ -206,9 +206,11 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         
         for (DTPropuesta p : proponente.getPropuestas()){
             if(p.getEstadoActual() == estadoElegido){
+                ArrayList<String> nomColaboradores = controlador.getNomColaboradores();
+                String colaboradores = nomColaboradores.isEmpty() ? "Sin Colaboradores" : String.join(", ", nomColaboradores);
                 Object [] filas = {
                     p.getTitulo(),
-                    p.getColaboradores(),
+                    colaboradores,
                     p.getMontoRecaudado(),
                     p.getMontoNecesario()
                 };
