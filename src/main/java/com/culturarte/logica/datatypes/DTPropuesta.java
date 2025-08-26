@@ -26,12 +26,12 @@ public class DTPropuesta {
     private File imagen;
     private ArrayList<String> colaboradores;
     private TipoEstado estadoActual;
-    private Categoria categoria;
+    private String categoria;
     private String nickProponente;
     
     public DTPropuesta(){}
     
-    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, File imagen, ArrayList<String> colaboradores, String nickProponente, TipoEstado estadoActual, Categoria categoria){
+    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, File imagen, ArrayList<String> colaboradores, String nickProponente, TipoEstado estadoActual, String categoria){
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.lugar = lugar;
@@ -101,7 +101,7 @@ public class DTPropuesta {
         return estadoActual;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
     
