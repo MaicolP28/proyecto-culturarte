@@ -5,6 +5,7 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,6 +21,8 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     public ModificarPropuesta(IControlador IC) {
         initComponents();
         controlador = IC;
+        //Cargo combobox
+        cargarComboBox();
     }
 
     /**
@@ -31,27 +34,59 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        comboPropuestas = new javax.swing.JComboBox<>();
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Modificar Propuesta");
 
+        comboPropuestas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboPropuestas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPropuestasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(233, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(246, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void comboPropuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPropuestasActionPerformed
+        mostrarDatosPropuesta();
+    }//GEN-LAST:event_comboPropuestasActionPerformed
+
+    private void cargarComboBox(){
+        ArrayList<String> tituloPropuestas = controlador.getTitulosPropuestas();
+        this.comboPropuestas.removeAllItems();
+        for (String t : tituloPropuestas) {
+            this.comboPropuestas.addItem(t);//Agrego solo el titulo
+        }
+    }
+    
+    private void mostrarDatosPropuesta(){
+        
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboPropuestas;
     // End of variables declaration//GEN-END:variables
 }

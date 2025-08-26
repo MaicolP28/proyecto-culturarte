@@ -1,6 +1,7 @@
 package com.culturarte.logica.manejadores;
 
 import com.culturarte.logica.clases.Propuesta;
+import java.util.ArrayList;
 
 import java.util.HashMap;
 
@@ -29,5 +30,10 @@ public class ManejadorPropuesta {
     
     public Propuesta buscarPropuesta(String titulo) {
         return ((Propuesta) propuestasTitulo.get(titulo));
+    }
+    
+    public ArrayList<String> getTitulos(){
+        //Retorna el titulo de todas las propuestas
+        return new ArrayList<>(propuestasTitulo.keySet());
     }
 }

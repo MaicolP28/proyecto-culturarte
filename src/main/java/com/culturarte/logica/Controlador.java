@@ -178,5 +178,12 @@ public class Controlador implements IControlador{
         u.addPropuestas(p);
     }
 
-     
+      @Override
+    public ArrayList<String> getTitulosPropuestas(){
+        //Retorna todos los titulos de todas las propuestas
+       ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+       ArrayList<String> retorno = new ArrayList<>(mp.getTitulos());
+       retorno.sort(String.CASE_INSENSITIVE_ORDER);//Ordena lista
+       return retorno;
+    }
 }

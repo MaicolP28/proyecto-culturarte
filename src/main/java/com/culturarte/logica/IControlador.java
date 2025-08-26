@@ -31,5 +31,5 @@ public interface IControlador {
     public abstract void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, String proponente, String categoria) throws PropuestaYaExiste;
     public abstract ArrayList<String> getNickColaboradores();
     public abstract DTColaborador getDTColaborador(String nickname);
-
+    public abstract ArrayList<String> getTitulosPropuestas();
 }
