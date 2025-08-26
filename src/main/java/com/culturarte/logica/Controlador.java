@@ -178,5 +178,36 @@ public class Controlador implements IControlador{
         u.addPropuestas(p);
     }
 
+    @Override
+    public ArrayList<String> getTituloPropuestas() {
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        ArrayList<String> retorno = new ArrayList<>();
+        
+        for (Propuesta p : mp.getPropuestas().values()) {
+            retorno.add(p.getTitulo());
+        }
+        return retorno;
+    }
+    
+    @Override
+    public DTPropuesta getDTPropuesta(String titulo){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        Propuesta p = mp.buscarPropuesta(titulo);
+        DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), p.getCategoria().getNombreCompleto());
+        return dtp;
+    }
+    
+    @Override
+    public ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        ArrayList<String> retorno = new ArrayList<>();
+        
+        for (Propuesta p : mp.getPropuestas().values()) {
+            if (p.getEstadoActual().getEstado() == estado)
+                retorno.add(p.getTitulo());
+        }
+        
+        return retorno;
+    }
      
 }
