@@ -5,6 +5,7 @@
 package com.culturarte.logica.datatypes;
 
 import com.culturarte.logica.clases.Categoria;
+import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Estado;
 import com.culturarte.logica.enums.TipoEstado;
 import java.io.File;
@@ -26,12 +27,12 @@ public class DTPropuesta {
     private File imagen;
     private ArrayList<String> colaboradores;
     private TipoEstado estadoActual;
-    private Categoria categoria;
+    private String categoria;
     private String nickProponente;
     
     public DTPropuesta(){}
     
-    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, File imagen, ArrayList<String> colaboradores, TipoEstado estadoActual, Categoria categoria){
+    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, File imagen, ArrayList<String> colaboradores, String nickProponente, TipoEstado estadoActual, String categoria){
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.lugar = lugar;
@@ -42,6 +43,7 @@ public class DTPropuesta {
         this.colaboradores = colaboradores;
         this.estadoActual = estadoActual;
         this.categoria = categoria;
+        this.nickProponente = nickProponente;
     }
     
     public DTPropuesta(String titulo, TipoEstado estado, ArrayList<String> colaboradores, float montoRecaudado, float montoNecesario) {
@@ -109,8 +111,11 @@ public class DTPropuesta {
         return estadoActual;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
+    }
+    public String getProponente(){
+     return nickProponente;
     }
     
     public void addColaborador(String nom) {
@@ -132,4 +137,13 @@ public class DTPropuesta {
         // TODO Falta el monto Recaurdado
         return sb.toString();
     }
+    public ArrayList<String> getNomColaboradores(){
+    ArrayList<String> retorno = new ArrayList<>();
+        for (String nomCol : this.colaboradores) {
+            retorno.add(nomCol);
+        }
+        retorno.sort(String.CASE_INSENSITIVE_ORDER);
+        return retorno;
+    }
+
 }

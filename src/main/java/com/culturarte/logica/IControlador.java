@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.logica.datatypes.DTColaborador;
 import com.culturarte.logica.datatypes.DTPropuesta;
-import com.culturarte.logica.enums.TipoRetorno;
+import com.culturarte.logica.enums.*;
 import java.time.LocalDate;
 import java.io.File;
 import java.util.EnumSet;
@@ -31,7 +31,12 @@ public interface IControlador {
     public abstract DefaultTreeModel listarCategorias();
     public abstract void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, String proponente, String categoria) throws PropuestaYaExiste;
     public abstract ArrayList<String> getNickColaboradores();
+    public abstract ArrayList<String> getNomColaboradores();
     public abstract DTColaborador getDTColaborador(String nickname);
-    public abstract ArrayList<String> getTitulosPropuestas();
     public abstract ArrayList<DTPropuesta> getDTPropuestas();
+    public abstract ArrayList<String> getTituloPropuestas(); // cu6 y cu7
+    public abstract DTPropuesta getDTPropuesta(String titulo); // cu6 y cu7
+    public abstract ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado); // cu6 y cu7
+    public abstract void altaColaboracion(String tituloPropuesta, String nickColaborador, TipoRetorno tipoRetorno, float monto); // cu9
+
 }

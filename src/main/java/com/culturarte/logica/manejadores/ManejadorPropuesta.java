@@ -32,7 +32,7 @@ public class ManejadorPropuesta {
         return ((Propuesta) propuestasTitulo.get(titulo));
     }
     
-       public HashMap<String, Propuesta> getPropuestas() {
+    public HashMap<String, Propuesta> getPropuestas() {
         return propuestasTitulo;
     }
 }
