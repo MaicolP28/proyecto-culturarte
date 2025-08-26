@@ -4,9 +4,7 @@ import com.culturarte.exepciones.CategoriaYaExiste;
 import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.logica.clases.*;
-import com.culturarte.logica.datatypes.DTColaborador;
-import com.culturarte.logica.datatypes.DTProponente;
-import com.culturarte.logica.datatypes.DTPropuesta;
+import com.culturarte.logica.datatypes.*;
 import com.culturarte.logica.enums.TipoRetorno;
 import com.culturarte.logica.manejadores.*;
 import java.io.File;
@@ -191,12 +189,30 @@ public class Controlador implements IControlador{
     }
 
     @Override
-    public ArrayList<String> getTituloPropuestas() {
+    public ArrayList<String> getTitulosPropuestas(){
+        //Retorna todos los titulos de todas las propuestas
+       ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+       ArrayList<String> retorno = new ArrayList<>();
+       for(String titulo : mp.getPropuestas().keySet()){
+           retorno.add(titulo);
+       }
+       retorno.sort(String.CASE_INSENSITIVE_ORDER);
+       return retorno;
+    }
+    
+    @Override
+    public ArrayList<DTPropuesta> getDTPropuestas(){
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
-        ArrayList<String> retorno = new ArrayList<>();
-        
-        for (Propuesta p : mp.getPropuestas().values()) {
-            retorno.add(p.getTitulo());
+        ArrayList<DTPropuesta> retorno = new ArrayList<>();
+        for(Propuesta p : mp.getPropuestas().values()){
+            DTPropuesta dtp = new DTPropuesta( p.getTitulo(),
+                    p.getDescripcion(),
+                    p.getLugar(),
+                    p.getFechaPrevista(),
+                    p.getPrecioEntrada(),
+                    p.getMontoNecesario()
+            );
+            retorno.add(dtp);
         }
         return retorno;
     }

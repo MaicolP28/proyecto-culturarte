@@ -5,6 +5,25 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.logica.clases.Propuesta;
+import com.culturarte.logica.datatypes.DTPropuesta;
+import com.culturarte.logica.manejadores.ManejadorPropuesta;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +39,8 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     public ModificarPropuesta(IControlador IC) {
         initComponents();
         controlador = IC;
+        //Cargo combobox
+        cargarComboBox();
     }
 
     /**
@@ -31,27 +52,215 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        comboPropuestas = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaDatosPropuesta = new javax.swing.JTable();
+        imagenPropuesta = new javax.swing.JLabel();
+        jButtonModificar = new javax.swing.JButton();
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Modificar Propuesta");
 
+        comboPropuestas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboPropuestas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPropuestasActionPerformed(evt);
+            }
+        });
+
+        tablaDatosPropuesta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaDatosPropuesta.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaDatosPropuesta);
+
+        jButtonModificar.setText("Modificar");
+        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(imagenPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(imagenPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonModificar)
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void comboPropuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPropuestasActionPerformed
+        mostrarDatosPropuesta();
+    }//GEN-LAST:event_comboPropuestasActionPerformed
+
+    private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
+        String propuestaSeleccionada = (String) comboPropuestas.getSelectedItem();
+        if(propuestaSeleccionada == null){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una propuesta primero");
+            return;
+        }
+        
+        Propuesta p = ManejadorPropuesta.getInstancia().getPropuesta(propuestaSeleccionada);
+        
+        JDialog dialog = new JDialog((Frame) null, "Modificar Datos", true);
+        JLabel lbl1 = new JLabel("Campo a modificar");
+        String [] campos = {"Titulo", "Descripcion", "Lugar", "Fecha Prevista", "Precio Entrada", "Monto Necesario"}; 
+        JComboBox<String> comboCampos = new JComboBox<>(campos);
+        
+        JLabel lbl2 = new JLabel("Valores a modificar");
+        JTextField txt = new JTextField(15);
+        
+        JButton btnAceptar = new JButton("Aceptar");
+        btnAceptar.addActionListener(e-> {
+        String campoSeleccionado = (String) comboCampos.getSelectedItem();
+        String cambio = txt.getText().trim();
+        if(cambio.isEmpty()){
+            JOptionPane.showMessageDialog(dialog, "Debe ingresar un valor");
+            return;
+        }
+        try{
+        switch(campoSeleccionado){
+            case "Titulo":
+                p.setTitulo(cambio);
+                break;
+            case "Descripcion":
+                p.setDescripcion(cambio);
+                break;
+            case "Lugar":
+                p.setLugar(cambio);
+                break;
+            case "Fecha Prevista":
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+                LocalDate fecha = LocalDate.parse(cambio, formatter);
+                p.setFechaPrevista(fecha);
+                break;
+            case "Precio Entrada":
+                float precio = Float.parseFloat(cambio);
+                p.setPrecioEntrada(precio);
+                break;
+            case "Monto Necesario":
+                float monto = Float.parseFloat(cambio);
+                p.setMontoNecesario(monto);
+                break;
+            }
+        JOptionPane.showMessageDialog(dialog, "Cambio realizado con exito");
+        dialog.dispose();
+        }catch(NumberFormatException exNum){
+            JOptionPane.showMessageDialog(dialog, "Debe ingresar un numero valido");
+        }catch(DateTimeParseException exFecha){
+            JOptionPane.showMessageDialog(dialog, "Debe ingresar una fecha valida, formato(dd/mm/yyyy)");
+            }
+        });
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3,2,10,10));
+        panel.add(lbl1);
+        panel.add(comboCampos);
+         panel.add(lbl2);
+    panel.add(txt);
+    panel.add(new JLabel());
+    panel.add(btnAceptar);
+
+    dialog.add(panel);
+    dialog.pack();
+    dialog.setLocationRelativeTo(this);
+    dialog.setVisible(true);
+        
+        
+    }//GEN-LAST:event_jButtonModificarActionPerformed
+
+    private void cargarComboBox(){
+        ArrayList<String> tituloPropuestas = controlador.getTitulosPropuestas();
+        this.comboPropuestas.removeAllItems();
+        for (String t : tituloPropuestas) {
+            this.comboPropuestas.addItem(t);//Agrego solo el titulo
+        }
+    }
+    
+    private void mostrarDatosPropuesta(){
+        String[] columnas = {"Titulo", "Descripcion", "Lugar", "Fecha Prevista", "Precio Entrada", "Monto Necesario"};
+        DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
+        for(DTPropuesta dtp : controlador.getDTPropuestas()){
+            Object [] filas = {
+                dtp.getTitulo(),
+                dtp.getDescripcion(),
+                dtp.getLugar(),
+                dtp.getFechaPrevista(),
+                dtp.getPrecioEntrada(),
+                dtp.getMontoNecesario()
+            };
+            dtm.addRow(filas);
+            if(dtp.getImagen() != null){
+                ImageIcon foto = new ImageIcon(dtp.getImagen().getAbsolutePath());
+                Image img = foto.getImage().getScaledInstance(imagenPropuesta.getWidth(), imagenPropuesta.getHeight(), Image.SCALE_SMOOTH);
+                imagenPropuesta.setIcon(new ImageIcon(img));
+            }else
+                imagenPropuesta.setIcon(null);
+        }
+        tablaDatosPropuesta.setModel(dtm);
+        
+    }
+    
+    private void datosPropuesta(){
+      
+    }
+    
+    private void cambiarDatos(){
+        ArrayList<String> dato; 
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboPropuestas;
+    private javax.swing.JLabel imagenPropuesta;
+    private javax.swing.JButton jButtonModificar;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tablaDatosPropuesta;
     // End of variables declaration//GEN-END:variables
 }
