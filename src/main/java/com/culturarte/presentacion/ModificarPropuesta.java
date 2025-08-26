@@ -216,7 +216,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void cargarComboBox(){
-        ArrayList<String> tituloPropuestas = controlador.getTitulosPropuestas();
+        ArrayList<String> tituloPropuestas = controlador.getTituloPropuestas();
         this.comboPropuestas.removeAllItems();
         for (String t : tituloPropuestas) {
             this.comboPropuestas.addItem(t);//Agrego solo el titulo

@@ -5,7 +5,7 @@ import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.logica.clases.*;
 import com.culturarte.logica.datatypes.*;
-import com.culturarte.logica.enums.TipoRetorno;
+import com.culturarte.logica.enums.*;
 import com.culturarte.logica.manejadores.*;
 import java.io.File;
 import java.time.LocalDate;
@@ -189,7 +189,7 @@ public class Controlador implements IControlador{
     }
 
     @Override
-    public ArrayList<String> getTitulosPropuestas(){
+    public ArrayList<String> getTituloPropuestas(){
         //Retorna todos los titulos de todas las propuestas
        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
        ArrayList<String> retorno = new ArrayList<>();
