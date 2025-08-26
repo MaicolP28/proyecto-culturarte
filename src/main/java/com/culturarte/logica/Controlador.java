@@ -3,6 +3,8 @@ package com.culturarte.logica;
 import com.culturarte.exepciones.CategoriaYaExiste;
 import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.exepciones.PropuestaYaExiste;
+import com.culturarte.exepciones.UsuarioNoSeguido;
+import com.culturarte.exepciones.UsuarioYaSeguido;
 import com.culturarte.logica.clases.*;
 import com.culturarte.logica.datatypes.*;
 import com.culturarte.logica.enums.*;
@@ -166,7 +168,6 @@ public class Controlador implements IControlador{
         }
         return nodo;
     }
-    
 
     @Override
     public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, String proponente, String categoria)
@@ -247,6 +248,21 @@ public class Controlador implements IControlador{
         Colaboracion colab = new Colaboracion(monto, LocalDate.now(), tipoRetorno, p, c);
         c.addColaboracion(colab);
         p.addColaboracion(colab);
+    }
+    
+    @Override 
+    public  ArrayList<String> getNickUsuarios() {
+        return null;
+    }
+    
+    @Override 
+    public  void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido {
+        
+    }
+    
+    @Override 
+    public  void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido {
+        
     }
      
 }

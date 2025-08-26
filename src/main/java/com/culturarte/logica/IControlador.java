@@ -4,11 +4,11 @@
  */
 package com.culturarte.logica;
 
-import com.culturarte.exepciones.CategoriaYaExiste;
-import com.culturarte.exepciones.UsuarioYaExiste;
+import com.culturarte.exepciones.*;
 import com.culturarte.logica.datatypes.DTProponente;
 import java.util.ArrayList;
 import com.culturarte.exepciones.PropuestaYaExiste;
+import com.culturarte.exepciones.UsuarioYaSeguido;
 import com.culturarte.logica.datatypes.DTColaborador;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.*;
@@ -38,5 +38,7 @@ public interface IControlador {
     public abstract DTPropuesta getDTPropuesta(String titulo); // cu6 y cu7
     public abstract ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado); // cu6 y cu7
     public abstract void altaColaboracion(String tituloPropuesta, String nickColaborador, TipoRetorno tipoRetorno, float monto); // cu9
-
+    public abstract ArrayList<String> getNickUsuarios(); // cu12 y cu13
+    public abstract void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido; // cu12
+    public abstract void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido; //cu13
 }
