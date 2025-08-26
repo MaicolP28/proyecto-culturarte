@@ -105,6 +105,9 @@ public class DTPropuesta {
     public String getCategoria() {
         return categoria;
     }
+    public String getProponente(){
+     return nickProponente;
+    }
     
     public void addColaborador(String nom) {
         
