@@ -5,8 +5,24 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.datatypes.DTPropuesta;
+import com.culturarte.logica.manejadores.ManejadorPropuesta;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -125,6 +141,77 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_comboPropuestasActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
+        String propuestaSeleccionada = (String) comboPropuestas.getSelectedItem();
+        if(propuestaSeleccionada == null){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una propuesta primero");
+            return;
+        }
+        
+        Propuesta p = ManejadorPropuesta.getInstancia().getPropuesta(propuestaSeleccionada);
+        
+        JDialog dialog = new JDialog((Frame) null, "Modificar Datos", true);
+        JLabel lbl1 = new JLabel("Campo a modificar");
+        String [] campos = {"Titulo", "Descripcion", "Lugar", "Fecha Prevista", "Precio Entrada", "Monto Necesario"}; 
+        JComboBox<String> comboCampos = new JComboBox<>(campos);
+        
+        JLabel lbl2 = new JLabel("Valores a modificar");
+        JTextField txt = new JTextField(15);
+        
+        JButton btnAceptar = new JButton("Aceptar");
+        btnAceptar.addActionListener(e-> {
+        String campoSeleccionado = (String) comboCampos.getSelectedItem();
+        String cambio = txt.getText().trim();
+        if(cambio.isEmpty()){
+            JOptionPane.showMessageDialog(dialog, "Debe ingresar un valor");
+            return;
+        }
+        try{
+        switch(campoSeleccionado){
+            case "Titulo":
+                p.setTitulo(cambio);
+                break;
+            case "Descripcion":
+                p.setDescripcion(cambio);
+                break;
+            case "Lugar":
+                p.setLugar(cambio);
+                break;
+            case "Fecha Prevista":
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+                LocalDate fecha = LocalDate.parse(cambio, formatter);
+                p.setFechaPrevista(fecha);
+                break;
+            case "Precio Entrada":
+                float precio = Float.parseFloat(cambio);
+                p.setPrecioEntrada(precio);
+                break;
+            case "Monto Necesario":
+                float monto = Float.parseFloat(cambio);
+                p.setMontoNecesario(monto);
+                break;
+            }
+        JOptionPane.showMessageDialog(dialog, "Cambio realizado con exito");
+        dialog.dispose();
+        }catch(NumberFormatException exNum){
+            JOptionPane.showMessageDialog(dialog, "Debe ingresar un numero valido");
+        }catch(DateTimeParseException exFecha){
+            JOptionPane.showMessageDialog(dialog, "Debe ingresar una fecha valida, formato(dd/mm/yyyy)");
+            }
+        });
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3,2,10,10));
+        panel.add(lbl1);
+        panel.add(comboCampos);
+         panel.add(lbl2);
+    panel.add(txt);
+    panel.add(new JLabel());
+    panel.add(btnAceptar);
+
+    dialog.add(panel);
+    dialog.pack();
+    dialog.setLocationRelativeTo(this);
+    dialog.setVisible(true);
+        
         
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
@@ -149,10 +236,23 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                 dtp.getMontoNecesario()
             };
             dtm.addRow(filas);
+            if(dtp.getImagen() != null){
+                ImageIcon foto = new ImageIcon(dtp.getImagen().getAbsolutePath());
+                Image img = foto.getImage().getScaledInstance(imagenPropuesta.getWidth(), imagenPropuesta.getHeight(), Image.SCALE_SMOOTH);
+                imagenPropuesta.setIcon(new ImageIcon(img));
+            }else
+                imagenPropuesta.setIcon(null);
         }
         tablaDatosPropuesta.setModel(dtm);
-        //Falta la imagen
         
+    }
+    
+    private void datosPropuesta(){
+      
+    }
+    
+    private void cambiarDatos(){
+        ArrayList<String> dato; 
     }
     
 

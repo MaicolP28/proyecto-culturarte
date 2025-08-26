@@ -182,8 +182,11 @@ public class Controlador implements IControlador{
     public ArrayList<String> getTitulosPropuestas(){
         //Retorna todos los titulos de todas las propuestas
        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
-       ArrayList<String> retorno = new ArrayList<>(mp.getTitulos());
-       retorno.sort(String.CASE_INSENSITIVE_ORDER);//Ordena lista
+       ArrayList<String> retorno = new ArrayList<>();
+       for(String titulo : mp.getPropuestas().keySet()){
+           retorno.add(titulo);
+       }
+       retorno.sort(String.CASE_INSENSITIVE_ORDER);
        return retorno;
     }
     
@@ -191,7 +194,7 @@ public class Controlador implements IControlador{
     public ArrayList<DTPropuesta> getDTPropuestas(){
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         ArrayList<DTPropuesta> retorno = new ArrayList<>();
-        for(Propuesta p : mp.getPropuestas()){
+        for(Propuesta p : mp.getPropuestas().values()){
             DTPropuesta dtp = new DTPropuesta( p.getTitulo(),
                     p.getDescripcion(),
                     p.getLugar(),

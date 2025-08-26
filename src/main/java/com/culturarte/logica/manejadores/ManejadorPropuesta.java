@@ -32,12 +32,7 @@ public class ManejadorPropuesta {
         return ((Propuesta) propuestasTitulo.get(titulo));
     }
     
-    public ArrayList<String> getTitulos(){
-        //Retorna el titulo de todas las propuestas
-        return new ArrayList<>(propuestasTitulo.keySet());
-    }
-    
-    public ArrayList<Propuesta> getPropuestas(){
-        return new ArrayList<>(propuestasTitulo.values());
+       public HashMap<String, Propuesta> getPropuestas() {
+        return propuestasTitulo;
     }
 }
