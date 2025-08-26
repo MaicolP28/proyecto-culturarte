@@ -40,6 +40,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDatosPropuesta = new javax.swing.JTable();
         imagenPropuesta = new javax.swing.JLabel();
+        jButtonModificar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -76,6 +77,13 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         tablaDatosPropuesta.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaDatosPropuesta);
 
+        jButtonModificar.setText("Modificar");
+        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,12 +92,15 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(imagenPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -101,7 +112,9 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(imagenPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonModificar)
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         pack();
@@ -110,6 +123,10 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     private void comboPropuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPropuestasActionPerformed
         mostrarDatosPropuesta();
     }//GEN-LAST:event_comboPropuestasActionPerformed
+
+    private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
+        
+    }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void cargarComboBox(){
         ArrayList<String> tituloPropuestas = controlador.getTitulosPropuestas();
@@ -142,6 +159,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboPropuestas;
     private javax.swing.JLabel imagenPropuesta;
+    private javax.swing.JButton jButtonModificar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaDatosPropuesta;
     // End of variables declaration//GEN-END:variables
