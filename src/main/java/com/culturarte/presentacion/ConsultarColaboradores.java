@@ -6,6 +6,8 @@ package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
 import com.culturarte.logica.datatypes.DTColaborador;
+import com.culturarte.logica.datatypes.DTPropuesta;
+import com.culturarte.logica.enums.TipoEstado;
 import java.awt.Image;
 import java.io.File;
 import java.util.ArrayList;
@@ -21,14 +23,14 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
     private DefaultTableModel tabla;
-    
+    private DefaultTableModel tabla2;
         
     public ConsultarColaboradores(IControlador IC) {
         initComponents();
         controlador = IC;
         cargarComboBox();
         tabla=(DefaultTableModel)jTable1.getModel();
-
+        tabla2=(DefaultTableModel)jTable1.getModel();
     }
     
     @SuppressWarnings("unchecked")
@@ -40,9 +42,9 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
         listaColaboradores = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaPropuestas = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -91,14 +93,28 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        listaPropuestas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listaPropuestas);
-
         jLabel1.setText("jLabel1");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Proponente", "Propuesta", "Dinero recaudado", "Estado actual"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,7 +131,9 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
                         .addComponent(listaColaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCargar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -129,9 +147,9 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(221, 221, 221)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -149,22 +167,41 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
     
     private void mostrarInfoColaborador(String nickname){
         DTColaborador c = controlador.getDTColaborador(nickname); // Acá ya tenemos toda la info para mostrar ...
+        ArrayList<DTPropuesta> propuesta=c.getPropuestas();
+        ArrayList<String> proponente = new ArrayList<>();
+        ArrayList<Float> recaudacion= new ArrayList<>();
+        ArrayList<TipoEstado> estadoActual = new ArrayList<>();
+       
+        for(DTPropuesta p:propuesta){
+            proponente.add(p.getProponente());
+            recaudacion.add(p.getMontoRecaudado());
+            estadoActual.add(p.getEstadoActual());
+        }
+        
         tabla.setRowCount(0);
-        Object[] fila = {
+        Object[] cuadro = {
         c.getNombre().trim(),
         c.getApellido().trim()};
-        tabla.addRow(fila);
+        tabla.addRow(cuadro);
         File imagenFile = c.getImagen();
         
         if (imagenFile != null && imagenFile.exists()) {
-        ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
+            ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
            //escala la imagen al tamaño del JLabel
-        Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_SMOOTH);
-        jLabel1.setIcon(new ImageIcon(imagenEscalada));
-    }   
-    else {
-        jLabel1.setIcon(null); // limpia si no hay imagen
+            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_SMOOTH);
+            jLabel1.setIcon(new ImageIcon(imagenEscalada));
+        }   
+        else {
+            jLabel1.setIcon(null); // limpia si no hay imagen
         }
+        
+        tabla2.setRowCount(0);
+        Object[] cuadro2 = {
+        c.getPropuestas().iterator(),
+        proponente.iterator(),
+        recaudacion.iterator(),
+        estadoActual.iterator()
+       };     
     }
         
     
@@ -189,7 +226,7 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JComboBox<String> listaColaboradores;
-    private javax.swing.JList<String> listaPropuestas;
     // End of variables declaration//GEN-END:variables
 }
