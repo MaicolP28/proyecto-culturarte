@@ -8,7 +8,11 @@ import com.culturarte.logica.IControlador;
 import com.culturarte.logica.datatypes.DTProponente;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoEstado;
+import java.awt.Image;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,11 +22,25 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
     
+    
     public ConsultarProponente(IControlador controlador) {
         initComponents(); 
         this.controlador = controlador;
-        cargarComboBox();
-}
+        
+        //ComboBox de Proponentes
+        cargarComboBox(); 
+        
+        
+        jTable1.setTableHeader(null);
+        
+        //ComboBox de Propuestas por TipoEstado 
+        comboEstadoProp.removeAllItems();
+        for (TipoEstado e : TipoEstado.values()) {
+            comboEstadoProp.addItem(e.toString());
+        }
+        
+       
+    }
        
 
     
@@ -39,12 +57,12 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
 
         ListaProponentes = new javax.swing.JComboBox<>();
         btnCargar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaPropuestas = new javax.swing.JList<>();
         comboEstadoProp = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -72,21 +90,11 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
             }
         });
 
-        listaPropuestas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listaPropuestas);
-
-        comboEstadoProp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboEstadoProp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboEstadoPropActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("jLabel1");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,6 +112,27 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(jTable1);
 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Titulo", "Colaboradores", "Monto Recaudado", "Monto Necesario"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,17 +140,20 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ListaProponentes, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCargar))
-                    .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ListaProponentes, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCargar))
+                            .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 1, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,18 +162,15 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ListaProponentes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargar, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGap(98, 98, 98)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
                 .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4))
         );
 
         pack();
@@ -162,16 +191,68 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void comboEstadoPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEstadoPropActionPerformed
-        // TODO add your handling code here:
+        String proponente = (String) ListaProponentes.getSelectedItem();
+        if(proponente != null){
+            DTProponente p = controlador.getDTProponente(proponente);
+            mostrarPropuestas(p);
+        }
     }//GEN-LAST:event_comboEstadoPropActionPerformed
-
+        
+    private void mostrarPropuestas(DTProponente proponente){
+        String estado = (String) comboEstadoProp.getSelectedItem();
+        TipoEstado estadoElegido = TipoEstado.valueOf(estado);
+        DefaultTableModel dtm = new DefaultTableModel();
+        
+        
+        for (DTPropuesta p : proponente.getPropuestas()){
+            if(p.getEstadoActual() == estadoElegido){
+                ArrayList<String> nomColaboradores = p.getNomColaboradores();
+                String colaboradores = nomColaboradores.isEmpty() ? "Sin Colaboradores" : String.join(", ", nomColaboradores);
+                Object [] filas = {
+                    p.getTitulo(),
+                    colaboradores,
+                    p.getMontoRecaudado(),
+                    p.getMontoNecesario()
+                };
+                 dtm.addRow(filas);
+            }
+            
+        }
+        jTable2.setModel(dtm);
+    }
+    
     private void mostrarInfoProponente(String nickname){
         
         DTProponente p = controlador.getDTProponente(nickname); // Acá ya tenemos toda la info para mostrar ...
         
-        // TODO : Añadir info al gui
+        // TODO : Añadir info al gui 
+        Object[][] data = { 
+            {"Nickname", p.getNickname()}, 
+            {"Nombre", p.getNombre()}, 
+            {"Apellido", p.getApellido()}, 
+            {"Fecha nacimiento", p.getFechaNacimiento()}, 
+            {"Correo electronico", p.getEmail()},
+            {"Link Web", p.getLinkWeb()}
+        }; 
+        
+        DefaultTableModel dtm = new DefaultTableModel(data, new String[]{"", ""}); 
+        jTable1.setDefaultEditor(Object.class, null); 
+        jTable1.setModel(dtm);
+        
+        if(p.getImagen() != null){
+            ImageIcon foto = new ImageIcon(p.getImagen().getAbsolutePath());
+        
+        Image img = foto.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+        jLabel1.setIcon(new ImageIcon(img));
+        }else{
+            //Ver de poner una imagen por defecto
+            jLabel1.setIcon(null);
+        }
+        
         
     }
+    
+    
     
     private void cargarComboBox() {
         ArrayList<String> nomProponentes = controlador.getNomProponentes();
@@ -191,6 +272,6 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JList<String> listaPropuestas;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

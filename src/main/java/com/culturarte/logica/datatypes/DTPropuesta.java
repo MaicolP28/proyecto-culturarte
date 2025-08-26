@@ -5,6 +5,7 @@
 package com.culturarte.logica.datatypes;
 
 import com.culturarte.logica.clases.Categoria;
+import com.culturarte.logica.clases.Colaborador;
 import com.culturarte.logica.clases.Estado;
 import com.culturarte.logica.enums.TipoEstado;
 import java.io.File;
@@ -124,4 +125,13 @@ public class DTPropuesta {
         // TODO Falta el monto Recaurdado
         return sb.toString();
     }
+    public ArrayList<String> getNomColaboradores(){
+    ArrayList<String> retorno = new ArrayList<>();
+        for (String nomCol : this.colaboradores) {
+            retorno.add(nomCol);
+        }
+        retorno.sort(String.CASE_INSENSITIVE_ORDER);
+        return retorno;
+    }
+
 }

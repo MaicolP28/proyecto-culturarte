@@ -7,14 +7,11 @@ import com.culturarte.logica.clases.*;
 import com.culturarte.logica.datatypes.DTColaborador;
 import com.culturarte.logica.datatypes.DTProponente;
 import com.culturarte.logica.datatypes.DTPropuesta;
-import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.enums.TipoRetorno;
 import com.culturarte.logica.manejadores.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.EnumSet;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -81,6 +78,21 @@ public class Controlador implements IControlador{
         return retorno;        
     }
     
+
+
+    @Override
+    public ArrayList<String> getNomColaboradores(){
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ArrayList<String> retorno = new ArrayList<>();
+        for (Usuario usu : mu.getUsuariosNick().values()) {
+            if(usu instanceof Colaborador){
+                retorno.add(usu.getNombre());
+            }
+        }
+        retorno.sort(String.CASE_INSENSITIVE_ORDER);
+        return retorno;
+    }
+
     @Override
     public DTColaborador getDTColaborador(String nickname) {
         
@@ -97,7 +109,7 @@ public class Controlador implements IControlador{
        
         return dtc;
     }
-    
+
     
     @Override
     public DTProponente getDTProponente(String nickname){
