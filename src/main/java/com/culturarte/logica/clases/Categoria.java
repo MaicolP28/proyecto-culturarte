@@ -19,7 +19,7 @@ public class Categoria {
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -40,5 +40,13 @@ public class Categoria {
 
     public void addSubCategoria(Categoria subCategoria) {
         this.subCategorias.add(subCategoria);
+    }
+    
+    public String getNombreCompleto() {
+        if (this.padre != null ) {
+            return this.padre.getNombre() + ", " + this.nombre;
+        } else {
+            return nombre;
+        }
     }
 }

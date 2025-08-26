@@ -27,11 +27,12 @@ public class DTPropuesta {
     private File imagen;
     private ArrayList<String> colaboradores;
     private TipoEstado estadoActual;
-    private Categoria categoria;
+    private String categoria;
+    private String nickProponente;
     
     public DTPropuesta(){}
     
-    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, File imagen, ArrayList<String> colaboradores, TipoEstado estadoActual, Categoria categoria){
+    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, File imagen, ArrayList<String> colaboradores, String nickProponente, TipoEstado estadoActual, String categoria){
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.lugar = lugar;
@@ -42,12 +43,21 @@ public class DTPropuesta {
         this.colaboradores = colaboradores;
         this.estadoActual = estadoActual;
         this.categoria = categoria;
+        this.nickProponente = nickProponente;
     }
     
     public DTPropuesta(String titulo, TipoEstado estado, ArrayList<String> colaboradores, float montoRecaudado, float montoNecesario) {
         this.titulo = titulo;
         this.estadoActual = estado;
         this.colaboradores = colaboradores;
+        this.montoRecaudado = montoRecaudado;
+        this.montoNecesario = montoNecesario;
+    }
+    
+    public DTPropuesta(String titulo, TipoEstado estado, String nickProponente, float montoRecaudado, float montoNecesario) {
+        this.titulo = titulo;
+        this.estadoActual = estado;
+        this.nickProponente = nickProponente;
         this.montoRecaudado = montoRecaudado;
         this.montoNecesario = montoNecesario;
     }
@@ -92,7 +102,7 @@ public class DTPropuesta {
         return estadoActual;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
     

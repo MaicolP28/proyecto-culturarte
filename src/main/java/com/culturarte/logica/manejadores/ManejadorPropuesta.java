@@ -30,4 +30,8 @@ public class ManejadorPropuesta {
     public Propuesta buscarPropuesta(String titulo) {
         return ((Propuesta) propuestasTitulo.get(titulo));
     }
+    
+    public HashMap<String, Propuesta> getPropuestas() {
+        return propuestasTitulo;
+    }
 }

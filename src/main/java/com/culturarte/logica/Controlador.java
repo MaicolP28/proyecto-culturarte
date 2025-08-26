@@ -4,6 +4,7 @@ import com.culturarte.exepciones.CategoriaYaExiste;
 import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.logica.clases.*;
+import com.culturarte.logica.datatypes.DTColaborador;
 import com.culturarte.logica.datatypes.DTProponente;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoRetorno;
@@ -45,6 +46,22 @@ public class Controlador implements IControlador{
         }
         mu.agregarUsuario(new Proponente(nickname, nombre, apellido, email, fechaNacimiento, imagen, direccion, linkWeb, bibliografia));
     }
+    
+        
+    @Override
+    public ArrayList<String> getNickColaboradores(){
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ArrayList<String> retorno = new ArrayList<>();
+        
+        for (Usuario usu : mu.getUsuariosNick().values()) {
+            if (usu instanceof Colaborador) {
+                retorno.add(usu.getNickname());
+            }
+        }
+        
+        retorno.sort(String.CASE_INSENSITIVE_ORDER); // Ordena la lista
+        return retorno;   
+    }
      
     @Override
     public ArrayList<String> getNomProponentes(){
@@ -62,6 +79,7 @@ public class Controlador implements IControlador{
     }
     
 
+
     @Override
     public ArrayList<String> getNomColaboradores(){
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
@@ -74,6 +92,24 @@ public class Controlador implements IControlador{
         retorno.sort(String.CASE_INSENSITIVE_ORDER);
         return retorno;
     }
+
+    @Override
+    public DTColaborador getDTColaborador(String nickname) {
+        
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+       
+        Colaborador c =(Colaborador) mu.buscarUsuario(nickname);
+       
+        DTColaborador dtc = new DTColaborador(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNacimiento(), c.getImagen());
+        
+        for (Propuesta prop : c.getPropuestas()) {
+            dtc.addPropuesta(new DTPropuesta(prop.getTitulo(), prop.getEstadoActual().getEstado() , prop.getProponenteNick(), prop.getMontoRecaudado(), prop.getMontoNecesario()));
+        }
+       
+        return dtc;
+    }
+
     
     @Override
     public DTProponente getDTProponente(String nickname){
@@ -152,6 +188,49 @@ public class Controlador implements IControlador{
         Propuesta p = new Propuesta(titulo,descripcion,lugar,fechaPrevista, precioEntrada, montoNecesario, tipoRetornos, imagen, u,c);
         mp.agregarPropuesta(p);
         u.addPropuestas(p);
+    }
+
+    @Override
+    public ArrayList<String> getTituloPropuestas() {
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        ArrayList<String> retorno = new ArrayList<>();
+        
+        for (Propuesta p : mp.getPropuestas().values()) {
+            retorno.add(p.getTitulo());
+        }
+        return retorno;
+    }
+    
+    @Override
+    public DTPropuesta getDTPropuesta(String titulo){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        Propuesta p = mp.buscarPropuesta(titulo);
+        DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), p.getCategoria().getNombreCompleto());
+        return dtp;
+    }
+    
+    @Override
+    public ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        ArrayList<String> retorno = new ArrayList<>();
+        
+        for (Propuesta p : mp.getPropuestas().values()) {
+            if (p.getEstadoActual().getEstado() == estado)
+                retorno.add(p.getTitulo());
+        }
+        
+        return retorno;
+    }
+    
+    @Override 
+    public void altaColaboracion(String tituloPropuesta, String nickColaborador, TipoRetorno tipoRetorno, float monto){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        Propuesta p = mp.buscarPropuesta(tituloPropuesta);
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Colaborador c = (Colaborador) mu.buscarUsuario(nickColaborador);
+        Colaboracion colab = new Colaboracion(monto, LocalDate.now(), tipoRetorno, p, c);
+        c.addColaboracion(colab);
+        p.addColaboracion(colab);
     }
      
 }

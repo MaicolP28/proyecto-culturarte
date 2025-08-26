@@ -5,6 +5,8 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.logica.datatypes.DTColaborador;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,6 +22,7 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
     public ConsultarColaboradores(IControlador IC) {
         initComponents();
         controlador = IC;
+        cargarComboBox();
     }
 
     /**
@@ -31,6 +34,10 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCargar = new javax.swing.JButton();
+        listaColaboradores = new javax.swing.JComboBox<>();
+        nick = new javax.swing.JLabel();
+
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
@@ -38,22 +45,93 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Consultar colaborador");
         setVisible(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
+        btnCargar.setText("Cargar");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
+
+        listaColaboradores.setName("comboProponentes"); // NOI18N
+        listaColaboradores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaColaboradoresActionPerformed(evt);
+            }
+        });
+
+        nick.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(listaColaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCargar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(nick)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(listaColaboradores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCargar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(95, 95, 95)
+                .addComponent(nick)
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        cargarComboBox();
+    }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void listaColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaColaboradoresActionPerformed
+        String proponenteSeleccionado = (String) listaColaboradores.getSelectedItem();
+        if(proponenteSeleccionado != null)
+        mostrarInfoProponente(proponenteSeleccionado);
+    }//GEN-LAST:event_listaColaboradoresActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        cargarComboBox();
+    }//GEN-LAST:event_formComponentShown
+
+    private void mostrarInfoProponente(String nickname){
+        DTColaborador c = controlador.getDTColaborador(nickname); // Acá ya tenemos toda la info para mostrar ...
+        
+        this.nick.setText(c.getNickname());
+        
+    }
+    
+    private void cargarComboBox() {
+        ArrayList<String> nomColaboradores = controlador.getNickColaboradores();
+
+        this.listaColaboradores.removeAllItems(); // limpia cualquier elemento previo
+
+        for (String p : nomColaboradores) {
+            this.listaColaboradores.addItem(p); // agregamos solo el nickname
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JComboBox<String> listaColaboradores;
+    private javax.swing.JLabel nick;
     // End of variables declaration//GEN-END:variables
 }

@@ -124,12 +124,20 @@ public class Propuesta {
         return colaboraciones;
     }
     
+    public void addColaboracion(Colaboracion colab){
+        this.colaboraciones.add(colab);
+    }
+    
     public ArrayList<String> getNicknameColaboradores(){
         ArrayList<String> listaNicks = new ArrayList<>();
         for(Colaboracion c : colaboraciones){
             listaNicks.add(c.getColaboradorNick());
         }
         return listaNicks;
+    }
+    
+    public String getProponenteNick() {
+        return proponente.getNickname();
     }
     
     public float getMontoRecaudado() {
