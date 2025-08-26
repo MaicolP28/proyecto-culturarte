@@ -209,5 +209,16 @@ public class Controlador implements IControlador{
         
         return retorno;
     }
+    
+    @Override 
+    public void altaColaboracion(String tituloPropuesta, String nickColaborador, TipoRetorno tipoRetorno, float monto){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        Propuesta p = mp.buscarPropuesta(tituloPropuesta);
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Colaborador c = (Colaborador) mu.buscarUsuario(nickColaborador);
+        Colaboracion colab = new Colaboracion(monto, LocalDate.now(), tipoRetorno, p, c);
+        c.addColaboracion(colab);
+        p.addColaboracion(colab);
+    }
      
 }
