@@ -59,6 +59,15 @@ public class DTPropuesta {
         this.montoRecaudado = montoRecaudado;
         this.montoNecesario = montoNecesario;
     }
+    
+    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario){
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.lugar = lugar;
+        this.fechaPrevista = fechaPrevista;
+        this.precioEntrada = precioEntrada;
+        this.montoNecesario = montoNecesario;
+    }
 
     public String getTitulo() {
         return titulo;

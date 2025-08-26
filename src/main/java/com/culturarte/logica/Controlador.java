@@ -178,12 +178,29 @@ public class Controlador implements IControlador{
         u.addPropuestas(p);
     }
 
-      @Override
+    @Override
     public ArrayList<String> getTitulosPropuestas(){
         //Retorna todos los titulos de todas las propuestas
        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
        ArrayList<String> retorno = new ArrayList<>(mp.getTitulos());
        retorno.sort(String.CASE_INSENSITIVE_ORDER);//Ordena lista
        return retorno;
+    }
+    
+    @Override
+    public ArrayList<DTPropuesta> getDTPropuestas(){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        ArrayList<DTPropuesta> retorno = new ArrayList<>();
+        for(Propuesta p : mp.getPropuestas()){
+            DTPropuesta dtp = new DTPropuesta( p.getTitulo(),
+                    p.getDescripcion(),
+                    p.getLugar(),
+                    p.getFechaPrevista(),
+                    p.getPrecioEntrada(),
+                    p.getMontoNecesario()
+            );
+            retorno.add(dtp);
+        }
+        return retorno;
     }
 }

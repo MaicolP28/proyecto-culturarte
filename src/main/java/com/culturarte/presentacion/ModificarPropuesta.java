@@ -5,7 +5,9 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.logica.datatypes.DTPropuesta;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -35,6 +37,9 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         comboPropuestas = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaDatosPropuesta = new javax.swing.JTable();
+        imagenPropuesta = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -49,21 +54,54 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             }
         });
 
+        tablaDatosPropuesta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaDatosPropuesta.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaDatosPropuesta);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(233, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(imagenPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(imagenPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                .addContainerGap(286, Short.MAX_VALUE))
         );
 
         pack();
@@ -82,11 +120,29 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     }
     
     private void mostrarDatosPropuesta(){
+        String[] columnas = {"Titulo", "Descripcion", "Lugar", "Fecha Prevista", "Precio Entrada", "Monto Necesario"};
+        DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
+        for(DTPropuesta dtp : controlador.getDTPropuestas()){
+            Object [] filas = {
+                dtp.getTitulo(),
+                dtp.getDescripcion(),
+                dtp.getLugar(),
+                dtp.getFechaPrevista(),
+                dtp.getPrecioEntrada(),
+                dtp.getMontoNecesario()
+            };
+            dtm.addRow(filas);
+        }
+        tablaDatosPropuesta.setModel(dtm);
+        //Falta la imagen
         
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboPropuestas;
+    private javax.swing.JLabel imagenPropuesta;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tablaDatosPropuesta;
     // End of variables declaration//GEN-END:variables
 }

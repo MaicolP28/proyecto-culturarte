@@ -36,4 +36,8 @@ public class ManejadorPropuesta {
         //Retorna el titulo de todas las propuestas
         return new ArrayList<>(propuestasTitulo.keySet());
     }
+    
+    public ArrayList<Propuesta> getPropuestas(){
+        return new ArrayList<>(propuestasTitulo.values());
+    }
 }

@@ -10,6 +10,7 @@ import com.culturarte.logica.datatypes.DTProponente;
 import java.util.ArrayList;
 import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.logica.datatypes.DTColaborador;
+import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoRetorno;
 import java.time.LocalDate;
 import java.io.File;
@@ -32,4 +33,5 @@ public interface IControlador {
     public abstract ArrayList<String> getNickColaboradores();
     public abstract DTColaborador getDTColaborador(String nickname);
     public abstract ArrayList<String> getTitulosPropuestas();
+    public abstract ArrayList<DTPropuesta> getDTPropuestas();
 }
