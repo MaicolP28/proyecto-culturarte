@@ -18,7 +18,7 @@ public class Colaborador extends Usuario {
         return colaboraciones;
     }
 
-    public void addColaboraciones(Colaboracion colaboracion) {
+    public void addColaboracion(Colaboracion colaboracion) {
         this.colaboraciones.add(colaboracion);
     }
 

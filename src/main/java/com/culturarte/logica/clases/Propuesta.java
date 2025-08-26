@@ -124,6 +124,10 @@ public class Propuesta {
         return colaboraciones;
     }
     
+    public void addColaboracion(Colaboracion colab){
+        this.colaboraciones.add(colab);
+    }
+    
     public ArrayList<String> getNicknameColaboradores(){
         ArrayList<String> listaNicks = new ArrayList<>();
         for(Colaboracion c : colaboraciones){

@@ -36,5 +36,7 @@ public interface IControlador {
     public abstract ArrayList<String> getTituloPropuestas(); // cu6 y cu7
     public abstract DTPropuesta getDTPropuesta(String titulo); // cu6 y cu7
     public abstract ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado); // cu6 y cu7
+    public abstract void altaColaboracion(String tituloPropuesta, String nickColaborador, TipoRetorno tipoRetorno, float monto); // cu9
+    
     
 }
