@@ -263,7 +263,14 @@ public class Controlador implements IControlador{
     
     @Override 
     public  void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido {
-        
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Usuario seguidor = mu.buscarUsuario(nickSeguidor);
+        Usuario seguido = mu.buscarUsuario(nickSeguido);
+            if(seguidor.getUsuariosSeguidos().contains(seguido)){
+                throw new UsuarioYaSeguido("El usuario con nickname: " + nickSeguidor + "\nYa está siguiendo a usuario con nickname: " + nickSeguido);
+            }else{
+                seguidor.addUsuariosSeguidos(seguido);
+            }
     }
     
     @Override 

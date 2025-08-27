@@ -4,8 +4,10 @@
  */
 package com.culturarte.presentacion;
 
+import com.culturarte.exepciones.UsuarioYaSeguido;
 import com.culturarte.logica.IControlador;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -134,7 +136,18 @@ private void cargarJList(){
 }
 
 private void seguirUsuario(){
-    
+    String seguidor = listaSeguidores.getSelectedValue();
+    String seguido = listaSeguidos.getSelectedValue();
+    if(seguidor.equals(seguido)){
+        JOptionPane.showMessageDialog(this,"El usuario no puede seguirse a si mismo", "ERROR", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    try{
+        controlador.seguirUsuario(seguidor, seguido);
+        JOptionPane.showMessageDialog(this, "El usuario: " + seguidor + ", Ahora sigue a: " + seguido, "Seguimiento Registrado", JOptionPane.INFORMATION_MESSAGE);
+    }catch(UsuarioYaSeguido u){
+        JOptionPane.showMessageDialog(this, u.getMessage(), "ERROR", JOptionPane.WARNING_MESSAGE);
+    }
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
