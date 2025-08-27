@@ -252,7 +252,13 @@ public class Controlador implements IControlador{
     
     @Override 
     public  ArrayList<String> getNickUsuarios() {
-        return null;
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ArrayList<String> retorno = new ArrayList<>();
+        for(Usuario u : mu.getUsuariosNick().values()){
+            retorno.add(u.getNickname());
+        }
+        retorno.sort(String.CASE_INSENSITIVE_ORDER);//Ordena la lista
+        return retorno;
     }
     
     @Override 
