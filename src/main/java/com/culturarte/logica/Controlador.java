@@ -262,7 +262,14 @@ public class Controlador implements IControlador{
     
     @Override 
     public  void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido {
-        
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Usuario seguidor = mu.buscarUsuario(nickSeguidor);
+        Usuario seguido = mu.buscarUsuario(nickSeguido);
+        if(seguidor.getUsuariosSeguidos().contains(seguido)){
+            seguidor.getUsuariosSeguidos().remove(seguido);
+        }else{
+            throw new UsuarioNoSeguido("El usuario con nickname: " + nickSeguidor + ", no sigue al usuario con nickname: " + nickSeguido);
+        }
     }
      
 }
