@@ -30,7 +30,7 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
         controlador = IC;
         cargarComboBox();
         tabla=(DefaultTableModel)jTable1.getModel();
-        tabla2=(DefaultTableModel)jTable1.getModel();
+        tabla2=(DefaultTableModel)jTable2.getModel();
     }
     
     @SuppressWarnings("unchecked")
@@ -196,12 +196,15 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
         }
         
         tabla2.setRowCount(0);
-        Object[] cuadro2 = {
-        c.getPropuestas().iterator(),
-        proponente.iterator(),
-        recaudacion.iterator(),
-        estadoActual.iterator()
-       };     
+        for (int i = 0; i < propuesta.size(); i++) {
+            Object[] fila = {
+            propuesta.get(i).getTitulo(),         
+            proponente.get(i),                   
+            recaudacion.get(i),                  
+            estadoActual.get(i)                   
+            };
+        tabla2.addRow(fila);
+        } 
     }
         
     

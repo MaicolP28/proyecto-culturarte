@@ -5,6 +5,12 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.logica.datatypes.DTPropuesta;
+import java.awt.Image;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,13 +19,15 @@ import com.culturarte.logica.IControlador;
 public class ConsultarPropuestas extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
-    
+    private DefaultTableModel tabla;
     /**
      * Creates new form ConsultarPropuestas
      */
     public ConsultarPropuestas(IControlador IC) {
         initComponents();
         controlador = IC;
+        cargarLista();
+        tabla=(DefaultTableModel)jTable1.getModel();
     }
 
     /**
@@ -31,27 +39,150 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        listaPropuesta = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Consultar Propuestas");
 
+        listaPropuesta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaPropuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaPropuestaActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Colaboradores", "Monto recaudado", "Estado"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel1.setText("jLabel1");
+
+        jButton1.setText("Cargar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(listaPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listaPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void listaPropuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaPropuestaActionPerformed
+        String propuestaSeleccionada=(String)listaPropuesta.getSelectedItem();
+        if(propuestaSeleccionada!=null){
+            mostrarInfoPropuesta(propuestaSeleccionada);
+        }
+    }//GEN-LAST:event_listaPropuestaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       cargarLista();
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private void mostrarInfoPropuesta(String propuesta){
+        DTPropuesta p=controlador.getDTPropuesta(propuesta);
+        ArrayList<String> colaboradores=p.getColaboradores();
+        
+        tabla.setRowCount(0);
+
+        for (int i = 0; i < colaboradores.size(); i++) {
+        if (i == 0) {
+            Object[] fila = {
+                colaboradores.get(i),
+                p.getMontoRecaudado(),
+                p.getEstadoActual()
+            };
+            tabla.addRow(fila);
+        } 
+        else {
+            Object[] fila = {
+                colaboradores.get(i),
+                "",   
+                ""    
+            };
+            tabla.addRow(fila);
+        }
+    }
+          
+        
+        File imagenFile = p.getImagen();
+        
+        if (imagenFile != null && imagenFile.exists()) {
+            ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
+           //escala la imagen al tamaño del JLabel
+            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_SMOOTH);
+            jLabel1.setIcon(new ImageIcon(imagenEscalada));
+        }   
+        else {
+            jLabel1.setIcon(null); // limpia si no hay imagen
+        }
+    }
+    
+    private void cargarLista() {
+        ArrayList<String> propuestas = controlador.getTituloPropuestas();
+
+        this.listaPropuesta.removeAllItems(); // limpia cualquier elemento previo
+
+        for (String p : propuestas) {
+            this.listaPropuesta.addItem(p); // agregamos solo el titulo
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<String> listaPropuesta;
     // End of variables declaration//GEN-END:variables
 }
