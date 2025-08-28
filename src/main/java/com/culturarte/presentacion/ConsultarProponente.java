@@ -203,7 +203,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         TipoEstado estadoElegido = TipoEstado.valueOf(estado);
         DefaultTableModel dtm = new DefaultTableModel();
         
-        
+        //Constructor
         for (DTPropuesta p : proponente.getPropuestas()){
             if(p.getEstadoActual() == estadoElegido){
                 ArrayList<String> nomColaboradores = p.getNomColaboradores();
@@ -219,6 +219,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
             
         }
         jTable2.setModel(dtm);
+        
     }
     
     private void mostrarInfoProponente(String nickname){
