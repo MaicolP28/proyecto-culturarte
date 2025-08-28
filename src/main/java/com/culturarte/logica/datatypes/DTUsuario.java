@@ -31,13 +31,13 @@ public class DTUsuario {
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
-        this.usuariosSeguidos = new ArrayList<>();
+        this.usuariosSeguidos = usuariosSeguidos;
     }
     
     public DTUsuario(String nickname, String nombre, ArrayList<String> usuariosSeguidos){
         this.nickname = nickname;
         this.nombre = nombre;
-        this.usuariosSeguidos = new ArrayList<>();
+        this.usuariosSeguidos = usuariosSeguidos;
     }
     
     public File getImagen() {

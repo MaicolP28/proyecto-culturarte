@@ -4,10 +4,12 @@
  */
 package com.culturarte.presentacion;
 
+import com.culturarte.exepciones.UsuarioNoSeguido;
 import com.culturarte.logica.IControlador;
 import com.culturarte.logica.datatypes.DTUsuario;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,6 +42,7 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
         comboUsuarios = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaSeguidos = new javax.swing.JList<>();
+        btnDejarDeSeguir = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -68,6 +71,13 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(listaSeguidos);
 
+        btnDejarDeSeguir.setText("Dejar de Seguir");
+        btnDejarDeSeguir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDejarDeSeguirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,8 +87,9 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
                 .addComponent(comboUsuarios, 0, 178, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDejarDeSeguir))
                 .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
@@ -88,9 +99,11 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCargar)
                     .addComponent(comboUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDejarDeSeguir)
+                .addGap(13, 13, 13))
         );
 
         pack();
@@ -111,6 +124,13 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
         cargarJCombo();
     }//GEN-LAST:event_btnCargarActionPerformed
 
+    private void btnDejarDeSeguirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDejarDeSeguirActionPerformed
+        dejarSeguirUsuario();
+        //limpia la lista cuando deja de seguir un usuario
+        String usuarioActual = (String) comboUsuarios.getSelectedItem();
+        listarSeguidos(usuarioActual); 
+    }//GEN-LAST:event_btnDejarDeSeguirActionPerformed
+
     private void cargarJCombo(){
         ArrayList<String> nickUsu = controlador.getNickUsuarios();
         comboUsuarios.removeAllItems();
@@ -129,8 +149,20 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
         listaSeguidos.setModel(dlm);
     }
 
+    private void dejarSeguirUsuario(){
+        String seguidor = (String) comboUsuarios.getSelectedItem();
+        String seguido = (String) listaSeguidos.getSelectedValue();
+        try{
+            controlador.dejarDeSeguirUsuario(seguidor, seguido);
+            JOptionPane.showMessageDialog(this, "El usuario: " + seguidor + "ha dejado de seguir a: " + seguido, "Listo", JOptionPane.INFORMATION_MESSAGE);
+        }catch(UsuarioNoSeguido e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnDejarDeSeguir;
     private javax.swing.JComboBox<String> comboUsuarios;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> listaSeguidos;

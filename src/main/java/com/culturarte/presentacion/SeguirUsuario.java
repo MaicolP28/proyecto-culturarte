@@ -145,8 +145,8 @@ private void seguirUsuario(){
     try{
         controlador.seguirUsuario(seguidor, seguido);
         JOptionPane.showMessageDialog(this, "El usuario: " + seguidor + ", Ahora sigue a: " + seguido, "Seguimiento Registrado", JOptionPane.INFORMATION_MESSAGE);
-    }catch(UsuarioYaSeguido u){
-        JOptionPane.showMessageDialog(this, u.getMessage(), "ERROR", JOptionPane.WARNING_MESSAGE);
+    }catch(UsuarioYaSeguido e){
+        JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR", JOptionPane.WARNING_MESSAGE);
     }
 }
 
