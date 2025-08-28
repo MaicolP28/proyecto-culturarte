@@ -17,6 +17,7 @@ public class CancelarColaboraciones extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
     private DefaultTableModel tabla1;
+    private DefaultTableModel tabla2;
     
     /**
      * Creates new form CancelarColaboraciones
@@ -24,8 +25,9 @@ public class CancelarColaboraciones extends javax.swing.JInternalFrame {
     public CancelarColaboraciones(IControlador IC) {
         initComponents();
         controlador = IC;
-        cargarComboBox();
         tabla1=(DefaultTableModel)jTable1.getModel();
+        tabla2=(DefaultTableModel)jTable2.getModel();
+        mostrarColaboraciones();
     }
 
     /**
@@ -37,12 +39,14 @@ public class CancelarColaboraciones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCcolaboraciones = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jBconfirmar = new javax.swing.JButton();
         jBcancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jBseleccionar = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -56,13 +60,6 @@ public class CancelarColaboraciones extends javax.swing.JInternalFrame {
             }
         });
 
-        jCcolaboraciones.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jCcolaboraciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCcolaboracionesActionPerformed(evt);
-            }
-        });
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -72,7 +69,7 @@ public class CancelarColaboraciones extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -95,7 +92,35 @@ public class CancelarColaboraciones extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Colaboracion");
+        jLabel1.setText("Colaboraciones");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Propuesta", "NickColaborador"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
+        jBseleccionar.setText("Seleccionar");
+        jBseleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBseleccionarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,76 +129,106 @@ public class CancelarColaboraciones extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
                         .addComponent(jBconfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
+                        .addGap(18, 18, 18)
                         .addComponent(jBcancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCcolaboraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75))
+                        .addGap(60, 60, 60)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(jBseleccionar)))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCcolaboraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(31, 31, 31)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jBseleccionar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBconfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBcancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(45, 45, 45))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBconfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBconfirmarActionPerformed
-        // TODO add your handling code here:
+        int filaSel = jTable2.getSelectedRow();
+        if (filaSel == -1) {
+            return; 
+        }
+        String propuesta = (String) tabla2.getValueAt(filaSel, 0);
+        String nick = (String) tabla2.getValueAt(filaSel, 1);
+        controlador.cancelarColaboracionPropuesta(propuesta, nick);
+
+        mostrarColaboraciones();
+        tabla1.setRowCount(0);
     }//GEN-LAST:event_jBconfirmarActionPerformed
 
     private void jBcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcancelarActionPerformed
-        // TODO add your handling code here:
+        tabla1.setRowCount(0);
+        tabla2.setRowCount(0);
+        this.setVisible(false);
     }//GEN-LAST:event_jBcancelarActionPerformed
 
-    private void jCcolaboracionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCcolaboracionesActionPerformed
-        String colaboracionSeleccionada = (String) jCcolaboraciones.getSelectedItem();
-        mostrarColaboracion(colaboracionSeleccionada);
-    }//GEN-LAST:event_jCcolaboracionesActionPerformed
-
-    private void mostrarColaboracion(String colab){
+    private void mostrarColaboraciones(){
+        tabla2.setRowCount(0);
+        for(DTColaboracion c: controlador.getDTColaboraciones()){
+            Object[] fila = {c.getPropuestaTitulo(),c.getNickColaborador()};
+            tabla2.addRow(fila);
+        }
+    }
+    
+    private void mostrarInfoColaboracion(){
        
+        int filaSel = jTable2.getSelectedRow();
+        if (filaSel == -1) {
+            return;
+        }
+
+        String propuesta = (String) tabla2.getValueAt(filaSel, 0);
+        String nick = (String) tabla2.getValueAt(filaSel, 1);
+        DTColaboracion c = controlador.getDTColaboracionPropuesta(propuesta, nick);
+    
         tabla1.setRowCount(0);
-        Object[] fila = {};
+        Object[] fila = {c.getNickColaborador(), c.getFecha(), c.getMonto(), c.getTipoRetorno()};
         tabla1.addRow(fila);
     }
     
-    private void cargarComboBox() {
-        this.jCcolaboraciones.removeAllItems();
-        
-    }
     
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        cargarComboBox();
+        mostrarColaboraciones();
     }//GEN-LAST:event_formComponentShown
+
+    private void jBseleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBseleccionarActionPerformed
+        mostrarInfoColaboracion();
+    }//GEN-LAST:event_jBseleccionarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBcancelar;
     private javax.swing.JButton jBconfirmar;
-    private javax.swing.JComboBox<String> jCcolaboraciones;
+    private javax.swing.JButton jBseleccionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

@@ -45,5 +45,6 @@ public interface IControlador {
     public abstract ArrayList<DTColaboracion> getDTColaboracionesPropuestas(String nickColab);//cu10
     public abstract DTColaboracion getDTColaboracionPropuesta(String nickColab, String tituloProp);//cu10
     public abstract void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador);//cu11
+    public abstract ArrayList<DTColaboracion> getDTColaboraciones();//cu11
     
 }

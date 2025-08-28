@@ -309,5 +309,19 @@ public class Controlador implements IControlador{
         return null;
     }
     
+    @Override
+    public ArrayList<DTColaboracion> getDTColaboraciones(){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        
+        ArrayList<DTColaboracion> ret = new ArrayList<>();
+        
+        for (Propuesta p : mp.getPropuestas().values()) {
+            if (p.getColaboraciones() != null)
+                for(Colaboracion c : p.getColaboraciones()){
+                    ret.add(new DTColaboracion(c.getColaborador().getNickname(),c.getPropuesta().getTitulo(),c.getFechaAporte(),c.getMonto(),c.getTipoRetorno()));
+                }
+        }
+        return ret;
+    }
     
 }
