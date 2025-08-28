@@ -55,6 +55,12 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
 
         btnCargar.setText("Cargar");
 
+        comboUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboUsuariosActionPerformed(evt);
+            }
+        });
+
         jScrollPane1.setViewportView(listaSeguidos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -89,12 +95,20 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
         cargarJCombo();
     }//GEN-LAST:event_formComponentShown
 
+    private void comboUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboUsuariosActionPerformed
+        String usuarioSeleccionado = (String) comboUsuarios.getSelectedItem();
+        if(usuarioSeleccionado != null){
+            listarSeguidos(usuarioSeleccionado);
+        }
+    }//GEN-LAST:event_comboUsuariosActionPerformed
+
     private void cargarJCombo(){
         ArrayList<String> nickUsu = controlador.getNickUsuarios();
         comboUsuarios.removeAllItems();
         for(String n : nickUsu){
             comboUsuarios.addItem(n);
         }
+        
     }
     
     private void listarSeguidos(String nickname){
