@@ -11,6 +11,7 @@ import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.exepciones.UsuarioYaSeguido;
 import com.culturarte.logica.datatypes.DTColaborador;
 import com.culturarte.logica.datatypes.DTPropuesta;
+import com.culturarte.logica.datatypes.DTColaboracion;
 import com.culturarte.logica.enums.*;
 import java.time.LocalDate;
 import java.io.File;
@@ -41,5 +42,7 @@ public interface IControlador {
     public abstract ArrayList<String> getNickUsuarios(); // cu12 y cu13
     public abstract void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido; // cu12
     public abstract void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido; //cu13
-    public abstract void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador);
+    public abstract void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador);//cu11
+    public abstract ArrayList<DTColaboracion> getDTColaboracionesPropuestas(String nickColab);//cu10
+    public abstract DTColaboracion getDTColaboracionPropuesta(String nickColab, String tituloProp);//cu10
 }

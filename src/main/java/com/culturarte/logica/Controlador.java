@@ -264,13 +264,6 @@ public class Controlador implements IControlador{
     public  void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido {
         
     }
-     
-    /*
-    El caso de uso comienza cuando el administrador desea cancelar una colaboración
-    existente en el sistema. Para ello el sistema lista todas las colaboraciones realizadas en
-    el sistema y el administrador selecciona cuál desea cancelar. Para esta se muestran el
-    nickname del colaborador, la fecha y hora, el monto y el tipo de retorno. Si el
-    administrador confirma se elimina la colaboración del sistema.*/
     
     @Override
     public void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador){
@@ -287,5 +280,34 @@ public class Controlador implements IControlador{
             }
         }
     }
+    
+    
+    @Override
+    public ArrayList<DTColaboracion> getDTColaboracionesPropuestas(String nickColab){
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Colaborador c = (Colaborador) mu.buscarUsuario(nickColab);
+        
+        ArrayList<DTColaboracion> ret = new ArrayList<>();
+        
+        for (Colaboracion colab : c.getColaboraciones()) {
+            ret.add(new DTColaboracion(colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno()));
+        }
+        
+        return ret;
+    }
+    
+    @Override
+    public DTColaboracion getDTColaboracionPropuesta(String nickColab, String tituloProp){
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Colaborador c = (Colaborador) mu.buscarUsuario(nickColab);
+        
+        for (Colaboracion colab : c.getColaboraciones()) {
+            if (colab.getPropuesta().getTitulo().equals(tituloProp)) {
+                return new DTColaboracion(colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno());
+            }
+        }
+        return null;
+    }
+    
     
 }
