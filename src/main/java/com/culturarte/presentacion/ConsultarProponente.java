@@ -163,14 +163,14 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                     .addComponent(ListaProponentes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargar, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(98, 98, 98)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(87, 87, 87)
                 .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         pack();
@@ -232,6 +232,8 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
             {"Apellido", p.getApellido()}, 
             {"Fecha nacimiento", p.getFechaNacimiento()}, 
             {"Correo electronico", p.getEmail()},
+            {"Direccion", p.getDireccion()},
+            {"Biografia", p.getBiografia()},
             {"Link Web", p.getLinkWeb()}
         }; 
         
