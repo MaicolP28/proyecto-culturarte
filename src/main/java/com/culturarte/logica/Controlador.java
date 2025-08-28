@@ -265,4 +265,27 @@ public class Controlador implements IControlador{
         
     }
      
+    /*
+    El caso de uso comienza cuando el administrador desea cancelar una colaboración
+    existente en el sistema. Para ello el sistema lista todas las colaboraciones realizadas en
+    el sistema y el administrador selecciona cuál desea cancelar. Para esta se muestran el
+    nickname del colaborador, la fecha y hora, el monto y el tipo de retorno. Si el
+    administrador confirma se elimina la colaboración del sistema.*/
+    
+    @Override
+    public void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        Propuesta p = mp.buscarPropuesta(tituloPropuesta);
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Colaborador c = (Colaborador) mu.buscarUsuario(nickColaborador);
+        
+        for (Colaboracion colab : p.getColaboraciones()) {
+            if (colab.getColaborador().equals(c)) {
+                p.getColaboraciones().remove(colab);
+                c.getColaboraciones().remove(colab);
+                break;
+            }
+        }
+    }
+    
 }
