@@ -12,6 +12,7 @@ import com.culturarte.exepciones.UsuarioYaSeguido;
 import com.culturarte.logica.datatypes.DTColaborador;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.datatypes.DTColaboracion;
+import com.culturarte.logica.datatypes.DTUsuario;
 import com.culturarte.logica.enums.*;
 import java.time.LocalDate;
 import java.io.File;
@@ -47,4 +48,5 @@ public interface IControlador {
     public abstract void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador);//cu11
     public abstract ArrayList<DTColaboracion> getDTColaboraciones();//cu11
     
+    public abstract DTUsuario getDTUsuario(String nickname);
 }
