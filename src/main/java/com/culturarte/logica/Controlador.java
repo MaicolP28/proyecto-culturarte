@@ -290,7 +290,7 @@ public class Controlador implements IControlador{
         ArrayList<DTColaboracion> ret = new ArrayList<>();
         
         for (Colaboracion colab : c.getColaboraciones()) {
-            ret.add(new DTColaboracion(colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno()));
+            ret.add(new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno()));
         }
         
         return ret;
@@ -303,11 +303,25 @@ public class Controlador implements IControlador{
         
         for (Colaboracion colab : c.getColaboraciones()) {
             if (colab.getPropuesta().getTitulo().equals(tituloProp)) {
-                return new DTColaboracion(colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno());
+                return new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno());
             }
         }
         return null;
     }
     
+    @Override
+    public ArrayList<DTColaboracion> getDTColaboraciones(){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        
+        ArrayList<DTColaboracion> ret = new ArrayList<>();
+        
+        for (Propuesta p : mp.getPropuestas().values()) {
+            if (p.getColaboraciones() != null)
+                for(Colaboracion c : p.getColaboraciones()){
+                    ret.add(new DTColaboracion(c.getColaborador().getNickname(),c.getPropuesta().getTitulo(),c.getFechaAporte(),c.getMonto(),c.getTipoRetorno()));
+                }
+        }
+        return ret;
+    }
     
 }
