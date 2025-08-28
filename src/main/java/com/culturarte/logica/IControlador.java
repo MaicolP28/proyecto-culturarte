@@ -42,7 +42,8 @@ public interface IControlador {
     public abstract ArrayList<String> getNickUsuarios(); // cu12 y cu13
     public abstract void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido; // cu12
     public abstract void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido; //cu13
-    public abstract void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador);//cu11
     public abstract ArrayList<DTColaboracion> getDTColaboracionesPropuestas(String nickColab);//cu10
     public abstract DTColaboracion getDTColaboracionPropuesta(String nickColab, String tituloProp);//cu10
+    public abstract void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador);//cu11
+    
 }

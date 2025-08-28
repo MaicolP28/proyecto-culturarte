@@ -16,16 +16,22 @@ public class DTColaboracion {
     private LocalDate fecha;
     private TipoRetorno tipoRetorno;
     private String tituloPropuesta;
+    private String nickColaborador;
     
-    public DTColaboracion(String tituloPropuesta, LocalDate fecha, float monto, TipoRetorno tipoRetorno) {
+    public DTColaboracion(String nickColaborador,String tituloPropuesta, LocalDate fecha, float monto, TipoRetorno tipoRetorno) {
         this.tituloPropuesta = tituloPropuesta;
         this.fecha = fecha;
         this.monto = monto;
         this.tipoRetorno = tipoRetorno;
+        this.nickColaborador = nickColaborador;
     }
 
     public String getPropuestaTitulo() {
         return tituloPropuesta;
+    }
+    
+    public String getNickColaborador() {
+        return nickColaborador;
     }
 
     public LocalDate getFecha() {

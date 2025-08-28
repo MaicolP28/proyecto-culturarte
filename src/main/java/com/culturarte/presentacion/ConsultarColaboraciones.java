@@ -6,12 +6,6 @@ package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
 import com.culturarte.logica.datatypes.DTColaboracion;
-import com.culturarte.logica.enums.TipoRetorno;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.io.*;
-import javax.swing.*;
-import java.util.EnumSet;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 /**
