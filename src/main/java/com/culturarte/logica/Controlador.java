@@ -252,7 +252,13 @@ public class Controlador implements IControlador{
     
     @Override 
     public  ArrayList<String> getNickUsuarios() {
-        return null;
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ArrayList<String> retorno = new ArrayList<>();
+        for(Usuario u : mu.getUsuariosNick().values()){
+            retorno.add(u.getNickname());
+        }
+        retorno.sort(String.CASE_INSENSITIVE_ORDER);//Ordena la lista
+        return retorno;
     }
     
     @Override 
@@ -271,5 +277,21 @@ public class Controlador implements IControlador{
             throw new UsuarioNoSeguido("El usuario con nickname: " + nickSeguidor + ", no sigue al usuario con nickname: " + nickSeguido);
         }
     }
+
+    @Override
+    public DTUsuario getDTUsuario(String nickname) {
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        Usuario usu = mu.buscarUsuario(nickname);
+        
+        ArrayList<String> nickSeguidos = new ArrayList<>();
+        for(Usuario u : usu.getUsuariosSeguidos()){
+            nickSeguidos.add(u.getNickname());
+        }
+        
+        DTUsuario dtu = new DTUsuario(usu.getNickname(), usu.getNombre(), nickSeguidos);
+        
+        return dtu;
+    }
      
+    
 }

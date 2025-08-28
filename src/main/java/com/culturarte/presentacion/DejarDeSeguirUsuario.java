@@ -5,6 +5,9 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.logica.datatypes.DTUsuario;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -20,6 +23,8 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
     public DejarDeSeguirUsuario(IControlador IC) {
         initComponents();
         controlador = IC;
+        cargarJCombo();
+        
     }
 
     /**
@@ -31,27 +36,80 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCargar = new javax.swing.JButton();
+        comboUsuarios = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaSeguidos = new javax.swing.JList<>();
+
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Dejar de seguir usuario");
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
+        btnCargar.setText("Cargar");
+
+        jScrollPane1.setViewportView(listaSeguidos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(comboUsuarios, 0, 178, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCargar)
+                    .addComponent(comboUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        cargarJCombo();
+    }//GEN-LAST:event_formComponentShown
+
+    private void cargarJCombo(){
+        ArrayList<String> nickUsu = controlador.getNickUsuarios();
+        comboUsuarios.removeAllItems();
+        for(String n : nickUsu){
+            comboUsuarios.addItem(n);
+        }
+    }
+    
+    private void listarSeguidos(String nickname){
+        DTUsuario u = controlador.getDTUsuario(nickname);
+        DefaultListModel<String> dlm = new DefaultListModel<>();
+        for(String n : u.getUsuariosSeguidos()){
+            dlm.addElement(n);
+        }
+        listaSeguidos.setModel(dlm);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JComboBox<String> comboUsuarios;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> listaSeguidos;
     // End of variables declaration//GEN-END:variables
 }
