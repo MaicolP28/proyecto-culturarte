@@ -5,7 +5,15 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
-
+import com.culturarte.logica.datatypes.DTColaboracion;
+import com.culturarte.logica.enums.TipoRetorno;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.io.*;
+import javax.swing.*;
+import java.util.EnumSet;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author fabriciorivero
@@ -13,6 +21,8 @@ import com.culturarte.logica.IControlador;
 public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
+    private DefaultTableModel tabla1;
+    private DefaultTableModel tabla2;
     
     /**
      * Creates new form ConsultarColaboraciones
@@ -20,6 +30,9 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
     public ConsultarColaboraciones(IControlador IC) {
         initComponents();
         controlador = IC;
+        cargarComboBox();
+        tabla1=(DefaultTableModel)jTable1.getModel();
+        tabla2=(DefaultTableModel)jTable2.getModel();
     }
 
     /**
@@ -33,14 +46,15 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jCcolaboradores = new javax.swing.JComboBox<>();
+        jBcerrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jCcolaboracion = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -56,47 +70,43 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable2);
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Consultar Colaboraciones");
-
-        jComboBox1.addComponentListener(new java.awt.event.ComponentAdapter() {
+        addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                jComboBox1ComponentShown(evt);
+                formComponentShown(evt);
             }
         });
 
-        jButton1.setText("jButton1");
+        jCcolaboradores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCcolaboradoresActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("jButton2");
+        jBcerrar.setText("Cerrar");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Nickname", "Colaboraciones"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        jCcolaboracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCcolaboracionActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
                 {null, null, null}
             },
             new String [] {
@@ -113,63 +123,114 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(jTable3);
 
+        jLabel1.setText("Colaboradores");
+
+        jLabel2.setText("Colaboracion");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34))
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(74, 74, 74))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(32, 32, 32)))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jBcerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton1))
+                        .addGap(133, 133, 133)
+                        .addComponent(jCcolaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCcolaboracion, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jCcolaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCcolaboracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBcerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jComboBox1ComponentShown
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ComponentShown
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        cargarComboBox();
+    }//GEN-LAST:event_formComponentShown
 
+    private void jCcolaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCcolaboradoresActionPerformed
+        String colaboradorSeleccionado = (String) jCcolaboradores.getSelectedItem();
+        mostrarColaboraciones(colaboradorSeleccionado);
+    }//GEN-LAST:event_jCcolaboradoresActionPerformed
+
+    private void jCcolaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCcolaboracionActionPerformed
+        String colaboracionSeleccionada = (String) jCcolaboracion.getSelectedItem();
+        String colaboradorSeleccionado = (String) jCcolaboradores.getSelectedItem();
+        mostrarColaboracion(colaboracionSeleccionada,colaboradorSeleccionado);
+    }//GEN-LAST:event_jCcolaboracionActionPerformed
+
+    private void mostrarColaboraciones(String nick){
+        ArrayList<DTColaboracion> colaboraciones= controlador.getDTColaboracionesPropuestas(nick);
+       
+        for(DTColaboracion c:colaboraciones){
+            tabla1.setRowCount(0);
+            Object[] fila = {nick, c.getPropuestaTitulo().trim()};
+            tabla1.addRow(fila);
+            this.jCcolaboracion.addItem(c.getPropuestaTitulo());
+        }
+    }
+    
+    private void mostrarColaboracion(String colab,String nick){
+        DTColaboracion c= controlador.getDTColaboracionPropuesta(nick,colab);
+       
+        tabla2.setRowCount(0);
+        Object[] fila = {c.getFecha(),c.getMonto(),c.getTipoRetorno()};
+        tabla2.addRow(fila);
+    }
+    
+    private void cargarComboBox() {
+        this.jCcolaboradores.removeAllItems();
+        this.jCcolaboracion.removeAllItems();
+        
+        ArrayList<String> nomColab = controlador.getNickColaboradores();
+        for (String p : nomColab) {
+            this.jCcolaboradores.addItem(p);
+        }   
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton jBcerrar;
+    private javax.swing.JComboBox<String> jCcolaboracion;
+    private javax.swing.JComboBox<String> jCcolaboradores;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

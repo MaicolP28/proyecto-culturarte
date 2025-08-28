@@ -62,16 +62,12 @@
                           <Component id="jScrollPane1" min="-2" pref="211" max="-2" attributes="0"/>
                           <Component id="jCProponente" min="-2" pref="202" max="-2" attributes="0"/>
                           <Component id="jTdescripcion" min="-2" pref="202" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTtitulo" max="32767" attributes="0"/>
-                              <Component id="jTlugar" min="-2" pref="202" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jDfecha" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTmontoE" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTmontoN" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jCTipoRet" alignment="0" min="-2" pref="202" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jTtitulo" max="32767" attributes="0"/>
+                          <Component id="jTlugar" min="-2" pref="202" max="-2" attributes="0"/>
+                          <Component id="jDfecha" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTmontoE" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTmontoN" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jCTipoRet" alignment="0" min="-2" pref="202" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jTimagen" min="-2" pref="108" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -157,9 +153,9 @@
                   </Group>
               </Group>
               <EmptySpace type="separate" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jBAceptar" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jBcancelar" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="jBAceptar" min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
