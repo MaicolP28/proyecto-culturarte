@@ -32,6 +32,7 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);

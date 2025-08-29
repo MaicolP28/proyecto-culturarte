@@ -10,7 +10,6 @@ import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoEstado;
 import java.awt.Image;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 

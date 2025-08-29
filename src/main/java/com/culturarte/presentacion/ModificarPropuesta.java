@@ -57,6 +57,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         tablaDatosPropuesta = new javax.swing.JTable();
         imagenPropuesta = new javax.swing.JLabel();
         jButtonModificar = new javax.swing.JButton();
+        btnCargar = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -101,6 +102,13 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             }
         });
 
+        btnCargar.setText("Cargar");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,6 +122,8 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCargar)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -124,14 +134,16 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(imagenPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonModificar)
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         pack();
@@ -216,6 +228,10 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        cargarComboBox();
+    }//GEN-LAST:event_btnCargarActionPerformed
+
     private void cargarComboBox(){
         ArrayList<String> tituloPropuestas = controlador.getTituloPropuestas();
         this.comboPropuestas.removeAllItems();
@@ -258,6 +274,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCargar;
     private javax.swing.JComboBox<String> comboPropuestas;
     private javax.swing.JLabel imagenPropuesta;
     private javax.swing.JButton jButtonModificar;

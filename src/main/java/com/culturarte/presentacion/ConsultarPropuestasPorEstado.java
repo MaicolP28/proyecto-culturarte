@@ -5,6 +5,10 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.logica.datatypes.DTPropuesta;
+import com.culturarte.logica.enums.TipoEstado;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,13 +17,26 @@ import com.culturarte.logica.IControlador;
 public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
-    
+    private DefaultTableModel dtm;
     /**
      * Creates new form ConsultarPropuestasPorEstado
      */
     public ConsultarPropuestasPorEstado(IControlador IC) {
         initComponents();
         controlador = IC;
+        //Cargo ComboBox de Propuestas por TipoEstado 
+        comboEstadoProp.removeAllItems();
+        for (TipoEstado e : TipoEstado.values()) {
+            comboEstadoProp.addItem(e.toString());
+        }
+        dtm = new DefaultTableModel();
+        listaPropuestas.addListSelectionListener(e->{
+        if(!e.getValueIsAdjusting()){
+                if(listaPropuestas.getSelectedValue() != null){
+                    cargarTabla();
+                }
+            }
+        });
     }
 
     /**
@@ -31,23 +48,124 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        comboEstadoProp = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listaPropuestas = new javax.swing.JList<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaDatosPropuesta = new javax.swing.JTable();
+        fotoPropuesta = new javax.swing.JLabel();
+
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Consultar propuestas por estado");
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
+        comboEstadoProp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboEstadoPropActionPerformed(evt);
+            }
+        });
+
+        jScrollPane2.setViewportView(listaPropuestas);
+
+        tablaDatosPropuesta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Titulo", "Colaboradores", "Monto Recaudado"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaDatosPropuesta);
+
+        fotoPropuesta.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(comboEstadoProp, 0, 120, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void comboEstadoPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEstadoPropActionPerformed
+        cargarCombo();
+    }//GEN-LAST:event_comboEstadoPropActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        cargarCombo();
+    }//GEN-LAST:event_formComponentShown
+
+    private void cargarCombo(){
+        DefaultListModel dlm = new DefaultListModel<>();
+        String seleccionado = (String) comboEstadoProp.getSelectedItem();
+        TipoEstado estado = TipoEstado.valueOf(seleccionado);
+        for(String s : controlador.getTituloPropuestasPorEstado(estado)){
+            dlm.addElement(s);
+        }
+        listaPropuestas.setModel(dlm);
+    }
+    
+    private void cargarTabla(){
+        DTPropuesta p = controlador.getDTPropuesta(listaPropuestas.getSelectedValue());
+        Object[] data = {
+            p.getTitulo(), p.getColaboradores(), p.getMontoRecaudado()
+        };
+        dtm.addRow(data);
+        tablaDatosPropuesta.setModel(dtm);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboEstadoProp;
+    private javax.swing.JLabel fotoPropuesta;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> listaPropuestas;
+    private javax.swing.JTable tablaDatosPropuesta;
     // End of variables declaration//GEN-END:variables
 }
