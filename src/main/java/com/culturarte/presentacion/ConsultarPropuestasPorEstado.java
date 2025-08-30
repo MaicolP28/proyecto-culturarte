@@ -105,8 +105,6 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tablaDatosPropuesta);
 
-        fotoPropuesta.setText("jLabel1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,7 +148,7 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         cargarCombo();
     }//GEN-LAST:event_formComponentShown
 
-    private void cargarCombo(){
+    private void cargarCombo(){       
         DefaultListModel dlm = new DefaultListModel<>();
         String seleccionado = (String) comboEstadoProp.getSelectedItem();
         TipoEstado estado = TipoEstado.valueOf(seleccionado);
@@ -158,9 +156,16 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
             dlm.addElement(s);
         }
         listaPropuestas.setModel(dlm);
+        if (dtm != null) {
+        dtm.setRowCount(0);
+    }
+    if (fotoPropuesta != null) {
+        fotoPropuesta.setIcon(null);
+    }
     }
     
-    private void cargarTabla(){       
+    private void cargarTabla(){   
+        dtm.setRowCount(0);
         DTPropuesta p = controlador.getDTPropuesta(listaPropuestas.getSelectedValue());
         ArrayList<String> nomColaboradores = p.getNomColaboradores();
         String colaboradores = nomColaboradores.isEmpty() ? "Sin Colaboradores" : String.join(", ", nomColaboradores);
