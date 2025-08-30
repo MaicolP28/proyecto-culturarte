@@ -165,17 +165,17 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         ArrayList<String> nomColaboradores = p.getNomColaboradores();
         String colaboradores = nomColaboradores.isEmpty() ? "Sin Colaboradores" : String.join(", ", nomColaboradores);
         Object[] data = {
-            p.getTitulo(), colaboradores, p.getMontoNecesario()
+            p.getTitulo(), colaboradores, p.getLugar(), p.getPrecioEntrada(), p.getMontoRecaudado()
         };
         dtm.addRow(data);
         tablaDatosPropuesta.setModel(dtm); 
         tablaDatosPropuesta.setDefaultEditor(Object.class, null); 
         //Corregir el ancho de las columnas
-        tablaDatosPropuesta.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tablaDatosPropuesta.getColumnModel().getColumn(0).setPreferredWidth(150);
         tablaDatosPropuesta.getColumnModel().getColumn(1).setPreferredWidth(150);
         tablaDatosPropuesta.getColumnModel().getColumn(2).setPreferredWidth(130);
-        tablaDatosPropuesta.getColumnModel().getColumn(3).setPreferredWidth(150);
-        tablaDatosPropuesta.getColumnModel().getColumn(4).setPreferredWidth(150);
+        tablaDatosPropuesta.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tablaDatosPropuesta.getColumnModel().getColumn(4).setPreferredWidth(100);
 
         
         if(p.getImagen() != null){
