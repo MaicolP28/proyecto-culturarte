@@ -222,7 +222,11 @@ public class Controlador implements IControlador{
     public DTPropuesta getDTPropuesta(String titulo){
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         Propuesta p = mp.buscarPropuesta(titulo);
-        DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), p.getCategoria().getNombreCompleto());
+        String nombreCategoria = "Sin categoría"; 
+    if (p.getCategoria() != null) {
+        nombreCategoria = p.getCategoria().getNombreCompleto();
+    }
+        DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), nombreCategoria);
         return dtp;
     }
     

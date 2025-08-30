@@ -7,7 +7,10 @@ package com.culturarte.presentacion;
 import com.culturarte.logica.IControlador;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoEstado;
+import java.awt.Image;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,6 +33,12 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
             comboEstadoProp.addItem(e.toString());
         }
         dtm = new DefaultTableModel();
+        dtm.addColumn("Título");
+        dtm.addColumn("Colaboradores");
+        dtm.addColumn("Lugar");
+        dtm.addColumn("Precio Entrada");
+        dtm.addColumn("Monto Recaudado");
+        tablaDatosPropuesta.setModel(dtm);
         listaPropuestas.addListSelectionListener(e->{
         if(!e.getValueIsAdjusting()){
                 if(listaPropuestas.getSelectedValue() != null){
@@ -77,17 +86,17 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
 
         tablaDatosPropuesta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Titulo", "Colaboradores", "Monto Recaudado"
+                "Titulo", "Colaboradores", "Lugar", "Precio Entrada", "Monto Recaudado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -124,9 +133,9 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                    .addComponent(fotoPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(125, Short.MAX_VALUE))
         );
 
@@ -151,13 +160,31 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         listaPropuestas.setModel(dlm);
     }
     
-    private void cargarTabla(){
+    private void cargarTabla(){       
         DTPropuesta p = controlador.getDTPropuesta(listaPropuestas.getSelectedValue());
+        ArrayList<String> nomColaboradores = p.getNomColaboradores();
+        String colaboradores = nomColaboradores.isEmpty() ? "Sin Colaboradores" : String.join(", ", nomColaboradores);
         Object[] data = {
-            p.getTitulo(), p.getColaboradores(), p.getMontoRecaudado()
+            p.getTitulo(), colaboradores, p.getMontoNecesario()
         };
         dtm.addRow(data);
-        tablaDatosPropuesta.setModel(dtm);
+        tablaDatosPropuesta.setModel(dtm); 
+        tablaDatosPropuesta.setDefaultEditor(Object.class, null); 
+        //Corregir el ancho de las columnas
+        tablaDatosPropuesta.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tablaDatosPropuesta.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tablaDatosPropuesta.getColumnModel().getColumn(2).setPreferredWidth(130);
+        tablaDatosPropuesta.getColumnModel().getColumn(3).setPreferredWidth(150);
+        tablaDatosPropuesta.getColumnModel().getColumn(4).setPreferredWidth(150);
+
+        
+        if(p.getImagen() != null){
+            ImageIcon foto = new ImageIcon(p.getImagen().getAbsolutePath());
+            Image img = foto.getImage().getScaledInstance(fotoPropuesta.getWidth(), fotoPropuesta.getHeight(), Image.SCALE_SMOOTH);
+            fotoPropuesta.setIcon(new ImageIcon(img));
+        }else{
+            fotoPropuesta.setIcon(null);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
