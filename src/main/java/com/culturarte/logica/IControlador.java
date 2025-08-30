@@ -36,6 +36,7 @@ public interface IControlador {
     public abstract ArrayList<String> getNomColaboradores();
     public abstract DTColaborador getDTColaborador(String nickname);
     public abstract ArrayList<DTPropuesta> getDTPropuestas();
+    public abstract void actualizarTituloProp(String tituloViejo, String tituloNuevo);//cu5
     public abstract ArrayList<String> getTituloPropuestas(); // cu6 y cu7
     public abstract DTPropuesta getDTPropuesta(String titulo); // cu6 y cu7
     public abstract ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado); // cu6 y cu7

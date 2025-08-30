@@ -35,4 +35,8 @@ public class ManejadorPropuesta {
     public HashMap<String, Propuesta> getPropuestas() {
         return propuestasTitulo;
     }
+    
+    public void sacarPropuesta(Propuesta propuesta){
+        propuestasTitulo.remove(propuesta.getTitulo(), propuesta);
+    }
 }

@@ -366,5 +366,15 @@ public class Controlador implements IControlador{
         }
         return ret;
     }
+    @Override
+    public void actualizarTituloProp(String tituloViejo, String tituloNuevo){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        Propuesta p = mp.getPropuesta(tituloViejo);
+        if (p != null) {
+        mp.sacarPropuesta(p);
+        p.setTitulo(tituloNuevo);
+        mp.agregarPropuesta(p);
+        }
+    }
     
 }

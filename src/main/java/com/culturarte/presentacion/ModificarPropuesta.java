@@ -181,7 +181,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         try{
         switch(campoSeleccionado){
             case "Titulo":
-                p.setTitulo(cambio);
+                controlador.actualizarTituloProp(p.getTitulo(), cambio);
                 break;
             case "Descripcion":
                 p.setDescripcion(cambio);
@@ -262,10 +262,6 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         }
         tablaDatosPropuesta.setModel(dtm);
         
-    }
-    
-    private void datosPropuesta(){
-      
     }
     
     private void cambiarDatos(){
