@@ -52,7 +52,6 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Consultar Propuestas");
 
-        listaPropuesta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaPropuesta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaPropuestaActionPerformed(evt);
@@ -132,32 +131,18 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
     
     private void mostrarInfoPropuesta(String propuesta){
-        DTPropuesta p=controlador.getDTPropuesta(propuesta);
-        ArrayList<String> colaboradores=p.getColaboradores();
+        DTPropuesta p = controlador.getDTPropuesta(propuesta);
+        ArrayList<String> nomColab = p.getNomColaboradores();
         
         tabla.setRowCount(0);
-
-        for (int i = 0; i < colaboradores.size(); i++) {
-        if (i == 0) {
-            Object[] fila = {
-                colaboradores.get(i),
-                p.getMontoRecaudado(),
-                p.getEstadoActual()
-            };
-            tabla.addRow(fila);
-        } 
-        else {
-            Object[] fila = {
-                colaboradores.get(i),
-                "",   
-                ""    
-            };
-            tabla.addRow(fila);
-        }
-    }
-          
         
-        File imagenFile = p.getImagen();
+        String colaboradores = nomColab.isEmpty() ? "Sin Colaboradores" : String.join(", ", nomColab);
+        Object[] fila = {colaboradores, p.getMontoRecaudado(), p.getEstadoActual()};
+        
+       tabla.addRow(fila);
+       jTable1.setModel(tabla);
+        
+       File imagenFile = p.getImagen();
         
         if (imagenFile != null && imagenFile.exists()) {
             ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
