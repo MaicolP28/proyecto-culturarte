@@ -16,7 +16,7 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
     private DefaultTableModel tabla1;
-    private DefaultTableModel tabla2;
+    private DefaultTableModel tabla3;
     
     /**
      * Creates new form ConsultarColaboraciones
@@ -26,7 +26,7 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
         controlador = IC;
         cargarComboBox();
         tabla1=(DefaultTableModel)jTable1.getModel();
-        tabla2=(DefaultTableModel)jTable2.getModel();
+        tabla3=(DefaultTableModel)jTable3.getModel();
     }
 
     /**
@@ -215,6 +215,10 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jCcolaboracionActionPerformed
 
     private void jBcerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcerrarActionPerformed
+        tabla1.setRowCount(0);
+        tabla3.setRowCount(0);
+        this.jCcolaboradores.removeAllItems();
+        this.jCcolaboracion.removeAllItems();
         setVisible(false);
     }//GEN-LAST:event_jBcerrarActionPerformed
 
@@ -244,9 +248,11 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
     private void mostrarColaboracion(String colab,String nick){
         DTColaboracion c= controlador.getDTColaboracionPropuesta(nick,colab);
        
-        tabla2.setRowCount(0);
-        Object[] fila = {c.getFecha(),c.getMonto(),c.getTipoRetorno()};
-        tabla2.addRow(fila);
+        tabla3.setRowCount(0);
+        if(c!=null){
+            Object[] fila = {c.getFecha(),c.getMonto(),c.getTipoRetorno()};
+            tabla3.addRow(fila);
+        }
     }
     
     private void cargarComboBox() {
