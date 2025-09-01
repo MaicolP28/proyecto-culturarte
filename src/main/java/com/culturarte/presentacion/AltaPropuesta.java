@@ -257,11 +257,11 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
 
         try {
             controlador.altaPropuesta(titulo, descripcion, lugar, fechaPrev, montoE, montoN, tipoRet, imagen, proponente,tipoEsp);
+            JOptionPane.showMessageDialog(this, "Propuesta registrada correctamente.");
         } catch (PropuestaYaExiste e) {
             JOptionPane.showMessageDialog(this, "La propuesta ya existe: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        JOptionPane.showMessageDialog(this, "Propuesta registrada correctamente.");
         jBcancelarActionPerformed(evt);
     }//GEN-LAST:event_jBAceptarActionPerformed
 
