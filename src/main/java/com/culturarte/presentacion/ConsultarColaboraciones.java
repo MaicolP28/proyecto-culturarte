@@ -82,6 +82,11 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
         });
 
         jBcerrar.setText("Cerrar");
+        jBcerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBcerrarActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -189,6 +194,10 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
         String colaboradorSeleccionado = (String) jCcolaboradores.getSelectedItem();
         mostrarColaboracion(colaboracionSeleccionada,colaboradorSeleccionado);
     }//GEN-LAST:event_jCcolaboracionActionPerformed
+
+    private void jBcerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcerrarActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_jBcerrarActionPerformed
 
     private void mostrarColaboraciones(String nick){
         ArrayList<DTColaboracion> colaboraciones= controlador.getDTColaboracionesPropuestas(nick);

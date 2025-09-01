@@ -121,22 +121,7 @@ public class DTPropuesta {
     public void addColaborador(String nom) {
         
     }
-    
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Titulo: ").append(titulo).append("\n");
-        sb.append("Descripcion: ").append(descripcion).append("\n");
-        sb.append("Lugar: ").append(lugar).append("\n");
-        sb.append("Fecha Prevista: ").append(fechaPrevista).append("\n");
-        sb.append("Precio Entrada: ").append(precioEntrada).append("\n");
-        sb.append("Monto Necesario: ").append(montoNecesario).append("\n");
-        //sb.append("Colaboraciones: ").append(colaboraciones).append("\n");
-        sb.append("Colaboradores: ").append(colaboradores).append("\n");
-        sb.append("Estado: ").append(estadoActual).append("\n");
-        sb.append("Categoria: ").append(categoria).append("\n");
-        // TODO Falta el monto Recaurdado
-        return sb.toString();
-    }
+
     public ArrayList<String> getNomColaboradores(){
     ArrayList<String> retorno = new ArrayList<>();
         for (String nomCol : this.colaboradores) {

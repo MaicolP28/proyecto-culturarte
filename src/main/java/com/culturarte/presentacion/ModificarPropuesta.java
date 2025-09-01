@@ -243,7 +243,8 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     private void mostrarDatosPropuesta(){
         String[] columnas = {"Titulo", "Descripcion", "Lugar", "Fecha Prevista", "Precio Entrada", "Monto Necesario"};
         DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
-        for(DTPropuesta dtp : controlador.getDTPropuestas()){
+        String propuestaSeleccionada = (String) comboPropuestas.getSelectedItem();
+        DTPropuesta dtp = controlador.getDTPropuesta(propuestaSeleccionada);
             Object [] filas = {
                 dtp.getTitulo(),
                 dtp.getDescripcion(),
@@ -259,14 +260,10 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                 imagenPropuesta.setIcon(new ImageIcon(img));
             }else
                 imagenPropuesta.setIcon(null);
-        }
         tablaDatosPropuesta.setModel(dtm);
         
     }
     
-    private void cambiarDatos(){
-        ArrayList<String> dato; 
-    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

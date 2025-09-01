@@ -119,7 +119,7 @@ public class Controlador implements IControlador{
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
        
         Proponente p =(Proponente) mu.buscarUsuario(nickname);
-       
+        
         DTProponente dtp = new DTProponente(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNacimiento(), p.getImagen(), p.getDireccion(), p.getLinkWeb(), p.getBiografia());
         
         for (Propuesta prop : p.getPropuestas()) {
@@ -129,7 +129,7 @@ public class Controlador implements IControlador{
         return dtp;
     }
     
-
+    @Override
     public void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste{
         ManejadorCategoria mc = ManejadorCategoria.getInstancia();
         
@@ -223,12 +223,16 @@ public class Controlador implements IControlador{
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         Propuesta p = mp.buscarPropuesta(titulo);
         String nombreCategoria = "Sin categoría"; 
+        DTPropuesta dtp = new DTPropuesta();
+        if(p != null){
     if (p.getCategoria() != null) {
         nombreCategoria = p.getCategoria().getNombreCompleto();
     }
-        DTPropuesta dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), nombreCategoria);
+        dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), nombreCategoria);
+        }
         return dtp;
     }
+        
     
     @Override
     public ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado){
@@ -377,4 +381,11 @@ public class Controlador implements IControlador{
         }
     }
     
+    @Override 
+    public String getNickProponente(String tituloPropuesta){
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        Propuesta p = mp.buscarPropuesta(tituloPropuesta);
+        
+        return p.getProponente().getNickname();
+    }
 }

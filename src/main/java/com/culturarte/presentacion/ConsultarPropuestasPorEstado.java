@@ -35,10 +35,24 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         dtm = new DefaultTableModel();
         dtm.addColumn("Título");
         dtm.addColumn("Colaboradores");
+        dtm.addColumn("Descripcion");
         dtm.addColumn("Lugar");
+        dtm.addColumn("Fecha Prevista");
         dtm.addColumn("Precio Entrada");
+        dtm.addColumn("Monto Necesario");
         dtm.addColumn("Monto Recaudado");
+
         tablaDatosPropuesta.setModel(dtm);
+        //Corregir el ancho de las columnas
+        tablaDatosPropuesta.getColumnModel().getColumn(0).setPreferredWidth(130);
+        tablaDatosPropuesta.getColumnModel().getColumn(1).setPreferredWidth(130);
+        tablaDatosPropuesta.getColumnModel().getColumn(2).setPreferredWidth(130);
+        tablaDatosPropuesta.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tablaDatosPropuesta.getColumnModel().getColumn(4).setPreferredWidth(100);
+        tablaDatosPropuesta.getColumnModel().getColumn(5).setPreferredWidth(100);
+        tablaDatosPropuesta.getColumnModel().getColumn(6).setPreferredWidth(130);
+        tablaDatosPropuesta.getColumnModel().getColumn(7).setPreferredWidth(130);
+        
         listaPropuestas.addListSelectionListener(e->{
         if(!e.getValueIsAdjusting()){
                 if(listaPropuestas.getSelectedValue() != null){
@@ -86,17 +100,18 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
 
         tablaDatosPropuesta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Titulo", "Colaboradores", "Lugar", "Precio Entrada", "Monto Recaudado"
+                "Titulo", "Colaboradores", "Descripcion", "Lugar", "Fecha Prevista", "Precio Entrada", "Monto Necesario", "Monto Recaudado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -132,8 +147,8 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                    .addComponent(fotoPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(fotoPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(125, Short.MAX_VALUE))
         );
 
@@ -170,19 +185,12 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         ArrayList<String> nomColaboradores = p.getNomColaboradores();
         String colaboradores = nomColaboradores.isEmpty() ? "Sin Colaboradores" : String.join(", ", nomColaboradores);
         Object[] data = {
-            p.getTitulo(), colaboradores, p.getLugar(), p.getPrecioEntrada(), p.getMontoRecaudado()
+            p.getTitulo(), colaboradores,p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getMontoRecaudado()
         };
         dtm.addRow(data);
         tablaDatosPropuesta.setModel(dtm); 
         tablaDatosPropuesta.setDefaultEditor(Object.class, null); 
-        //Corregir el ancho de las columnas
-        tablaDatosPropuesta.getColumnModel().getColumn(0).setPreferredWidth(150);
-        tablaDatosPropuesta.getColumnModel().getColumn(1).setPreferredWidth(150);
-        tablaDatosPropuesta.getColumnModel().getColumn(2).setPreferredWidth(130);
-        tablaDatosPropuesta.getColumnModel().getColumn(3).setPreferredWidth(100);
-        tablaDatosPropuesta.getColumnModel().getColumn(4).setPreferredWidth(100);
 
-        
         if(p.getImagen() != null){
             ImageIcon foto = new ImageIcon(p.getImagen().getAbsolutePath());
             Image img = foto.getImage().getScaledInstance(fotoPropuesta.getWidth(), fotoPropuesta.getHeight(), Image.SCALE_SMOOTH);

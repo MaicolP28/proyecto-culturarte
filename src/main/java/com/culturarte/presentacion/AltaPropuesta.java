@@ -81,6 +81,12 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
             }
         });
 
+        jCProponente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCProponenteActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Proponente");
 
         jLabel2.setText("Tipo de espectaculo");
@@ -306,6 +312,10 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         cargarComboBox();
     }//GEN-LAST:event_formComponentShown
+
+    private void jCProponenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCProponenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCProponenteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

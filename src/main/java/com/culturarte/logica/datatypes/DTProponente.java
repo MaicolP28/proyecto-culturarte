@@ -37,6 +37,7 @@ public class DTProponente {
         this.direccion = direccion;
         this.linkWeb = linkWeb;
         this.biografia = biografia;
+        this.propuestas = new ArrayList<>();
     }
 
     //Getters
