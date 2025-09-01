@@ -305,6 +305,13 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         LocalDate fechaNac = jDateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         File imagen = new File(JTarchivo.getText());
 
+        if(!email.endsWith("@gmail.com")){
+            JOptionPane.showMessageDialog(this, "Correo Incorrecto debe contener @gmail.com", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        
+        
         try {
             if (JRBproponente.isSelected()) {
                 String direccion = JTdireccion.getText().trim();
@@ -354,7 +361,6 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JTapellidoActionPerformed
 
     private void JTEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTEmailActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_JTEmailActionPerformed
 
     private void JTlinkwebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTlinkwebActionPerformed
