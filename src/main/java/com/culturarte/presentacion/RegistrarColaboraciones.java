@@ -70,6 +70,11 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Registrar colaboraciones");
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jPanel1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -98,7 +103,7 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Cargar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -239,11 +244,11 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel1ComponentShown
-        // TODO add your handling code here:
+        cargarCombo();
     }//GEN-LAST:event_jPanel1ComponentShown
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        cargarCombo();
+ 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void comboPropuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPropuestasActionPerformed
@@ -284,6 +289,10 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
     private void comboColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboColaboradoresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboColaboradoresActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        cargarCombo();
+    }//GEN-LAST:event_formComponentShown
     
     private void cargarCombo(){
         comboPropuestas.removeAllItems();

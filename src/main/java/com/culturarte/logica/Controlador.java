@@ -345,12 +345,10 @@ public class Controlador implements IControlador{
     
     @Override
     public DTColaboracion getDTColaboracionPropuesta(String nickColab, String tituloProp){
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        Colaborador c = (Colaborador) mu.buscarUsuario(nickColab);
         
-        for (Colaboracion colab : c.getColaboraciones()) {
-            if (colab.getPropuesta().getTitulo().equals(tituloProp)) {
-                return new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno());
+        for (DTColaboracion colab : this.getDTColaboracionesPropuestas(nickColab)) {
+            if (colab.getPropuestaTitulo().equals(tituloProp)) {
+                return colab;
             }
         }
         return null;

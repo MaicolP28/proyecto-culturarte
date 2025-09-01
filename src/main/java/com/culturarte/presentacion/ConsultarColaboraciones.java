@@ -49,6 +49,8 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
         jTable3 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jBselec = new javax.swing.JButton();
+        jBselec2 = new javax.swing.JButton();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,6 +128,20 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Colaboracion");
 
+        jBselec.setText("Seleccionar");
+        jBselec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBselecActionPerformed(evt);
+            }
+        });
+
+        jBselec2.setText("Seleccionar");
+        jBselec2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBselec2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,13 +165,17 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(133, 133, 133)
-                        .addComponent(jCcolaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jCcolaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jBselec))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jCcolaboracion, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jCcolaboracion, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jBselec2)))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,13 +183,15 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCcolaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jBselec))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCcolaboracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jBselec2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -185,23 +207,32 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void jCcolaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCcolaboradoresActionPerformed
-        String colaboradorSeleccionado = (String) jCcolaboradores.getSelectedItem();
-        mostrarColaboraciones(colaboradorSeleccionado);
+
     }//GEN-LAST:event_jCcolaboradoresActionPerformed
 
     private void jCcolaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCcolaboracionActionPerformed
-        String colaboracionSeleccionada = (String) jCcolaboracion.getSelectedItem();
-        String colaboradorSeleccionado = (String) jCcolaboradores.getSelectedItem();
-        mostrarColaboracion(colaboracionSeleccionada,colaboradorSeleccionado);
+        
     }//GEN-LAST:event_jCcolaboracionActionPerformed
 
     private void jBcerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcerrarActionPerformed
         setVisible(false);
     }//GEN-LAST:event_jBcerrarActionPerformed
 
+    private void jBselecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBselecActionPerformed
+        String colaboradorSeleccionado = (String) jCcolaboradores.getSelectedItem();
+        mostrarColaboraciones(colaboradorSeleccionado);
+    }//GEN-LAST:event_jBselecActionPerformed
+
+    private void jBselec2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBselec2ActionPerformed
+        String colaboracionSeleccionada = (String) jCcolaboracion.getSelectedItem();
+        String colaboradorSeleccionado = (String) jCcolaboradores.getSelectedItem();
+        mostrarColaboracion(colaboracionSeleccionada,colaboradorSeleccionado);
+    }//GEN-LAST:event_jBselec2ActionPerformed
+
     private void mostrarColaboraciones(String nick){
         ArrayList<DTColaboracion> colaboraciones= controlador.getDTColaboracionesPropuestas(nick);
        
+        this.jCcolaboracion.removeAllItems();
         for(DTColaboracion c:colaboraciones){
             tabla1.setRowCount(0);
             Object[] fila = {nick, c.getPropuestaTitulo().trim()};
@@ -230,6 +261,8 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBcerrar;
+    private javax.swing.JButton jBselec;
+    private javax.swing.JButton jBselec2;
     private javax.swing.JComboBox<String> jCcolaboracion;
     private javax.swing.JComboBox<String> jCcolaboradores;
     private javax.swing.JLabel jLabel1;
