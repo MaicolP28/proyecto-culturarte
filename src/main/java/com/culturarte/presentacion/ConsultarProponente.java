@@ -109,7 +109,15 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
             new String [] {
                 "Title 1", "Title 2"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
