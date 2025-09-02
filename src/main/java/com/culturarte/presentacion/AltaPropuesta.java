@@ -14,6 +14,8 @@ import javax.swing.*;
 import java.util.EnumSet;
 import javax.swing.filechooser.*;
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author fabriciorivero
@@ -28,6 +30,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     public AltaPropuesta(IControlador IC) {
         initComponents();
         controlador = IC;
+        jLTipoRet.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         this.jTipoEsp.setModel(controlador.listarCategorias());
         cargarComboBox();
     }
@@ -60,12 +63,13 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         jDfecha = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jCTipoRet = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jTlugar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTipoEsp = new javax.swing.JTree();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jLTipoRet = new javax.swing.JList<>();
 
         jLabel11.setText("jLabel11");
 
@@ -124,17 +128,13 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Monto necesario");
 
-        jCTipoRet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCTipoRetActionPerformed(evt);
-            }
-        });
-
         jLabel9.setText("Tipo de retorno");
 
         jLabel10.setText("Lugar");
 
         jScrollPane1.setViewportView(jTipoEsp);
+
+        jScrollPane3.setViewportView(jLTipoRet);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,10 +145,8 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel9)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel8)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -156,33 +154,38 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel5)
-                                    .addComponent(jLabel4))))
+                                    .addComponent(jLabel4)))
+                            .addComponent(jLabel9))
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCProponente, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTdescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jCProponente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTtitulo)
-                            .addComponent(jTlugar, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jDfecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTmontoE)
                             .addComponent(jTmontoN)
-                            .addComponent(jCTipoRet, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTimagen, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jBImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jTdescripcion)
+                            .addComponent(jTlugar)
+                            .addComponent(jScrollPane3)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
-                        .addComponent(jBAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBcancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTimagen, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jBAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBcancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jCProponente, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -217,24 +220,20 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTmontoN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCTipoRet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTimagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBcancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(jLabel3)
+                    .addComponent(jTimagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBcancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(71, 71, 71))
         );
 
         pack();
@@ -251,8 +250,8 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         LocalDate fechaPrev = jDfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String proponente = (String) jCProponente.getSelectedItem();
         String tipoEsp = jTipoEsp.getToolTipText();
-        TipoRetorno seleccionado = (TipoRetorno) jCTipoRet.getSelectedItem();
-        EnumSet<TipoRetorno> tipoRet = EnumSet.of(seleccionado);
+        List<TipoRetorno> seleccionados = jLTipoRet.getSelectedValuesList();
+        EnumSet<TipoRetorno> tipoRet = EnumSet.copyOf(seleccionados);
         File imagen = new File(jTimagen.getText());
 
         try {
@@ -279,25 +278,21 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     
     private void cargarComboBox() {
         this.jCProponente.removeAllItems();
-        this.jCTipoRet.removeAllItems();
         
         ArrayList<String> nomProponentes = controlador.getNomProponentes();
         for (String p : nomProponentes) {
             this.jCProponente.addItem(p);
         }
         
+        DefaultListModel<TipoRetorno> modelo = new DefaultListModel<>();
         for (TipoRetorno tr : TipoRetorno.values()) {
-            this.jCTipoRet.addItem(tr);
+            modelo.addElement(tr);
         }
-        
-        this.jTipoEsp.setModel(controlador.listarCategorias());
-        
+        jLTipoRet.setModel(modelo);
+
+        this.jTipoEsp.setModel(controlador.listarCategorias());        
     }
     
-    private void jCTipoRetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCTipoRetActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCTipoRetActionPerformed
-
     private void jBcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcancelarActionPerformed
         this.jTdescripcion.setText("");
         this.jTimagen.setText("");
@@ -306,6 +301,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         this.jTmontoN.setText("");
         this.jTtitulo.setText("");
         this.jDfecha.setDate(null);
+        this.jLTipoRet.clearSelection();
         this.setVisible(false);
     }//GEN-LAST:event_jBcancelarActionPerformed
 
@@ -323,8 +319,8 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBImagen;
     private javax.swing.JButton jBcancelar;
     private javax.swing.JComboBox<String> jCProponente;
-    private javax.swing.JComboBox<TipoRetorno> jCTipoRet;
     private com.toedter.calendar.JDateChooser jDfecha;
+    private javax.swing.JList<com.culturarte.logica.enums.TipoRetorno> jLTipoRet;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -337,6 +333,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTdescripcion;
     private javax.swing.JTextField jTimagen;
     private javax.swing.JTree jTipoEsp;
