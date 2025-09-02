@@ -22,7 +22,35 @@ import javax.swing.tree.DefaultTreeModel;
 public class Controlador implements IControlador{
     
     public Controlador() {
+        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        ManejadorCategoria mc = ManejadorCategoria.getInstancia();
+        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         
+        // Datos de prueba
+        
+        Colaborador c1 = new Colaborador("maicol123", "Maicol", "Pastor", "maicol@coso", LocalDate.now(), null);
+        Colaborador c2 = new Colaborador("roberto", "Robert", "Gomez", "robert@coso", LocalDate.now(), null);
+        Colaborador c3 = new Colaborador("ñery", "Kevin", "Kante", "kevinvpi@coso", LocalDate.now(), null);
+        mu.agregarUsuario(c1);
+        mu.agregarUsuario(c2);
+        mu.agregarUsuario(c3);
+        
+        Proponente p1 = new Proponente("alonso", "Alonso", "Tornado", "tornadito@vpi", LocalDate.now(), null, "Casa", "www.coso.com", "el propio");
+        Proponente p2 = new Proponente("simio", "Simio", "Mono", "coso@vpi", LocalDate.now(), null, "Casa", "www.coso.com", "el propio");
+        Proponente p3 = new Proponente("juan", "Juan", "Caballo", "caballito@vpi", LocalDate.now(), null, "Casa", "www.coso.com", "el propio");
+        mu.agregarUsuario(p1);
+        mu.agregarUsuario(p2);
+        mu.agregarUsuario(p3);
+        
+        Categoria cat1 = new Categoria("Rock", null);
+        Categoria cat2 = new Categoria("Cumbia", null);
+        mc.agregarCategoriaRaiz(cat2);
+        mc.agregarCategoriaRaiz(cat1);
+        
+        cat1.addSubCategoria(new Categoria("Nacional", cat1));
+        cat1.addSubCategoria(new Categoria("Metal", cat1));
+        cat2.addSubCategoria(new Categoria("Argentina", cat2));
+        cat2.addSubCategoria(new Categoria("Uruguaya", cat2));
     }
     
     @Override
