@@ -23,7 +23,7 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
     public AltaCategoria(IControlador IC) {
         initComponents();
         controlador = IC;
-        this.jTree1.setModel(controlador.listarCategorias());
+        
     }
 
     /**
@@ -51,6 +51,9 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 formComponentHidden(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
             }
         });
 
@@ -151,6 +154,11 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+
+        this.jTree1.setModel(controlador.listarCategorias());
+    }//GEN-LAST:event_formComponentShown
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

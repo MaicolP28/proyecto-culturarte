@@ -28,7 +28,7 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
     public ConsultarColaboradores(IControlador IC) {
         initComponents();
         controlador = IC;
-        cargarComboBox();
+        
         tabla=(DefaultTableModel)jTable1.getModel();
         tabla2=(DefaultTableModel)jTable2.getModel();
     }
