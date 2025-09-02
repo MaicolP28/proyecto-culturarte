@@ -305,8 +305,8 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         LocalDate fechaNac = jDateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         File imagen = new File(JTarchivo.getText());
 
-        if(!email.endsWith("@gmail.com")){
-            JOptionPane.showMessageDialog(this, "Correo Incorrecto debe contener @gmail.com", "Error", JOptionPane.ERROR_MESSAGE);
+        if(!email.contains("@")){
+            JOptionPane.showMessageDialog(this, "Correo Incorrecto", "EROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
