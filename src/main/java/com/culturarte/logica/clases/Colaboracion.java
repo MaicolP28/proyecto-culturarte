@@ -1,13 +1,17 @@
 package com.culturarte.logica.clases;
 
 import com.culturarte.logica.enums.TipoRetorno;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
+@Entity
 public class Colaboracion {
     private float monto;
     private LocalDate fechaAporte;
     private TipoRetorno tipoRetorno;
+    @Id
     private Propuesta propuesta;
     private Colaborador colaborador;
 

@@ -2,13 +2,17 @@ package com.culturarte.logica.clases;
 
 import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.enums.TipoRetorno;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
+@Entity
 public class Propuesta {
+    @Id
     private String titulo;
     private String descripcion;
     private String lugar;

@@ -3,7 +3,9 @@ package com.culturarte.logica.clases;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import jakarta.persistence.Entity;
 
+@Entity
 public class Proponente extends Usuario {
     private String direccion;
     private String biografia;

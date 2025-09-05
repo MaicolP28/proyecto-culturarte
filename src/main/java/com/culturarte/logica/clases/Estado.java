@@ -1,11 +1,15 @@
 package com.culturarte.logica.clases;
 
 import com.culturarte.logica.enums.TipoEstado;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
+@Entity
 public class Estado {
     private LocalDate fecha;
+    @Id
     private TipoEstado estado;
 
     public Estado() {}

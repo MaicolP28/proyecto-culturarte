@@ -3,7 +3,9 @@ package com.culturarte.logica.clases;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import jakarta.persistence.Entity;
 
+@Entity
 public class Colaborador extends Usuario {
     private ArrayList<Colaboracion> colaboraciones;
 

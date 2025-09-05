@@ -1,8 +1,12 @@
 package com.culturarte.logica.clases;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.util.ArrayList;
 
+@Entity
 public class Categoria {
+    @Id
     private String nombre;
     private Categoria padre;
     private ArrayList<Categoria> subCategorias;
