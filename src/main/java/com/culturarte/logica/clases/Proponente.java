@@ -4,12 +4,14 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Proponente extends Usuario {
     private String direccion;
     private String biografia;
     private String linkWeb;
+    @OneToMany
     private ArrayList<Propuesta> propuestas;
     
     public Proponente() {}

@@ -3,6 +3,8 @@ package com.culturarte.logica.clases;
 import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.enums.TipoRetorno;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 
 import java.io.File;
@@ -19,6 +21,7 @@ public class Propuesta {
     private LocalDate fechaPrevista;
     private float precioEntrada;
     private float montoNecesario;
+    @Enumerated(EnumType.STRING)
     private EnumSet<TipoRetorno> tipoRetornos;
     private File imagen;
     private ArrayList<Colaboracion> colaboraciones;

@@ -1,28 +1,28 @@
 package com.culturarte.logica.clases;
 
 import com.culturarte.logica.enums.TipoRetorno;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import java.time.LocalDate;
 
 @Entity
 public class Colaboracion {
     private float monto;
     private LocalDate fechaAporte;
+    @Enumerated(EnumType.STRING)
     private TipoRetorno tipoRetorno;
-    @Id
-    private Propuesta propuesta;
-    private Colaborador colaborador;
-
+    @EmbeddedId
+    private ColaboracionId id;
+   
     public Colaboracion(){}
 
     public Colaboracion(float monto, LocalDate fechaAporte, TipoRetorno tipoRetorno, Propuesta propuesta, Colaborador colaborador) {
         this.monto = monto;
         this.fechaAporte = fechaAporte;
         this.tipoRetorno = tipoRetorno;
-        this.propuesta = propuesta;
-        this.colaborador = colaborador;
+        this.id = new ColaboracionId(propuesta, colaborador);
     }
 
     public float getMonto() {
@@ -50,15 +50,15 @@ public class Colaboracion {
     }
 
     public Propuesta getPropuesta() {
-        return propuesta;
+        return id.getPropuesta();
     }
 
     public void setPropuesta(Propuesta propuesta) {
-        this.propuesta = propuesta;
+        this.Propuesta = propuesta;
     }
 
     public Colaborador getColaborador() {
-        return colaborador;
+        return id.getColaborador();
     }
 
     public void setColaborador(Colaborador colaborador) {
