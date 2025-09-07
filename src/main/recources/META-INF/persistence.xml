@@ -2,18 +2,14 @@
 <persistence version="3.1" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
   <persistence-unit name="BaseDeDatos" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <class>com.culturarte.logica.clases.Usuario</class>
     <class>com.culturarte.logica.clases.Categoria</class>
-    <class>com.culturarte.logica.clases.Colaboracion</class>
-    <class>com.culturarte.logica.clases.Colaborador</class>
-    <class>com.culturarte.logica.clases.Estado</class>
+    <class>com.culturarte.logica.clases.Usuario</class>
     <class>com.culturarte.logica.clases.Proponente</class>
-    <class>com.culturarte.logica.clases.Propuesta</class>
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="jakarta.persistence.jdbc.user" value="root"/>
       <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="jakarta.persistence.jdbc.password" value="password"/>
+      <property name="jakarta.persistence.jdbc.password" value=""/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
     </properties>

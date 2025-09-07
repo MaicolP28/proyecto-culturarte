@@ -5,6 +5,8 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import java.time.LocalDate;
 
 @Entity
@@ -13,8 +15,8 @@ public class Colaboracion {
     private LocalDate fechaAporte;
     @Enumerated(EnumType.STRING)
     private TipoRetorno tipoRetorno;
-    @EmbeddedId
-    private ColaboracionId id;
+    private Propuesta propuesta;
+    private Colaborador colaborador;
    
     public Colaboracion(){}
 
@@ -22,7 +24,8 @@ public class Colaboracion {
         this.monto = monto;
         this.fechaAporte = fechaAporte;
         this.tipoRetorno = tipoRetorno;
-        this.id = new ColaboracionId(propuesta, colaborador);
+        this.propuesta = propuesta;
+        this.colaborador = colaborador;
     }
 
     public float getMonto() {
@@ -50,15 +53,15 @@ public class Colaboracion {
     }
 
     public Propuesta getPropuesta() {
-        return id.getPropuesta();
+        return getPropuesta();
     }
 
     public void setPropuesta(Propuesta propuesta) {
-        this.Propuesta = propuesta;
+        this.propuesta = propuesta;
     }
 
     public Colaborador getColaborador() {
-        return id.getColaborador();
+        return getColaborador();
     }
 
     public void setColaborador(Colaborador colaborador) {
