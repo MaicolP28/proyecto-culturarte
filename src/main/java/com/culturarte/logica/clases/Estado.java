@@ -5,11 +5,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 import java.time.LocalDate;
 
 @Entity
 public class Estado {
+ 
     private LocalDate fecha;
     @Id
     @Enumerated(EnumType.STRING)

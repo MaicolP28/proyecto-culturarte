@@ -1,7 +1,7 @@
 package com.culturarte.logica.clases;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ public class ColaboracionId implements Serializable {
     @OneToOne
     private Propuesta propuesta;
 
-    @ManyToOne
+    @OneToMany
     private Colaborador colaborador;
 
     public ColaboracionId() {}

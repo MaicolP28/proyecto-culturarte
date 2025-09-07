@@ -2,10 +2,18 @@ package com.culturarte.logica.clases;
 
 import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.enums.TipoRetorno;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -24,8 +32,13 @@ public class Propuesta {
     @Enumerated(EnumType.STRING)
     private EnumSet<TipoRetorno> tipoRetornos;
     private File imagen;
+//    private String imagenPath; 
+    @OneToMany
     private ArrayList<Colaboracion> colaboraciones;
+    @OneToOne
     private Proponente proponente;
+    @ElementCollection(targetClass = Estado.class)
+    @Enumerated(EnumType.STRING)
     private ArrayList<Estado> historialEstados;
     private Estado estadoActual;
     private Categoria categoria;
@@ -50,7 +63,21 @@ public class Propuesta {
         this.historialEstados = new ArrayList<>();
         this.historialEstados.add(this.estadoActual);
     }
+    
 
+//    @PostLoad
+//    private void postLoad() {
+//    if (imagenPath != null) {
+//        imagen = new File(imagenPath);
+//        }
+//    }
+//
+//    @PrePersist
+//    @PreUpdate
+//    private void preSave() {
+//    imagenPath = (imagen != null) ? imagen.getPath() : null;
+//    }
+    
     public String getTitulo() {
         return titulo;
     }

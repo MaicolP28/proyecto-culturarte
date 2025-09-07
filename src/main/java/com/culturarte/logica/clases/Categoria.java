@@ -2,10 +2,11 @@ package com.culturarte.logica.clases;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Entity
-public class Categoria {
+public class Categoria implements Serializable {
     @Id
     private String nombre;
     private Categoria padre;
