@@ -1,16 +1,18 @@
 package com.culturarte.logica.manejadores;
 
 import com.culturarte.logica.clases.Propuesta;
-import java.util.ArrayList;
-
-import java.util.HashMap;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+import java.util.List;
 
 public class ManejadorPropuesta {
-    private HashMap<String, Propuesta> propuestasTitulo;
     private  static ManejadorPropuesta instancia = null;
+    private EntityManagerFactory emf;
 
     private ManejadorPropuesta(){
-        propuestasTitulo = new HashMap<>();
+        emf = Persistence.createEntityManagerFactory("BaseDeDatos");
     }
 
     public static ManejadorPropuesta getInstancia(){
@@ -21,22 +23,51 @@ public class ManejadorPropuesta {
     }
 
     public void agregarPropuesta(Propuesta propuesta){
-        propuestasTitulo.put(propuesta.getTitulo(), propuesta);
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(propuesta);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     public Propuesta getPropuesta(String titulo){
-        return propuestasTitulo.get(titulo);
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(Propuesta.class, titulo);
+        } finally {
+            em.close();
+        }
     }
     
     public Propuesta buscarPropuesta(String titulo) {
-        return ((Propuesta) propuestasTitulo.get(titulo));
+        return getPropuesta(titulo);
     }
     
-    public HashMap<String, Propuesta> getPropuestas() {
-        return propuestasTitulo;
+    public List<Propuesta> getPropuestas() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Propuesta> query = em.createQuery("SELECT p FROM Propuesta p", Propuesta.class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
     }
     
     public void sacarPropuesta(Propuesta propuesta){
-        propuestasTitulo.remove(propuesta.getTitulo(), propuesta);
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Propuesta p = em.find(Propuesta.class, propuesta.getTitulo());
+            if (p != null) {
+                em.remove(p);
+            }
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 }
+
