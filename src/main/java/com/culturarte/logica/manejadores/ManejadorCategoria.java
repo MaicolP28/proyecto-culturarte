@@ -1,29 +1,26 @@
 package com.culturarte.logica.manejadores;
 
 import com.culturarte.logica.clases.Categoria;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import java.util.List;
 
 public class ManejadorCategoria {
 
     private static ManejadorCategoria instancia = null;
     private EntityManagerFactory emf;
-    
-    private ManejadorCategoria(){
+
+    private ManejadorCategoria() {
         emf = Persistence.createEntityManagerFactory("DBculturarte");
     }
-    
+
     public static ManejadorCategoria getInstancia() {
         if (instancia == null) {
             instancia = new ManejadorCategoria();
         }
         return instancia;
     }
-    
-    public void agregarCategoriaRaiz(Categoria categoria) {
+
+    public void alta(Categoria categoria) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -33,20 +30,24 @@ public class ManejadorCategoria {
             em.close();
         }
     }
-    
-    public List<Categoria> getCategoriasRaiz() {
+
+    public void agregarSubcategoria(String nombre, String nombrePadre) {
         EntityManager em = emf.createEntityManager();
         try {
-            TypedQuery<Categoria> query = em.createQuery(
-                "SELECT c FROM Categoria c WHERE c.padre IS NULL", Categoria.class);
-            return query.getResultList();
+            em.getTransaction().begin();
+            Categoria padre = em.find(Categoria.class, nombrePadre);
+            if (padre != null) {
+                Categoria nueva = new Categoria(nombre, padre);
+                padre.addSubCategoria(nueva);
+                em.persist(nueva);
+            }
+            em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
 
-
-    public Categoria buscarCategoria(String nombre) {
+    public Categoria buscar(String nombre) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Categoria.class, nombre);
@@ -54,18 +55,32 @@ public class ManejadorCategoria {
             em.close();
         }
     }
-    
-    private Categoria buscarRecursivo(Categoria cat, String nombre) {
-        if (cat.getNombre().equalsIgnoreCase(nombre)) {
-            return cat;
+
+    public List<Categoria> getCategoriasRaizConSubcategorias() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Categoria> q = em.createQuery(
+                "SELECT DISTINCT c FROM Categoria c LEFT JOIN FETCH c.subCategorias WHERE c.padre IS NULL",
+                Categoria.class
+            );
+            List<Categoria> raiz = q.getResultList();
+            // Si quieres carga recursiva:
+            for (Categoria c : raiz) {
+                cargarSubcategorias(c);
+            }
+            return raiz;
+        } finally {
+            em.close();
         }
-        for (Categoria sub : cat.getSubCategorias()) {
-            Categoria encontrada = buscarRecursivo(sub, nombre);
-            if (encontrada != null) return encontrada;
-        }
-        return null;
     }
-    
+
+    private void cargarSubcategorias(Categoria cat) {
+        cat.getSubCategorias().size(); // fuerza carga
+        for (Categoria sub : cat.getSubCategorias()) {
+            cargarSubcategorias(sub);
+        }
+    }
 }
+
 
 

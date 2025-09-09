@@ -163,43 +163,43 @@ public class Controlador implements IControlador{
        
         return dtp;
     }
-    
+
     @Override
-    public void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste{
+    public void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste {
         ManejadorCategoria mc = ManejadorCategoria.getInstancia();
-        
-        if (mc.buscarCategoria(nombre) != null) {
-            throw new CategoriaYaExiste("Ya existe esta categoria");
+
+        if (mc.buscar(nombre) != null) {
+            throw new CategoriaYaExiste("La categoría ya existe");
         }
-        
         if (catPadre == null) {
-            mc.agregarCategoriaRaiz(new Categoria(nombre, null));
+            mc.alta(new Categoria(nombre, null));
         } else {
-            Categoria padre = mc.buscarCategoria(catPadre);
-            if (padre != null) {
-                padre.addSubCategoria(new Categoria(nombre, padre));
-            }
-        }   
+            mc.agregarSubcategoria(nombre, catPadre);
+        }
     }
     
     @Override
     public DefaultTreeModel listarCategorias() {
         ManejadorCategoria mc = ManejadorCategoria.getInstancia();
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorías");
-        DefaultTreeModel model = new DefaultTreeModel (raiz);
-        
-        for (Categoria categoria : mc.getCategoriasRaiz()) {
-            raiz.add(crearNodoCategoria(categoria));
-        }
+        DefaultTreeModel model = new DefaultTreeModel(raiz);
+
+        List<Categoria> categoriasRaiz = mc.getCategoriasRaizConSubcategorias();
+        for (Categoria cat : categoriasRaiz) {
+            raiz.add(crearNodo(cat));
+        }   
         return model;
     }
     
-
-    
-    private DefaultMutableTreeNode crearNodoCategoria(Categoria cat) {
+    private DefaultMutableTreeNode crearNodo(Categoria cat) {
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(cat.getNombre());
-        for (Categoria sub : cat.getSubCategorias()) {
-            nodo.add(crearNodoCategoria(sub));
+
+        // Inicializamos subcategorías mientras el EntityManager está abierto
+        if (cat.getSubCategorias() != null) {
+            cat.getSubCategorias().size(); // fuerza carga
+            for (Categoria sub : cat.getSubCategorias()) {
+                nodo.add(crearNodo(sub));
+            }
         }
         return nodo;
     }
@@ -217,7 +217,7 @@ public class Controlador implements IControlador{
         
         Proponente u = (Proponente) mu.buscarUsuario(proponente);
         
-        Categoria c = mc.buscarCategoria(categoria);
+        Categoria c = mc.buscar(categoria);
         
         Propuesta p = new Propuesta(titulo,descripcion,lugar,fechaPrevista, precioEntrada, montoNecesario, tipoRetornos, imagen, u,c);
         mp.agregarPropuesta(p);
@@ -262,7 +262,7 @@ public class Controlador implements IControlador{
         DTPropuesta dtp = new DTPropuesta();
         if(p != null){
     if (p.getCategoria() != null) {
-        nombreCategoria = p.getCategoria().getNombreCompleto();
+        nombreCategoria = p.getCategoria().getNombre();
     }
         dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), nombreCategoria);
         }

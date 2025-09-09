@@ -310,8 +310,6 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             return;
         }
         
-        
-        
         try {
             if (JRBproponente.isSelected()) {
                 String direccion = JTdireccion.getText().trim();
