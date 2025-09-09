@@ -1,16 +1,24 @@
 package com.culturarte.logica.clases;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Categoria implements Serializable {
     @Id
     private String nombre;
+    @ManyToOne
+    @JoinColumn(name="padre_nombre")
     private Categoria padre;
-    private ArrayList<Categoria> subCategorias;
+    @OneToMany(mappedBy = "padre", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Categoria> subCategorias;
     
 
     public Categoria() {}
@@ -39,7 +47,7 @@ public class Categoria implements Serializable {
         this.padre = padre;
     }
 
-    public ArrayList<Categoria> getSubCategorias() {
+    public List<Categoria> getSubCategorias() {
         return subCategorias;
     }
 

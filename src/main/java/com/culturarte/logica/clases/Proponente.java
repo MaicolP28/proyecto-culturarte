@@ -5,14 +5,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Proponente extends Usuario {
     private String direccion;
     private String biografia;
     private String linkWeb;
-    @OneToMany
-    private ArrayList<Propuesta> propuestas;
+    @OneToMany(mappedBy="proponente")
+    private List<Propuesta> propuestas;
     
     public Proponente() {}
 
@@ -39,7 +40,7 @@ public class Proponente extends Usuario {
         return linkWeb;
     }
 
-    public ArrayList<Propuesta> getPropuestas() {
+    public List<Propuesta> getPropuestas() {
         return propuestas;
     }
 

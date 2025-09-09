@@ -8,6 +8,7 @@ import jakarta.persistence.OneToMany;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -19,9 +20,9 @@ public abstract class Usuario {
     private String email;
     private LocalDate fechaNacimiento;
     @OneToMany
-    private ArrayList<Propuesta> propuestasSeguidas;
+    private List<Propuesta> propuestasSeguidas;
     @OneToMany
-    private ArrayList<Usuario> usuariosSeguidos;
+    private List<Usuario> usuariosSeguidos;
     private File imagen;
 
     public Usuario() { }
@@ -45,7 +46,7 @@ public abstract class Usuario {
         this.imagen = imagen;
     }
 
-    public ArrayList<Usuario> getUsuariosSeguidos() {
+    public List<Usuario> getUsuariosSeguidos() {
         return usuariosSeguidos;
     }
 
@@ -53,11 +54,11 @@ public abstract class Usuario {
         this.usuariosSeguidos.add(usuario);
     }
 
-    public ArrayList<Propuesta> getPropuestas() {
+    public List<Propuesta> getPropuestasSeguidas() {
         return propuestasSeguidas;
     }
 
-    public void addPropuestas(Propuesta propuesta) {
+    public void getPropuestasSeguida(Propuesta propuesta) {
         this.propuestasSeguidas.add(propuesta);
     }
 

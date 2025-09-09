@@ -12,7 +12,7 @@ public class ManejadorPropuesta {
     private EntityManagerFactory emf;
 
     private ManejadorPropuesta(){
-        emf = Persistence.createEntityManagerFactory("BaseDeDatos");
+        emf = Persistence.createEntityManagerFactory("DBculturarte");
     }
 
     public static ManejadorPropuesta getInstancia(){
@@ -34,12 +34,18 @@ public class ManejadorPropuesta {
     }
 
     public Propuesta getPropuesta(String titulo){
-        EntityManager em = emf.createEntityManager();
-        try {
-            return em.find(Propuesta.class, titulo);
-        } finally {
-            em.close();
+       
+        if (titulo != null){
+            EntityManager em = emf.createEntityManager();
+            try {
+                return em.find(Propuesta.class, titulo);
+            } finally {
+                em.close();
+            }
+
         }
+        
+        return null;
     }
     
     public Propuesta buscarPropuesta(String titulo) {

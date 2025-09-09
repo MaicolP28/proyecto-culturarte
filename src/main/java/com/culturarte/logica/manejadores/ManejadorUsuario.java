@@ -12,7 +12,7 @@ public class ManejadorUsuario {
     private EntityManagerFactory emf;
     
     private ManejadorUsuario() {
-        emf = Persistence.createEntityManagerFactory("BaseDeDatos"); ;
+        emf = Persistence.createEntityManagerFactory("DBculturarte"); ;
     }
 
     public static ManejadorUsuario getInstance() {

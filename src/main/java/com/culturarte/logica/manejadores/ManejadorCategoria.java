@@ -13,7 +13,7 @@ public class ManejadorCategoria {
     private EntityManagerFactory emf;
     
     private ManejadorCategoria(){
-        emf = Persistence.createEntityManagerFactory("BaseDeDatos");
+        emf = Persistence.createEntityManagerFactory("DBculturarte");
     }
     
     public static ManejadorCategoria getInstancia() {

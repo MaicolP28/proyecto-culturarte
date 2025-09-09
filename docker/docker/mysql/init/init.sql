@@ -1,2 +1,3 @@
-CREATE DATABASE IF NOT EXISTS culturarte;
+DROP DATABASE IF EXISTS culturarte;
+CREATE DATABASE culturarte;
 

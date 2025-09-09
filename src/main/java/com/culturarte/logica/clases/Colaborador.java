@@ -5,11 +5,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Colaborador extends Usuario {
-    @OneToMany
-    private ArrayList<Colaboracion> colaboraciones;
+    @OneToMany(mappedBy="colaborador")
+    private List<Colaboracion> colaboraciones;
 
     public Colaborador() {}
 
@@ -18,7 +19,7 @@ public class Colaborador extends Usuario {
         this.colaboraciones = new ArrayList<>();
     }
 
-    public ArrayList<Colaboracion> getColaboraciones() {
+    public List<Colaboracion> getColaboraciones() {
         return colaboraciones;
     }
 

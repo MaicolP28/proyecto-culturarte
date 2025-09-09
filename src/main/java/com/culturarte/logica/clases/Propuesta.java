@@ -2,23 +2,18 @@ package com.culturarte.logica.clases;
 
 import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.enums.TipoRetorno;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PostLoad;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 @Entity
 public class Propuesta {
@@ -33,14 +28,17 @@ public class Propuesta {
     private EnumSet<TipoRetorno> tipoRetornos;
     private File imagen;
 //    private String imagenPath; 
-    @OneToMany
-    private ArrayList<Colaboracion> colaboraciones;
-    @OneToOne
+    @OneToMany(mappedBy="propuesta")
+    private List<Colaboracion> colaboraciones;
+    @ManyToOne
     private Proponente proponente;
-    @ElementCollection(targetClass = Estado.class)
-    @Enumerated(EnumType.STRING)
-    private ArrayList<Estado> historialEstados;
+    
+    @OneToMany
+    private List<Estado> historialEstados;
+    @OneToOne
     private Estado estadoActual;
+    
+    @ManyToOne
     private Categoria categoria;
 
     public Propuesta() {
@@ -154,7 +152,7 @@ public class Propuesta {
         return imagen;
     }
     
-    public ArrayList<Colaboracion> getColaboraciones(){
+    public List<Colaboracion> getColaboraciones(){
         return colaboraciones;
     }
     

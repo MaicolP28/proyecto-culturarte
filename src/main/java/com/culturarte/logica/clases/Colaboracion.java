@@ -1,21 +1,29 @@
 package com.culturarte.logica.clases;
 
 import com.culturarte.logica.enums.TipoRetorno;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
 public class Colaboracion {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    
     private float monto;
     private LocalDate fechaAporte;
     @Enumerated(EnumType.STRING)
     private TipoRetorno tipoRetorno;
+    @ManyToOne
     private Propuesta propuesta;
+    @ManyToOne
     private Colaborador colaborador;
    
     public Colaboracion(){}
@@ -53,7 +61,7 @@ public class Colaboracion {
     }
 
     public Propuesta getPropuesta() {
-        return getPropuesta();
+        return propuesta;
     }
 
     public void setPropuesta(Propuesta propuesta) {
@@ -61,7 +69,7 @@ public class Colaboracion {
     }
 
     public Colaborador getColaborador() {
-        return getColaborador();
+        return colaborador;
     }
 
     public void setColaborador(Colaborador colaborador) {
