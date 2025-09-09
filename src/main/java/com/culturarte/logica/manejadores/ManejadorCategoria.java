@@ -1,23 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.culturarte.logica.manejadores;
 
 import com.culturarte.logica.clases.Categoria;
-import java.util.ArrayList;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+import java.util.List;
 
-/**
- *
- * @author maicol
- */
 public class ManejadorCategoria {
-    private ArrayList<Categoria> categoriasRaiz;
-    
+
     private static ManejadorCategoria instancia = null;
+    private EntityManagerFactory emf;
     
     private ManejadorCategoria(){
-        categoriasRaiz = new ArrayList<Categoria>();
+        emf = Persistence.createEntityManagerFactory("BaseDeDatos");
     }
     
     public static ManejadorCategoria getInstancia() {
@@ -28,21 +24,35 @@ public class ManejadorCategoria {
     }
     
     public void agregarCategoriaRaiz(Categoria categoria) {
-        categoriasRaiz.add(categoria);
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(categoria);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
     
-    public ArrayList<Categoria> getCategoriasRaiz() {
-        return categoriasRaiz;
+    public List<Categoria> getCategoriasRaiz() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Categoria> query = em.createQuery(
+                "SELECT c FROM Categoria c WHERE c.padre IS NULL", Categoria.class
+            );
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
     }
     
     public Categoria buscarCategoria(String nombre) {
-        for (Categoria cat : categoriasRaiz) {
-            Categoria encontrada = buscarRecursivo(cat, nombre);
-            if (encontrada != null) {
-                return encontrada;
-            }
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(Categoria.class, nombre);
+        } finally {
+            em.close();
         }
-        return null;
     }
     
     private Categoria buscarRecursivo(Categoria cat, String nombre) {
@@ -57,3 +67,5 @@ public class ManejadorCategoria {
     }
     
 }
+
+

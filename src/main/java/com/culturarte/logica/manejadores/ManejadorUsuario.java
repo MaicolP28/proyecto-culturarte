@@ -1,15 +1,18 @@
 package com.culturarte.logica.manejadores;
-
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import com.culturarte.logica.clases.Usuario;
+import java.util.List;
+import jakarta.persistence.TypedQuery;
 
-import java.util.HashMap;
 
 public class ManejadorUsuario {
-    private HashMap<String, Usuario> usuariosNick;
     private static ManejadorUsuario instancia = null;
-
+    private EntityManagerFactory emf;
+    
     private ManejadorUsuario() {
-        usuariosNick = new HashMap<>();
+        emf = Persistence.createEntityManagerFactory("BaseDeDatos"); ;
     }
 
     public static ManejadorUsuario getInstance() {
@@ -19,16 +22,37 @@ public class ManejadorUsuario {
     }
 
     public void agregarUsuario(Usuario usuario) {
-        usuariosNick.put(usuario.getNickname(), usuario);
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(usuario);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     public Usuario buscarUsuario(String nick) {
-        return ((Usuario) usuariosNick.get(nick));
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(Usuario.class, nick);
+        } finally {
+            em.close();
+        }
     }
 
-    public HashMap<String, Usuario> getUsuariosNick() {
-        return usuariosNick;
+    public List<Usuario> listarUsuarios() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u", Usuario.class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
     }
     
-    
 }
+
+
+
+   
