@@ -55,6 +55,7 @@ public class ManejadorPropuesta {
             em.close();
         }
     }
+
     
     public void sacarPropuesta(Propuesta propuesta){
         EntityManager em = emf.createEntityManager();

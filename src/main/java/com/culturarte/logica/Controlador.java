@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import jakarta.persistence.*;
+import java.util.List;
 /**
  *
  * @author maicol
@@ -25,6 +27,8 @@ public class Controlador implements IControlador{
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ManejadorCategoria mc = ManejadorCategoria.getInstancia();
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        
+        
         
         // Datos de prueba
         
@@ -81,7 +85,7 @@ public class Controlador implements IControlador{
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<String> retorno = new ArrayList<>();
         
-        for (Usuario usu : mu.getUsuariosNick().values()) {
+        for (Usuario usu : mu.listarUsuarios()) {
             if (usu instanceof Colaborador) {
                 retorno.add(usu.getNickname());
             }
@@ -90,13 +94,15 @@ public class Controlador implements IControlador{
         retorno.sort(String.CASE_INSENSITIVE_ORDER); // Ordena la lista
         return retorno;   
     }
+
+
      
     @Override
     public ArrayList<String> getNomProponentes(){
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<String> retorno = new ArrayList<>();
         
-        for (Usuario usu : mu.getUsuariosNick().values()) {
+        for (Usuario usu : mu.listarUsuarios()) {
             if (usu instanceof Proponente) {
                 retorno.add(usu.getNickname());
             }
@@ -112,7 +118,7 @@ public class Controlador implements IControlador{
     public ArrayList<String> getNomColaboradores(){
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<String> retorno = new ArrayList<>();
-        for (Usuario usu : mu.getUsuariosNick().values()) {
+        for (Usuario usu : mu.listarUsuarios()) {
             if(usu instanceof Colaborador){
                 retorno.add(usu.getNombre());
             }
@@ -125,7 +131,6 @@ public class Controlador implements IControlador{
     public DTColaborador getDTColaborador(String nickname) {
         
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
        
         Colaborador c =(Colaborador) mu.buscarUsuario(nickname);
        
@@ -172,8 +177,7 @@ public class Controlador implements IControlador{
             if (padre != null) {
                 padre.addSubCategoria(new Categoria(nombre, padre));
             }
-        }
-        
+        }   
     }
     
     @Override
@@ -182,12 +186,13 @@ public class Controlador implements IControlador{
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorías");
         DefaultTreeModel model = new DefaultTreeModel (raiz);
         
-        ArrayList<Categoria> categorias = mc.getCategoriasRaiz();
-        for (Categoria categoria : categorias) {
+        for (Categoria categoria : mc.getCategoriasRaiz()) {
             raiz.add(crearNodoCategoria(categoria));
         }
         return model;
     }
+    
+
     
     private DefaultMutableTreeNode crearNodoCategoria(Categoria cat) {
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(cat.getNombre());
@@ -222,18 +227,18 @@ public class Controlador implements IControlador{
         //Retorna todos los titulos de todas las propuestas
        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
        ArrayList<String> retorno = new ArrayList<>();
-       for(String titulo : mp.getPropuestas().keySet()){
-           retorno.add(titulo);
-       }
+       for (Propuesta p : mp.getPropuestas()){
+        retorno.add(p.getTitulo());
+    }
        retorno.sort(String.CASE_INSENSITIVE_ORDER);
        return retorno;
     }
-    
+     
     @Override
     public ArrayList<DTPropuesta> getDTPropuestas(){
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         ArrayList<DTPropuesta> retorno = new ArrayList<>();
-        for(Propuesta p : mp.getPropuestas().values()){
+        for(Propuesta p : mp.getPropuestas()){
             DTPropuesta dtp = new DTPropuesta( p.getTitulo(),
                     p.getDescripcion(),
                     p.getLugar(),
@@ -245,6 +250,7 @@ public class Controlador implements IControlador{
         }
         return retorno;
     }
+
     
     @Override
     public DTPropuesta getDTPropuesta(String titulo){
@@ -267,7 +273,7 @@ public class Controlador implements IControlador{
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         ArrayList<String> retorno = new ArrayList<>();
         
-        for (Propuesta p : mp.getPropuestas().values()) {
+        for (Propuesta p : mp.getPropuestas()) {
             if (p.getEstadoActual().getEstado() == estado)
                 retorno.add(p.getTitulo());
         }
@@ -290,7 +296,7 @@ public class Controlador implements IControlador{
     public  ArrayList<String> getNickUsuarios() {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<String> retorno = new ArrayList<>();
-        for(Usuario u : mu.getUsuariosNick().values()){
+        for(Usuario u : mu.listarUsuarios()){
             retorno.add(u.getNickname());
         }
         retorno.sort(String.CASE_INSENSITIVE_ORDER);//Ordena la lista
@@ -388,7 +394,7 @@ public class Controlador implements IControlador{
         
         ArrayList<DTColaboracion> ret = new ArrayList<>();
         
-        for (Propuesta p : mp.getPropuestas().values()) {
+        for (Propuesta p : mp.getPropuestas()) {
             if (p.getColaboraciones() != null)
                 for(Colaboracion c : p.getColaboraciones()){
                     ret.add(new DTColaboracion(c.getColaborador().getNickname(),c.getPropuesta().getTitulo(),c.getFechaAporte(),c.getMonto(),c.getTipoRetorno()));

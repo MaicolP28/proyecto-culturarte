@@ -38,14 +38,14 @@ public class ManejadorCategoria {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Categoria> query = em.createQuery(
-                "SELECT c FROM Categoria c WHERE c.padre IS NULL", Categoria.class
-            );
+                "SELECT c FROM Categoria c WHERE c.padre IS NULL", Categoria.class);
             return query.getResultList();
         } finally {
             em.close();
         }
     }
-    
+
+
     public Categoria buscarCategoria(String nombre) {
         EntityManager em = emf.createEntityManager();
         try {
