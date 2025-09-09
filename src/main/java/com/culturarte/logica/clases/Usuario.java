@@ -1,16 +1,26 @@
 package com.culturarte.logica.clases;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Usuario {
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Usuario {
+    @Id
     private String nickname;
     private String nombre;
     private String apellido;
     private String email;
     private LocalDate fechaNacimiento;
+    @OneToMany
     private ArrayList<Propuesta> propuestasSeguidas;
+    @OneToMany
     private ArrayList<Usuario> usuariosSeguidos;
     private File imagen;
 
