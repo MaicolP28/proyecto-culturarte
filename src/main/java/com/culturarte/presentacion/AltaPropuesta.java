@@ -15,6 +15,7 @@ import java.util.EnumSet;
 import javax.swing.filechooser.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -249,7 +250,11 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         float montoN = Float.parseFloat(montoNS); 
         LocalDate fechaPrev = jDfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String proponente = (String) jCProponente.getSelectedItem();
-        String tipoEsp = jTipoEsp.getToolTipText();
+        
+        DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) jTipoEsp.getSelectionPath().getLastPathComponent();
+        Object cat = nodo.getUserObject();
+        String tipoEsp = cat.toString();
+        
         List<TipoRetorno> seleccionados = jLTipoRet.getSelectedValuesList();
         EnumSet<TipoRetorno> tipoRet = EnumSet.copyOf(seleccionados);
         File imagen = new File(jTimagen.getText());

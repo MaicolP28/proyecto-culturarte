@@ -220,8 +220,8 @@ public class Controlador implements IControlador{
         Categoria c = mc.buscar(categoria);
         
         Propuesta p = new Propuesta(titulo,descripcion,lugar,fechaPrevista, precioEntrada, montoNecesario, tipoRetornos, imagen, u,c);
+        
         mp.agregarPropuesta(p);
-        u.addPropuestas(p);
     }
 
     @Override
@@ -308,22 +308,30 @@ public class Controlador implements IControlador{
     @Override 
     public  void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        Usuario seguidor = mu.buscarUsuario(nickSeguidor);
+        
+        Usuario seguidor = mu.buscarUsuarioConUsuariosSeguidos(nickSeguidor);
         Usuario seguido = mu.buscarUsuario(nickSeguido);
-            if(seguidor.getUsuariosSeguidos().contains(seguido)){
-                throw new UsuarioYaSeguido("El usuario con nickname: " + nickSeguidor + "\nYa está siguiendo a usuario con nickname: " + nickSeguido);
-            }else{
-                seguidor.addUsuariosSeguidos(seguido);
-            }
+        
+        if (seguidor == null || seguido == null) {
+            throw new UsuarioYaSeguido("Uno de los usuarios no existe.");
+        }
+        
+        if(seguidor.getUsuariosSeguidos().contains(seguido)){
+            throw new UsuarioYaSeguido("El usuario con nickname: " + nickSeguidor + "\nYa está siguiendo a usuario con nickname: " + nickSeguido);
+        }
+        
+        seguidor.addUsuariosSeguidos(seguido);
+        mu.actualizarUsuario(seguidor);
     }
     
     @Override 
     public  void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        Usuario seguidor = mu.buscarUsuario(nickSeguidor);
+        Usuario seguidor = mu.buscarUsuarioConUsuariosSeguidos(nickSeguidor);
         Usuario seguido = mu.buscarUsuario(nickSeguido);
         if(seguidor.getUsuariosSeguidos().contains(seguido)){
             seguidor.getUsuariosSeguidos().remove(seguido);
+            mu.actualizarUsuario(seguidor);
         }else{
             throw new UsuarioNoSeguido("El usuario con nickname: " + nickSeguidor + ", no sigue al usuario con nickname: " + nickSeguido);
         }
