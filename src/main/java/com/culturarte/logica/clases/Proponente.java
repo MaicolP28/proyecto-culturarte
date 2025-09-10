@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 public class Proponente extends Usuario {
     private String direccion;
+    @Column(length = 3000)
     private String biografia;
     private String linkWeb;
     @OneToMany(mappedBy="proponente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -31,7 +31,7 @@ public class DatosPrueba {
                     new File("imagenes/hr.png"),
                     "18 de Julio 1234",
                     "https://twitter.com/horaciorubino",
-                    "Conductor, actor y libretista nacido en 1962. Debutó en carnaval en 1982 con Los Klaper's y luego en Gaby's. Actualmente dirige Momosapiens."
+                    "Actor y conductor"
             );
             
             Proponente mb = new Proponente(
@@ -40,7 +40,7 @@ public class DatosPrueba {
                     new File("imagenes/mb.png"),
                     "Colonia 4321",
                     "http://www.martinbuscaglia.com/",
-                    "Artista, músico y compositor uruguayo nacido en 1972. Ha recorrido el mundo con Los Bochamakers y como solista."
+                    "Músico uruguayo"
             );
             
             Proponente hg = new Proponente(
@@ -49,7 +49,7 @@ public class DatosPrueba {
                     new File("imagenes/hg.png"),
                     "Gral. Flores 5645",
                     "",
-                    "Actor de teatro y cine. Ingresó al Galpón en 1972. Ganador de cuatro premios Florencio y premio al mejor actor de cine 2008."
+                    "Actor de teatro"
             );
             
             Proponente tc = new Proponente(
@@ -58,7 +58,7 @@ public class DatosPrueba {
                     new File("imagenes/tc.png"),
                     "Santiago Rivas 1212",
                     "https://www.facebook.com/Tabaré-Cardozo-55179094281/?ref=br_rs",
-                    "Tabaré Cardozo (Montevideo, 24 de julio de 1971) es un cantante, compositor y murguista uruguayo; conocido por su participación en la murga Agarrate Catalina, conjunto que fundó junto a su hermano Yamandú y Carlos Tanco en el año 2001."
+                    "Cantante murguista"
             );
             
             Proponente cs = new Proponente(
@@ -67,7 +67,7 @@ public class DatosPrueba {
                     new File("imagenes/cs.png"),
                     "Br. Artigas 4567",
                     "https://www.facebook.com/C1080?ref=br_rs",
-                    "Nace en el año 1947 en el conventillo \"Medio Mundo\" ubicado en pleno Barrio Sur. Es heredero parcialmente-junto al resto de sus hermanos- de la Comparsa \"Morenada\" (inactiva desde el fallecimiento de Juan Ángel Silva), en 1999 forma su propia Comparsa de negros y lubolos \"Cuareim 1080\". Director responsable, compositor y cantante de la misma."
+                    "Director comparsa"
             );
             
             Proponente jb = new Proponente(
@@ -76,7 +76,7 @@ public class DatosPrueba {
                     new File("imagenes/jb.png"),
                     "Benito Blanco 4321",
                     "",
-                    ""
+                    "Bailarín"
             );
             
             Proponente dp = new Proponente(
@@ -85,7 +85,7 @@ public class DatosPrueba {
                     new File("imagenes/dp.png"),
                     "Emilio Frugoni 1138 Ap. 02",
                     "http://www.efectocine.com",
-                    ""
+                    "Cineasta"
             );
             
             Proponente kh = new Proponente(
@@ -94,7 +94,7 @@ public class DatosPrueba {
                     new File("imagenes/kh.png"),
                     "Paraguay 1423",
                     "",
-                    ""
+                    "Organizador eventos"
             );
             
             Proponente lb = new Proponente(
@@ -103,7 +103,7 @@ public class DatosPrueba {
                     new File("imagenes/lb.png"),
                     "8 de Octubre 1429",
                     "https://bardocientifico.com/",
-                    "Organización referente en divulgación científica con espíritu didáctico y divertido."
+                    "Divulgación científica"
             );
 
             Colaborador rh = new Colaborador(
@@ -376,7 +376,7 @@ public class DatosPrueba {
             em.persist(col09); em.persist(col10); em.persist(col11); em.persist(col12);
             em.persist(col13); em.persist(col14); em.persist(col15); em.persist(col16);
             em.persist(col17);
-
+            /*
             // HR sigue a: MB, HG, TC
             hr.addUsuariosSeguidos(mb); hr.addUsuariosSeguidos(hg); hr.addUsuariosSeguidos(tc);
             
@@ -386,8 +386,8 @@ public class DatosPrueba {
             // HG sigue a: HR, TC
             hg.addUsuariosSeguidos(hr); hg.addUsuariosSeguidos(tc);
             
-            // TC sigue a: HR, TC
-            tc.addUsuariosSeguidos(hr); tc.addUsuariosSeguidos(tc);
+            // TC sigue a: HR, HG
+            tc.addUsuariosSeguidos(hr); tc.addUsuariosSeguidos(hg);
             
             // CS sigue a: HR
             cs.addUsuariosSeguidos(hr);
@@ -436,7 +436,7 @@ public class DatosPrueba {
             
             // TJ sigue a: HR, MB, HG
             tj.addUsuariosSeguidos(hr); tj.addUsuariosSeguidos(mb); tj.addUsuariosSeguidos(hg);
-
+            */
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();

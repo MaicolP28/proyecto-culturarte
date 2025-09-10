@@ -14,6 +14,7 @@ import java.util.Set;
 public class Propuesta {
     @Id
     private String titulo;
+    @Column(length = 5000)
     private String descripcion;
     private String lugar;
     private LocalDate fechaPrevista;
