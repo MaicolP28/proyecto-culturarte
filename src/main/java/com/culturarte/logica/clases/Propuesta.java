@@ -178,4 +178,10 @@ public class Propuesta {
         }
         return montoRecuadado;
     }
+    
+    public void agregarEstado(TipoEstado tipoEstado, LocalDate fecha) {
+        Estado nuevoEstado = new Estado(fecha, tipoEstado);
+        this.estadoActual = nuevoEstado;
+        this.historialEstados.add(nuevoEstado);
+    }
 }
