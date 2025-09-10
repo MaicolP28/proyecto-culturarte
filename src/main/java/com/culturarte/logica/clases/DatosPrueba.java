@@ -19,7 +19,7 @@ import java.util.EnumSet;
 public class DatosPrueba {
 
     public static void cargar() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("CulturartePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DBculturarte");
         EntityManager em = emf.createEntityManager();
 
         try {
@@ -31,7 +31,7 @@ public class DatosPrueba {
                     new File("imagenes/hr.png"),
                     "18 de Julio 1234",
                     "https://twitter.com/horaciorubino",
-                    "Horacio Rubino Torres nace el 25 de febrero de 1962, es conductor, actor y libretista. Debuta en 1982 en carnaval en Los \"Klaper's\", donde estuvo cuatro años, actuando y libretando. Luego para \"Gaby's\" (6 años), escribió en categoría revistas y humoristas y desde el comienzo y hasta el presente en su propio conjunto Momosapiens."
+                    "Conductor, actor y libretista nacido en 1962. Debutó en carnaval en 1982 con Los Klaper's y luego en Gaby's. Actualmente dirige Momosapiens."
             );
             
             Proponente mb = new Proponente(
@@ -40,7 +40,7 @@ public class DatosPrueba {
                     new File("imagenes/mb.png"),
                     "Colonia 4321",
                     "http://www.martinbuscaglia.com/",
-                    "Martín Buscaglia (Montevideo, 1972) es un artista, músico, compositor y productor uruguayo. Tanto con su banda (\"Los Bochamakers\") como en su formato \"Hombre orquesta\", o solo con su guitarra, ha recorrido el mundo tocando entre otros países en España, Estados Unidos, Inglaterra, Francia, Australia, Brasil, Colombia, Argentina, Chile, Paraguay, México y Uruguay."
+                    "Artista, músico y compositor uruguayo nacido en 1972. Ha recorrido el mundo con Los Bochamakers y como solista."
             );
             
             Proponente hg = new Proponente(
@@ -49,7 +49,7 @@ public class DatosPrueba {
                     new File("imagenes/hg.png"),
                     "Gral. Flores 5645",
                     "",
-                    "En 1972 ingresó a la Escuela de Arte Dramático del teatro El Galpón. Participó en más de treinta obras teatrales y varios largometrajes. Integró el elenco estable de Radioteatro del Sodre, y en 2006 fue asesor de su Consejo Directivo. Como actor recibió múltiples reconocimientos: cuatro premios Florencio, premio al mejor actor extranjero del Festival de Miami y premio Mejor Actor de Cine 2008."
+                    "Actor de teatro y cine. Ingresó al Galpón en 1972. Ganador de cuatro premios Florencio y premio al mejor actor de cine 2008."
             );
             
             Proponente tc = new Proponente(
@@ -103,7 +103,7 @@ public class DatosPrueba {
                     new File("imagenes/lb.png"),
                     "8 de Octubre 1429",
                     "https://bardocientifico.com/",
-                    "Queremos ser vistos y reconocidos como una organización: referente en divulgación científica con un fuerte espíritu didáctico y divertido, a través de acciones coordinadas con otros divulgadores científicos, que permitan establecer puentes de comunicación. Impulsora en la generación de espacios de democratización y apropiación social del conocimiento científico."
+                    "Organización referente en divulgación científica con espíritu didáctico y divertido."
             );
 
             Colaborador rh = new Colaborador(
