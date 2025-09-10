@@ -58,6 +58,8 @@ public class ManejadorUsuario {
             em.close();
         }
     }
+    
+    
 
     public List<Usuario> listarUsuarios() {
         EntityManager em = emf.createEntityManager();

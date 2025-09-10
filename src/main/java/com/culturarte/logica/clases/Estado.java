@@ -4,15 +4,21 @@ import com.culturarte.logica.enums.TipoEstado;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
 @Entity
 public class Estado {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
  
     private LocalDate fecha;
-    @Id
+    
     @Enumerated(EnumType.STRING)
     private TipoEstado estado;
 
@@ -23,6 +29,14 @@ public class Estado {
         this.estado = estado;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public LocalDate getFecha() {
         return fecha;
     }
