@@ -220,8 +220,8 @@ public class Controlador implements IControlador{
         Categoria c = mc.buscar(categoria);
         
         Propuesta p = new Propuesta(titulo,descripcion,lugar,fechaPrevista, precioEntrada, montoNecesario, tipoRetornos, imagen, u,c);
+        
         mp.agregarPropuesta(p);
-        u.addPropuestas(p);
     }
 
     @Override

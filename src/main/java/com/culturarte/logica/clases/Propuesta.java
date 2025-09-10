@@ -2,18 +2,13 @@ package com.culturarte.logica.clases;
 
 import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.enums.TipoRetorno;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Propuesta {
@@ -24,20 +19,24 @@ public class Propuesta {
     private LocalDate fechaPrevista;
     private float precioEntrada;
     private float montoNecesario;
+    
+    @ElementCollection(targetClass = TipoRetorno.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "propuesta_retornos", joinColumns = @JoinColumn(name = "propuesta_id"))
+    @Column(name = "retorno")
     @Enumerated(EnumType.STRING)
-    private EnumSet<TipoRetorno> tipoRetornos;
+    private Set<TipoRetorno> tipoRetornos = EnumSet.noneOf(TipoRetorno.class);
+
     private File imagen;
-//    private String imagenPath; 
-    @OneToMany(mappedBy="propuesta")
+//    private String imagenPath;     private Set<TipoRetorno> tipoRetornos = new EnumSet<>();
+    @OneToMany(mappedBy = "propuesta", fetch = FetchType.EAGER)
     private List<Colaboracion> colaboraciones;
     @ManyToOne
     private Proponente proponente;
     
-    @OneToMany
-    private List<Estado> historialEstados;
-    @OneToOne
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<Estado> historialEstados;    
+    @OneToOne(cascade = CascadeType.ALL)
     private Estado estadoActual;
-    
     @ManyToOne
     private Categoria categoria;
 
@@ -58,8 +57,8 @@ public class Propuesta {
         this.colaboraciones = new ArrayList<>();
 
         this.estadoActual = new Estado(LocalDate.now(), TipoEstado.INGRESADA);
-        this.historialEstados = new ArrayList<>();
-        this.historialEstados.add(this.estadoActual);
+        this.historialEstados = new ArrayList<>(List.of(this.estadoActual));
+
     }
     
 
