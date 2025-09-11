@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import jakarta.persistence.*;
 import java.util.List;
 /**
  *
@@ -539,8 +538,94 @@ public class Controlador implements IControlador{
                     null
             );
             
+            // HR sigue a: MB, HG, TC
+            this.seguirUsuario("hrubino", "mbusca");
+            this.seguirUsuario("hrubino", "hectorg");
+            this.seguirUsuario("hrubino", "tabarec");
+
+            // MB sigue a: HR, HG, TC
+            
+            this.seguirUsuario("mbusca", "hrubino");
+            this.seguirUsuario("mbusca", "hectorg");
+            this.seguirUsuario("mbusca", "tabarec");
+
+            // HG sigue a: HR, TC
+            this.seguirUsuario("hectorg", "hrubino");
+            this.seguirUsuario("hectorg", "tabarec");
+
+            // TC sigue a: HR, HG
+            this.seguirUsuario("tabarec", "hrubino");
+            this.seguirUsuario("tabarec", "hectorg");
+
+            // CS sigue a: HR
+            this.seguirUsuario("cachilas", "hrubino");
+
+            // JB sigue a: HR, TC
+            this.seguirUsuario("juliob", "hrubino");
+            this.seguirUsuario("juliob", "tabarec");
+
+            // DP sigue a: HR, TC
+            this.seguirUsuario("diegop", "hrubino");
+            this.seguirUsuario("diegop", "tabarec");
+
+            // KH sigue a: HR
+            this.seguirUsuario("kairoh", "hrubino");
+
+            // LB sigue a: HR, TC
+            this.seguirUsuario("losBardo", "hrubino");
+            this.seguirUsuario("losBardo", "tabarec");
+
+            // RH sigue a: HR, MB, HG
+            this.seguirUsuario("robinh", "hrubino");
+            this.seguirUsuario("robinh", "mbusca");
+            this.seguirUsuario("robinh", "hectorg");
+
+            // MT sigue a: HR, MB, HG
+            this.seguirUsuario("marcelot", "hrubino");
+            this.seguirUsuario("marcelot", "mbusca");
+            this.seguirUsuario("marcelot", "hectorg");
+
+            // EN sigue a: HR, MB, HG
+            this.seguirUsuario("novick", "hrubino");
+            this.seguirUsuario("novick", "mbusca");
+            this.seguirUsuario("novick", "hectorg");
+
+            // SP sigue a: HR, MB, HG
+            this.seguirUsuario("sergiop", "hrubino");
+            this.seguirUsuario("sergiop", "mbusca");
+            this.seguirUsuario("sergiop", "hectorg");
+
+            // AR sigue a: HR
+            this.seguirUsuario("chino", "hrubino");
+
+            // AP sigue a: HR
+            this.seguirUsuario("tonyp", "hrubino");
+
+            // NJ sigue a: HR, MB
+            this.seguirUsuario("nicoJ", "hrubino");
+            this.seguirUsuario("nicoJ", "mbusca");
+
+            // JP sigue a: HR, MB, HG
+            this.seguirUsuario("juanP", "hrubino");
+            this.seguirUsuario("juanP", "mbusca");
+            this.seguirUsuario("juanP", "hectorg");
+
+            // MG sigue a: HR, MB, HG
+            this.seguirUsuario("Mengano", "hrubino");
+            this.seguirUsuario("Mengano", "mbusca");
+            this.seguirUsuario("Mengano", "hectorg");
+
+            // PL sigue a: HR, MB
+            this.seguirUsuario("Perengano", "hrubino");
+            this.seguirUsuario("Perengano", "mbusca");
+
+            // TJ sigue a: HR, MB, HG
+            this.seguirUsuario("Tiajaci", "hrubino");
+            this.seguirUsuario("Tiajaci", "mbusca");
+            this.seguirUsuario("Tiajaci", "hectorg");
+
+            
             // Categorias
-            // Categorías raíz
             this.altaCategoria("Teatro", null);
             this.altaCategoria("Literatura", null);
             this.altaCategoria("Música", null);
@@ -661,6 +746,26 @@ public class Controlador implements IControlador{
                     null,
                     "losBardo", "Stand-up"
             );
+            
+            
+//            Colaboracion col01 = new Colaboracion(50000, LocalDate.of(2017, 5, 20), TipoRetorno.PORCENTAJEGANANCIA, ceb, en);
+//            Colaboracion col02 = new Colaboracion(50000, LocalDate.of(2017, 5, 24), TipoRetorno.PORCENTAJEGANANCIA, ceb, rh);
+//            Colaboracion col03 = new Colaboracion(50000, LocalDate.of(2017, 5, 30), TipoRetorno.PORCENTAJEGANANCIA, ceb, nj);
+//            Colaboracion col04 = new Colaboracion(200000, LocalDate.of(2017, 6, 30), TipoRetorno.PORCENTAJEGANANCIA, mom, mt);
+//            Colaboracion col05 = new Colaboracion(500, LocalDate.of(2017, 7, 1), TipoRetorno.ENTRADAGRATIS, mom, tj);
+//            Colaboracion col06 = new Colaboracion(600, LocalDate.of(2017, 7, 7), TipoRetorno.ENTRADAGRATIS, mom, mg);
+//            Colaboracion col07 = new Colaboracion(50000, LocalDate.of(2017, 7, 10), TipoRetorno.PORCENTAJEGANANCIA, mom, en);
+//            Colaboracion col08 = new Colaboracion(50000, LocalDate.of(2017, 7, 15), TipoRetorno.PORCENTAJEGANANCIA, mom, sp);
+//            Colaboracion col09 = new Colaboracion(200000, LocalDate.of(2017, 8, 1), TipoRetorno.PORCENTAJEGANANCIA, pim, mt);
+//            Colaboracion col10 = new Colaboracion(80000, LocalDate.of(2017, 8, 3), TipoRetorno.PORCENTAJEGANANCIA, pim, sp);
+//            Colaboracion col11 = new Colaboracion(50000, LocalDate.of(2017, 8, 5), TipoRetorno.ENTRADAGRATIS, pil, ar);
+//            Colaboracion col12 = new Colaboracion(120000, LocalDate.of(2017, 8, 10), TipoRetorno.PORCENTAJEGANANCIA, pil, en);
+//            Colaboracion col13 = new Colaboracion(120000, LocalDate.of(2017, 8, 15), TipoRetorno.ENTRADAGRATIS, pil, ap);
+//            Colaboracion col14 = new Colaboracion(100000, LocalDate.of(2017, 8, 13), TipoRetorno.PORCENTAJEGANANCIA, ryj, sp);
+//            Colaboracion col15 = new Colaboracion(200000, LocalDate.of(2017, 8, 14), TipoRetorno.PORCENTAJEGANANCIA, ryj, mt);
+//            Colaboracion col16 = new Colaboracion(30000, LocalDate.of(2017, 8, 15), TipoRetorno.ENTRADAGRATIS, udj, ap);
+//            Colaboracion col17 = new Colaboracion(150000, LocalDate.of(2017, 8, 17), TipoRetorno.PORCENTAJEGANANCIA, udj, mt);
+//
             
             System.out.println("Datos de prueba cargados exitosamente.");
         } catch (Exception e) {
