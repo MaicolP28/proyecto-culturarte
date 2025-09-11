@@ -122,9 +122,8 @@ public class Controlador implements IControlador{
         // Datos usuario, datos proponente, Propuestas (nombre, estado, lista colaboradores, monto recaudado, monto necesario)
         
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
        
-        Proponente p =(Proponente) mu.buscarUsuario(nickname);
+        Proponente p = mu.getProponenteConPropuestas(nickname);
         
         DTProponente dtp = new DTProponente(p.getNickname(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNacimiento(), p.getImagen(), p.getDireccion(), p.getLinkWeb(), p.getBiografia());
         
@@ -182,7 +181,7 @@ public class Controlador implements IControlador{
         ManejadorCategoria mc = ManejadorCategoria.getInstancia();
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         
-        if (mp.buscarPropuesta(titulo) != null) {
+        if (mp.getPropuesta(titulo) != null) {
             throw new PropuestaYaExiste("Ya existe esta Propuesta");
         }
         
@@ -228,7 +227,7 @@ public class Controlador implements IControlador{
     @Override
     public DTPropuesta getDTPropuesta(String titulo){
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
-        Propuesta p = mp.buscarPropuesta(titulo);
+        Propuesta p = mp.getPropuesta(titulo);
         String nombreCategoria = "Sin categoría"; 
         DTPropuesta dtp = new DTPropuesta();
         if(p != null){
@@ -257,7 +256,7 @@ public class Controlador implements IControlador{
     @Override 
     public void altaColaboracion(String tituloPropuesta, String nickColaborador, TipoRetorno tipoRetorno, float monto){
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
-        Propuesta p = mp.buscarPropuesta(tituloPropuesta);
+        Propuesta p = mp.getPropuesta(tituloPropuesta);
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         Colaborador c = (Colaborador) mu.buscarUsuario(nickColaborador);
         Colaboracion colab = new Colaboracion(monto, LocalDate.now(), tipoRetorno, p, c);
@@ -280,7 +279,7 @@ public class Controlador implements IControlador{
     public  void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
         
-        Usuario seguidor = mu.buscarUsuarioConUsuariosSeguidos(nickSeguidor);
+        Usuario seguidor = mu.buscarUsuario(nickSeguidor);
         Usuario seguido = mu.buscarUsuario(nickSeguido);
         
         if (seguidor == null || seguido == null) {
@@ -298,7 +297,7 @@ public class Controlador implements IControlador{
     @Override 
     public  void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido {
         ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        Usuario seguidor = mu.buscarUsuarioConUsuariosSeguidos(nickSeguidor);
+        Usuario seguidor = mu.buscarUsuario(nickSeguidor);
         Usuario seguido = mu.buscarUsuario(nickSeguido);
         if(seguidor.getUsuariosSeguidos().contains(seguido)){
             seguidor.getUsuariosSeguidos().remove(seguido);
@@ -329,18 +328,18 @@ public class Controlador implements IControlador{
     
     @Override
     public void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador){
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
-        Propuesta p = mp.buscarPropuesta(tituloPropuesta);
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        Colaborador c = (Colaborador) mu.buscarUsuario(nickColaborador);
-        
-        for (Colaboracion colab : p.getColaboraciones()) {
-            if (colab.getColaborador().equals(c)) {
-                p.getColaboraciones().remove(colab);
-                c.getColaboraciones().remove(colab);
-                break;
-            }
-        }
+//        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+//        Propuesta p = mp.getPropuesta(tituloPropuesta);
+//        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+//        Colaborador c = (Colaborador) mu.buscarUsuario(nickColaborador);
+//        
+//        for (Colaboracion colab : p.getColaboraciones()) {
+//            if (colab.getColaborador().equals(c)) {
+//                p.getColaboraciones().remove(colab);
+//                c.getColaboraciones().remove(colab);
+//                break;
+//            }
+//        }
     }
     
     
@@ -351,9 +350,9 @@ public class Controlador implements IControlador{
         
         ArrayList<DTColaboracion> ret = new ArrayList<>();
         
-        for (Colaboracion colab : c.getColaboraciones()) {
-            ret.add(new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno()));
-        }
+//        for (Colaboracion colab : c.getColaboraciones()) {
+//            ret.add(new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno()));
+//        }
         
         return ret;
     }
@@ -361,11 +360,11 @@ public class Controlador implements IControlador{
     @Override
     public DTColaboracion getDTColaboracionPropuesta(String nickColab, String tituloProp){
         
-        for (DTColaboracion colab : this.getDTColaboracionesPropuestas(nickColab)) {
-            if (colab.getPropuestaTitulo().equals(tituloProp)) {
-                return colab;
-            }
-        }
+//        for (DTColaboracion colab : this.getDTColaboracionesPropuestas(nickColab)) {
+//            if (colab.getPropuestaTitulo().equals(tituloProp)) {
+//                return colab;
+//            }
+//        }
         return null;
     }
     
@@ -397,7 +396,7 @@ public class Controlador implements IControlador{
     @Override 
     public String getNickProponente(String tituloPropuesta){
         ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
-        Propuesta p = mp.buscarPropuesta(tituloPropuesta);
+        Propuesta p = mp.getPropuesta(tituloPropuesta);
         
         return p.getProponente().getNickname();
     }

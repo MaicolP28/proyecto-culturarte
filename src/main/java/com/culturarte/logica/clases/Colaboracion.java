@@ -4,6 +4,7 @@ import com.culturarte.logica.enums.TipoRetorno;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,9 +22,9 @@ public class Colaboracion {
     private LocalDate fechaAporte;
     @Enumerated(EnumType.STRING)
     private TipoRetorno tipoRetorno;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Propuesta propuesta;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Colaborador colaborador;
    
     public Colaboracion(){}
