@@ -4,9 +4,11 @@
  */
 package com.culturarte.presentacion;
 
+import com.culturarte.exepciones.CargaFallida;
 import com.culturarte.logica.Fabrica;
 import com.culturarte.logica.IControlador;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -50,6 +52,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // Pidiendo Controlador
         Fabrica fab = Fabrica.getInstancia();
         IC = fab.getIControlador();
+        
+        // Cargando datos de prueba
+        try {
+            IC.cargarDatosPrueba();
+        } catch(CargaFallida e) {
+            JOptionPane.showMessageDialog(this, "Error","Error al cargar datos prueba", JOptionPane.ERROR);
+        }
+        
         
         // Creando InternalFrames
         iframeAltaCategoria = new AltaCategoria(IC);

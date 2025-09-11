@@ -25,6 +25,9 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public interface IControlador {
     
+    // carga de datos
+    public abstract void cargarDatosPrueba() throws CargaFallida;
+    
     public abstract void altaColaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen) throws UsuarioYaExiste;
     public abstract void altaProponente(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen, String direccion, String linkWeb, String bibliografia) throws UsuarioYaExiste;
     public abstract ArrayList<String> getNomProponentes();

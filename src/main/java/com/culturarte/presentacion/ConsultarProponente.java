@@ -9,6 +9,7 @@ import com.culturarte.logica.datatypes.DTProponente;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoEstado;
 import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
@@ -256,16 +257,17 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         jTable1.setDefaultEditor(Object.class, null); 
         jTable1.setModel(dtm);
         
-        if(p.getImagen() != null){
-            ImageIcon foto = new ImageIcon(p.getImagen().getAbsolutePath());
+        File imagenFile = p.getImagen();
         
-        Image img = foto.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
-        jLabel1.setIcon(new ImageIcon(img));
-        }else{
-            //Ver de poner una imagen por defecto
-            jLabel1.setIcon(null);
+        if (imagenFile != null && imagenFile.exists()) {
+            ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
+           //escala la imagen al tamaño del JLabel
+            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_SMOOTH);
+            jLabel1.setIcon(new ImageIcon(imagenEscalada));
+        }   
+        else {
+            jLabel1.setIcon(null); // limpia si no hay imagen
         }
-        
     }
     
     
