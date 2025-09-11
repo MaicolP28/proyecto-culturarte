@@ -25,9 +25,10 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
      */
     public ConsultarPropuestas(IControlador IC) {
         initComponents();
+        tabla=(DefaultTableModel)jTable1.getModel();
         controlador = IC;
         cargarLista();
-        tabla=(DefaultTableModel)jTable1.getModel();
+        
     }
 
     /**
