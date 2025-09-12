@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
-    private DefaultTableModel dtm;
     /**
      * Creates new form ConsultarPropuestasPorEstado
      */
@@ -32,27 +31,6 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         for (TipoEstado e : TipoEstado.values()) {
             comboEstadoProp.addItem(e.toString());
         }
-        dtm = new DefaultTableModel();
-        dtm.addColumn("Título");
-        dtm.addColumn("Colaboradores");
-        dtm.addColumn("Descripcion");
-        dtm.addColumn("Lugar");
-        dtm.addColumn("Fecha Prevista");
-        dtm.addColumn("Precio Entrada");
-        dtm.addColumn("Monto Necesario");
-        dtm.addColumn("Monto Recaudado");
-
-        tablaDatosPropuesta.setModel(dtm);
-        //Corregir el ancho de las columnas
-        tablaDatosPropuesta.getColumnModel().getColumn(0).setPreferredWidth(130);
-        tablaDatosPropuesta.getColumnModel().getColumn(1).setPreferredWidth(130);
-        tablaDatosPropuesta.getColumnModel().getColumn(2).setPreferredWidth(130);
-        tablaDatosPropuesta.getColumnModel().getColumn(3).setPreferredWidth(100);
-        tablaDatosPropuesta.getColumnModel().getColumn(4).setPreferredWidth(100);
-        tablaDatosPropuesta.getColumnModel().getColumn(5).setPreferredWidth(100);
-        tablaDatosPropuesta.getColumnModel().getColumn(6).setPreferredWidth(130);
-        tablaDatosPropuesta.getColumnModel().getColumn(7).setPreferredWidth(130);
-        
         listaPropuestas.addListSelectionListener(e->{
         if(!e.getValueIsAdjusting()){
                 if(listaPropuestas.getSelectedValue() != null){
@@ -74,9 +52,25 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         comboEstadoProp = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaPropuestas = new javax.swing.JList<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaDatosPropuesta = new javax.swing.JTable();
         fotoPropuesta = new javax.swing.JLabel();
+        jlLugar = new javax.swing.JLabel();
+        jlFecha = new javax.swing.JLabel();
+        jlPrecio = new javax.swing.JLabel();
+        jlTitulo = new javax.swing.JLabel();
+        jlMontoRec = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jlColaboradores = new javax.swing.JList<>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jlMontoNec = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtaDesc = new javax.swing.JTextPane();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -98,27 +92,42 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
 
         jScrollPane2.setViewportView(listaPropuestas);
 
-        tablaDatosPropuesta.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Titulo", "Colaboradores", "Descripcion", "Lugar", "Fecha Prevista", "Precio Entrada", "Monto Necesario", "Monto Recaudado"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
+        jlLugar.setText("jLabel2");
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
+        jlFecha.setText("jLabel2");
+
+        jlPrecio.setText("jLabel2");
+
+        jlTitulo.setText("jLabel2");
+
+        jlMontoRec.setText("jLabel2");
+
+        jLabel5.setText("Monto Necesario:");
+
+        jLabel6.setText("Titulo:");
+
+        jlColaboradores.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(tablaDatosPropuesta);
+        jScrollPane1.setViewportView(jlColaboradores);
+
+        jLabel7.setText("Lugar:");
+
+        jLabel2.setText("Colaboradores:");
+
+        jlMontoNec.setText("jLabel3");
+
+        jLabel8.setText("Fecha:");
+
+        jLabel9.setText("Descripcion:");
+
+        jScrollPane3.setViewportView(jtaDesc);
+
+        jLabel3.setText("Precio:");
+
+        jLabel4.setText("Monto Recaudado:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,30 +135,87 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(comboEstadoProp, 0, 165, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE))
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jlFecha))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(comboEstadoProp, 0, 120, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jlLugar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jlTitulo)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlMontoRec)
+                    .addComponent(jlMontoNec)
+                    .addComponent(jlPrecio))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(fotoPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jlTitulo)
+                                    .addComponent(jlPrecio)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel9))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jlLugar)
+                                            .addComponent(jlMontoRec)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel7))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jlFecha)
+                                            .addComponent(jlMontoNec)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel8)))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(339, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,25 +237,28 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
             dlm.addElement(s);
         }
         listaPropuestas.setModel(dlm);
-        if (dtm != null) {
-        dtm.setRowCount(0);
-    }
+       
     if (fotoPropuesta != null) {
         fotoPropuesta.setIcon(null);
     }
     }
     
     private void cargarTabla(){   
-        dtm.setRowCount(0);
         DTPropuesta p = controlador.getDTPropuesta(listaPropuestas.getSelectedValue());
         ArrayList<String> nomColaboradores = p.getNomColaboradores();
         String colaboradores = nomColaboradores.isEmpty() ? "Sin Colaboradores" : String.join(", ", nomColaboradores);
-        Object[] data = {
-            p.getTitulo(), colaboradores,p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getMontoRecaudado()
-        };
-        dtm.addRow(data);
-        tablaDatosPropuesta.setModel(dtm); 
-        tablaDatosPropuesta.setDefaultEditor(Object.class, null); 
+       
+        jlTitulo.setText(p.getTitulo());
+        jtaDesc.setText(p.getDescripcion());
+        jlLugar.setText(p.getLugar());
+        jlFecha.setText(p.getFechaPrevista().toString());
+        jlPrecio.setText(String.valueOf(p.getPrecioEntrada()));
+        jlMontoRec.setText(String.valueOf(p.getMontoRecaudado()));
+        jlMontoNec.setText(String.valueOf(p.getMontoNecesario()));
+        DefaultListModel dlm = new DefaultListModel();
+        dlm.clear();
+        dlm.addElement(colaboradores);
+        jlColaboradores.setModel(dlm);
 
         if(p.getImagen() != null){
             ImageIcon foto = new ImageIcon(p.getImagen().getAbsolutePath());
@@ -203,9 +272,25 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboEstadoProp;
     private javax.swing.JLabel fotoPropuesta;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> jlColaboradores;
+    private javax.swing.JLabel jlFecha;
+    private javax.swing.JLabel jlLugar;
+    private javax.swing.JLabel jlMontoNec;
+    private javax.swing.JLabel jlMontoRec;
+    private javax.swing.JLabel jlPrecio;
+    private javax.swing.JLabel jlTitulo;
+    private javax.swing.JTextPane jtaDesc;
     private javax.swing.JList<String> listaPropuestas;
-    private javax.swing.JTable tablaDatosPropuesta;
     // End of variables declaration//GEN-END:variables
 }
