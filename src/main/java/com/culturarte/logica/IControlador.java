@@ -43,7 +43,7 @@ public interface IControlador {
     public abstract ArrayList<String> getTituloPropuestas(); // cu6 y cu7
     public abstract DTPropuesta getDTPropuesta(String titulo); // cu6 y cu7
     public abstract ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado); // cu6 y cu7
-    public abstract void altaColaboracion(String tituloPropuesta, String nickColaborador, TipoRetorno tipoRetorno, float monto) throws ColaboracionYaExiste; // cu9
+    public abstract void altaColaboracion( float monto, LocalDate fecha, TipoRetorno tipoRetorno, String tituloPropuesta, String nickColaborador) throws ColaboracionYaExiste; // cu9
     public abstract String getNickProponente(String tituloPropuesta); //cu9
     public abstract ArrayList<String> getNickUsuarios(); // cu12 y cu13
     public abstract void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido; // cu12

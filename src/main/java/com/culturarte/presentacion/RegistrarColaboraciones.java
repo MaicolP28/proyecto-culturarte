@@ -4,6 +4,7 @@ import com.culturarte.exepciones.ColaboracionYaExiste;
 import com.culturarte.logica.IControlador;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoRetorno;
+import java.time.LocalDate;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -334,20 +335,36 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String propSelec = (String) comboPropuestas.getSelectedItem();
-        String titulo =  propSelec.split(" - ")[0];
+        String titulo = (String) comboPropuestas.getSelectedItem();
         String tipoRetornoStr = (String) listaTipoRet.getSelectedValue();
         TipoRetorno tipoRetorno = TipoRetorno.valueOf(tipoRetornoStr);
         String montoC = jtMontoColaboracion.getText().trim();
-        float montoColaboracion = Float.parseFloat(montoC);
+        float montoColaboracion = 0;
+        try{
+            montoColaboracion = Float.parseFloat(montoC);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El monto no puede ser texto", "ERROR", JOptionPane.ERROR_MESSAGE);
+     
+            return;
+        }
+        
+        
         String nick = (String) comboColaboradores.getSelectedItem();
+        if (nick == null || nick.isBlank()) {
+            JOptionPane.showMessageDialog(this, 
+                "Debe seleccionar un colaborador válido",
+                "Error", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         try{
-            controlador.altaColaboracion(titulo, nick, tipoRetorno, montoColaboracion);
+            controlador.altaColaboracion(montoColaboracion, LocalDate.now(), tipoRetorno, titulo, nick);
         }catch(ColaboracionYaExiste e){
             JOptionPane.showMessageDialog(this, "La colaboracion ya existe" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            return; 
         }
-        JOptionPane.showMessageDialog(this, "Colaboracion registrada correctamente.");
+        JOptionPane.showMessageDialog(this, "Colaboracion registrada correctamente." + titulo + " " + nick);
         btnCancelarActionPerformed(evt);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -366,10 +383,8 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
     private void cargarCombo(){
         comboPropuestas.removeAllItems();
         comboColaboradores.removeAllItems();
-        for(String tit : controlador.getTituloPropuestas()){
-            String nick = controlador.getNickProponente(tit);
-            String datos = tit + " - " + nick;
-            comboPropuestas.addItem(datos);
+        for (String tit : controlador.getTituloPropuestas()) {
+            comboPropuestas.addItem(tit);
         }
 
         for(String nick : controlador.getNickColaboradores()){
@@ -398,6 +413,7 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
         jlPrecioEntrada.setText(String.valueOf(p.getPrecioEntrada()));
         jlMontoNecesario.setText(String.valueOf(p.getMontoNecesario()));
         jlMontoRecaudado.setText(String.valueOf(p.getMontoRecaudado()));
+        // Agregar aca el nombre del proponente **********************************+++
         }
     }
     

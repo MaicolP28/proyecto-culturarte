@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ public abstract class Usuario {
     private String apellido;
     private String email;
     private LocalDate fechaNacimiento;
-    @OneToMany
+    @ManyToMany
     private List<Propuesta> propuestasSeguidas;
-    @OneToMany
+    @ManyToMany
     private List<Usuario> usuariosSeguidos;
     private File imagen;
 
