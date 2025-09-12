@@ -12,8 +12,10 @@ import java.util.Set;
 
 @Entity
 public class Propuesta {
+    
     @Id
     private String titulo;
+    
     @Column(length = 5000)
     private String descripcion;
     private String lugar;
@@ -28,16 +30,19 @@ public class Propuesta {
     private Set<TipoRetorno> tipoRetornos = EnumSet.noneOf(TipoRetorno.class);
 
     private File imagen;
-//    private String imagenPath;     private Set<TipoRetorno> tipoRetornos = new EnumSet<>();
-    @OneToMany(mappedBy = "propuesta", fetch = FetchType.EAGER)
+    
+    @OneToMany(mappedBy = "propuesta")
     private List<Colaboracion> colaboraciones;
-    @ManyToOne
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     private Proponente proponente;
     
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
-    private List<Estado> historialEstados;    
+    private List<Estado> historialEstados;
+    
     @OneToOne(cascade = CascadeType.ALL)
     private Estado estadoActual;
+    
     @ManyToOne
     private Categoria categoria;
 
@@ -61,20 +66,6 @@ public class Propuesta {
         this.historialEstados = new ArrayList<>(List.of(this.estadoActual));
 
     }
-    
-
-//    @PostLoad
-//    private void postLoad() {
-//    if (imagenPath != null) {
-//        imagen = new File(imagenPath);
-//        }
-//    }
-//
-//    @PrePersist
-//    @PreUpdate
-//    private void preSave() {
-//    imagenPath = (imagen != null) ? imagen.getPath() : null;
-//    }
     
     public String getTitulo() {
         return titulo;
@@ -154,6 +145,22 @@ public class Propuesta {
     
     public List<Colaboracion> getColaboraciones(){
         return colaboraciones;
+    }
+
+    public Set<TipoRetorno> getTipoRetornos() {
+        return tipoRetornos;
+    }
+
+    public void setTipoRetornos(Set<TipoRetorno> tipoRetornos) {
+        this.tipoRetornos = tipoRetornos;
+    }
+
+    public List<Estado> getHistorialEstados() {
+        return historialEstados;
+    }
+
+    public void setHistorialEstados(List<Estado> historialEstados) {
+        this.historialEstados = historialEstados;
     }
     
     public void addColaboracion(Colaboracion colab){

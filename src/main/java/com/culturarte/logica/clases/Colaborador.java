@@ -4,12 +4,13 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
 @Entity
 public class Colaborador extends Usuario {
-    @OneToMany(mappedBy="colaborador")
+    @OneToMany(mappedBy="colaborador", fetch = FetchType.EAGER)
     private List<Colaboracion> colaboraciones;
 
     public Colaborador() {}

@@ -314,6 +314,12 @@ public class DatosPrueba {
 //            em.persist(ceb); em.persist(mom); em.persist(pim); em.persist(pil);
 //            em.persist(ryj); em.persist(udj); em.persist(ldt); em.persist(bef);
 //
+
+
+
+
+
+
 //            // Estados para CEB
 //            ceb.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 5, 15));
 //            ceb.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 5, 17));
@@ -352,6 +358,14 @@ public class DatosPrueba {
 //            // Estados para BEF
 //            bef.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 8, 23));
 //
+
+
+
+
+
+
+
+
 //            Colaboracion col01 = new Colaboracion(50000, LocalDate.of(2017, 5, 20), TipoRetorno.PORCENTAJEGANANCIA, ceb, en);
 //            Colaboracion col02 = new Colaboracion(50000, LocalDate.of(2017, 5, 24), TipoRetorno.PORCENTAJEGANANCIA, ceb, rh);
 //            Colaboracion col03 = new Colaboracion(50000, LocalDate.of(2017, 5, 30), TipoRetorno.PORCENTAJEGANANCIA, ceb, nj);
@@ -370,73 +384,7 @@ public class DatosPrueba {
 //            Colaboracion col16 = new Colaboracion(30000, LocalDate.of(2017, 8, 15), TipoRetorno.ENTRADAGRATIS, udj, ap);
 //            Colaboracion col17 = new Colaboracion(150000, LocalDate.of(2017, 8, 17), TipoRetorno.PORCENTAJEGANANCIA, udj, mt);
 //
-//            // Persistir colaboraciones
-//            em.persist(col01); em.persist(col02); em.persist(col03); em.persist(col04);
-//            em.persist(col05); em.persist(col06); em.persist(col07); em.persist(col08);
-//            em.persist(col09); em.persist(col10); em.persist(col11); em.persist(col12);
-//            em.persist(col13); em.persist(col14); em.persist(col15); em.persist(col16);
-//            em.persist(col17);
-            /*
-            // HR sigue a: MB, HG, TC
-            hr.addUsuariosSeguidos(mb); hr.addUsuariosSeguidos(hg); hr.addUsuariosSeguidos(tc);
-            
-            // MB sigue a: HR, HG, TC
-            mb.addUsuariosSeguidos(hr); mb.addUsuariosSeguidos(hg); mb.addUsuariosSeguidos(tc);
-            
-            // HG sigue a: HR, TC
-            hg.addUsuariosSeguidos(hr); hg.addUsuariosSeguidos(tc);
-            
-            // TC sigue a: HR, HG
-            tc.addUsuariosSeguidos(hr); tc.addUsuariosSeguidos(hg);
-            
-            // CS sigue a: HR
-            cs.addUsuariosSeguidos(hr);
-            
-            // JB sigue a: HR, TC
-            jb.addUsuariosSeguidos(hr); jb.addUsuariosSeguidos(tc);
-            
-            // DP sigue a: HR, TC
-            dp.addUsuariosSeguidos(hr); dp.addUsuariosSeguidos(tc);
-            
-            // KH sigue a: HR
-            kh.addUsuariosSeguidos(hr);
-            
-            // LB sigue a: HR, TC
-            lb.addUsuariosSeguidos(hr); lb.addUsuariosSeguidos(tc);
-            
-            // RH sigue a: HR, MB, HG
-            rh.addUsuariosSeguidos(hr); rh.addUsuariosSeguidos(mb); rh.addUsuariosSeguidos(hg);
-            
-            // MT sigue a: HR, MB, HG
-            mt.addUsuariosSeguidos(hr); mt.addUsuariosSeguidos(mb); mt.addUsuariosSeguidos(hg);
-            
-            // EN sigue a: HR, MB, HG
-            en.addUsuariosSeguidos(hr); en.addUsuariosSeguidos(mb); en.addUsuariosSeguidos(hg);
-            
-            // SP sigue a: HR, MB, HG
-            sp.addUsuariosSeguidos(hr); sp.addUsuariosSeguidos(mb); sp.addUsuariosSeguidos(hg);
-            
-            // AR sigue a: HR
-            ar.addUsuariosSeguidos(hr);
-            
-            // AP sigue a: HR
-            ap.addUsuariosSeguidos(hr);
-            
-            // NJ sigue a: HR, MB
-            nj.addUsuariosSeguidos(hr); nj.addUsuariosSeguidos(mb);
-            
-            // JP sigue a: HR, MB, HG
-            jp.addUsuariosSeguidos(hr); jp.addUsuariosSeguidos(mb); jp.addUsuariosSeguidos(hg);
-            
-            // MG sigue a: HR, MB, HG
-            mg.addUsuariosSeguidos(hr); mg.addUsuariosSeguidos(mb); mg.addUsuariosSeguidos(hg);
-            
-            // PL sigue a: HR, MB
-            pl.addUsuariosSeguidos(hr); pl.addUsuariosSeguidos(mb);
-            
-            // TJ sigue a: HR, MB, HG
-            tj.addUsuariosSeguidos(hr); tj.addUsuariosSeguidos(mb); tj.addUsuariosSeguidos(hg);
-            */
+
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
