@@ -23,7 +23,6 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
     
-    
     public ConsultarProponente(IControlador controlador) {
         initComponents(); 
         this.controlador = controlador;
@@ -31,7 +30,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         //ComboBox de Proponentes
         cargarComboBox(); 
         
-        
+        jTextField1.setEditable(false);
         jTable1.setTableHeader(null);
         
         //ComboBox de Propuestas por TipoEstado 
@@ -40,6 +39,11 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
             comboEstadoProp.addItem(e.toString());
         }
         
+        jTable2.getSelectionModel().addListSelectionListener(e-> {
+            if(!e.getValueIsAdjusting()){
+                mostrarColaboradores();
+            }
+        });
        
     }
        
@@ -68,6 +72,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jlColab = new javax.swing.JList<>();
         jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -158,6 +163,13 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Cargar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,7 +192,10 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -197,15 +212,17 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                 .addGap(131, 131, 131)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,8 +230,15 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
 
     private void ListaProponentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaProponentesActionPerformed
         String proponenteSeleccionado = (String) ListaProponentes.getSelectedItem();
-        if(proponenteSeleccionado != null)
+        if(proponenteSeleccionado != null){
             mostrarInfoProponente(proponenteSeleccionado);
+        
+            DTProponente p = controlador.getDTProponente(proponenteSeleccionado);
+            mostrarPropuestas(p);
+        
+       
+        } 
+       
     }//GEN-LAST:event_ListaProponentesActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -223,6 +247,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         cargarComboBox();
+        
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void comboEstadoPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEstadoPropActionPerformed
@@ -236,12 +261,25 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String proponente = (String) ListaProponentes.getSelectedItem();
+        if(proponente != null){
+            DTProponente p = controlador.getDTProponente(proponente);
+            mostrarPropuestas(p);
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
         
     private void mostrarPropuestas(DTProponente proponente){
+        
         String estado = (String) comboEstadoProp.getSelectedItem();
+        if(estado == null) {
+            return;
+        }
         TipoEstado estadoElegido = TipoEstado.valueOf(estado);
         DefaultTableModel dtm = new DefaultTableModel(new Object[]{"Titulo", "Monto Recaudado", "Monto Necesario"},0);
-        
+        jTable2.setDefaultEditor(Object.class, null); 
         //Constructor
         for (DTPropuesta p : proponente.getPropuestas()){
             if(p.getEstadoActual() == estadoElegido){
@@ -260,12 +298,22 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
     
     private void mostrarColaboradores(){
         int filaSelec = jTable2.getSelectedRow();
-        String tituloProp = (String) jTable2.getValueAt(filaSelec, 0);
-        DTPropuesta propuesta = controlador.getDTPropuesta(tituloProp);
-        ArrayList<String> nomColab = propuesta.getNomColaboradores();
-        DefaultListModel dlm = new DefaultListModel();
-        dlm.addElement(nomColab);
-        jlColab.setModel(dlm);
+        if(filaSelec >= 0){
+            String tituloProp = (String) jTable2.getValueAt(filaSelec, 0);
+            DTPropuesta propuesta = controlador.getDTPropuesta(tituloProp);
+            
+            ArrayList<String> nomColab = propuesta.getNomColaboradores();
+            
+            DefaultListModel dlm = new DefaultListModel();
+            if(nomColab.isEmpty()){
+                dlm.addElement("Sin Colaboradores");
+            }else{
+                for(String n : nomColab){
+                    dlm.addElement(n);
+                }
+            }
+            jlColab.setModel(dlm);
+        }
     }
     
     private void mostrarInfoProponente(String nickname){
@@ -317,6 +365,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> ListaProponentes;
     private javax.swing.JButton btnCargar;
     private javax.swing.JComboBox<String> comboEstadoProp;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
