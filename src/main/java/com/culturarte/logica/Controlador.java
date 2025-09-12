@@ -23,7 +23,17 @@ import java.util.List;
  */
 public class Controlador implements IControlador{
     
+    private final ManejadorPropuesta mp;
+    private final ManejadorUsuario mu;
+    private final ManejadorCategoria mc;
+    private final ManejadorColaboracion mcol;
+    
+    
     public Controlador() {
+        this.mp = ManejadorPropuesta.getInstancia();
+        this.mc = ManejadorCategoria.getInstancia();
+        this.mcol = ManejadorColaboracion.getInstancia();
+        this.mu = ManejadorUsuario.getInstance();
     }
     
 
@@ -31,7 +41,6 @@ public class Controlador implements IControlador{
     @Override
     public void altaColaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen)
             throws UsuarioYaExiste {
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         Usuario u = mu.buscarUsuario(nickname);
         if (u != null) {
             throw new UsuarioYaExiste("El usuario con nickname " + nickname + " ya está registrado");
@@ -42,7 +51,6 @@ public class Controlador implements IControlador{
     @Override
     public void altaProponente(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen, String direccion, String linkWeb, String bibliografia)
             throws UsuarioYaExiste {
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         Usuario u = mu.buscarUsuario(nickname);
         if (u != null) {
             throw new UsuarioYaExiste("El usuario con nickname " + nickname + " ya está registrado");
@@ -53,7 +61,6 @@ public class Controlador implements IControlador{
         
     @Override
     public ArrayList<String> getNickColaboradores(){
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<String> retorno = new ArrayList<>();
         
         for (Usuario usu : mu.listarUsuarios()) {
@@ -70,7 +77,6 @@ public class Controlador implements IControlador{
      
     @Override
     public ArrayList<String> getNomProponentes(){
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<String> retorno = new ArrayList<>();
         
         for (Usuario usu : mu.listarUsuarios()) {
@@ -87,7 +93,6 @@ public class Controlador implements IControlador{
 
     @Override
     public ArrayList<String> getNomColaboradores(){
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<String> retorno = new ArrayList<>();
         for (Usuario usu : mu.listarUsuarios()) {
             if(usu instanceof Colaborador){
@@ -100,8 +105,6 @@ public class Controlador implements IControlador{
 
     @Override
     public DTColaborador getDTColaborador(String nickname) {
-        
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
        
         Colaborador c =(Colaborador) mu.buscarUsuario(nickname);
        
@@ -120,8 +123,6 @@ public class Controlador implements IControlador{
     @Override
     public DTProponente getDTProponente(String nickname){
         // Datos usuario, datos proponente, Propuestas (nombre, estado, lista colaboradores, monto recaudado, monto necesario)
-        
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
        
         Proponente p = mu.getProponenteConPropuestas(nickname);
         
@@ -136,7 +137,6 @@ public class Controlador implements IControlador{
 
     @Override
     public void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste {
-        ManejadorCategoria mc = ManejadorCategoria.getInstancia();
 
         if (mc.buscar(nombre) != null) {
             throw new CategoriaYaExiste("La categoría ya existe");
@@ -150,7 +150,6 @@ public class Controlador implements IControlador{
     
     @Override
     public DefaultTreeModel listarCategorias() {
-        ManejadorCategoria mc = ManejadorCategoria.getInstancia();
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorías");
         DefaultTreeModel model = new DefaultTreeModel(raiz);
 
@@ -177,10 +176,7 @@ public class Controlador implements IControlador{
     @Override
     public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, String proponente, String categoria)
     throws PropuestaYaExiste {
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
-        ManejadorCategoria mc = ManejadorCategoria.getInstancia();
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
-        
+
         if (mp.getPropuesta(titulo) != null) {
             throw new PropuestaYaExiste("Ya existe esta Propuesta");
         }
@@ -196,8 +192,7 @@ public class Controlador implements IControlador{
 
     @Override
     public ArrayList<String> getTituloPropuestas(){
-        //Retorna todos los titulos de todas las propuestas
-       ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+        
        ArrayList<String> retorno = new ArrayList<>();
        for (Propuesta p : mp.getPropuestas()){
         retorno.add(p.getTitulo());
@@ -208,7 +203,6 @@ public class Controlador implements IControlador{
      
     @Override
     public ArrayList<DTPropuesta> getDTPropuestas(){
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         ArrayList<DTPropuesta> retorno = new ArrayList<>();
         for(Propuesta p : mp.getPropuestas()){
             DTPropuesta dtp = new DTPropuesta( p.getTitulo(),
@@ -226,7 +220,6 @@ public class Controlador implements IControlador{
     
     @Override
     public DTPropuesta getDTPropuesta(String titulo){
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         Propuesta p = mp.getPropuesta(titulo);
         String nombreCategoria = "Sin categoría"; 
         DTPropuesta dtp = new DTPropuesta();
@@ -242,7 +235,7 @@ public class Controlador implements IControlador{
     
     @Override
     public ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado){
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+
         ArrayList<String> retorno = new ArrayList<>();
         
         for (Propuesta p : mp.getPropuestas()) {
@@ -254,19 +247,30 @@ public class Controlador implements IControlador{
     }
     
     @Override 
-    public void altaColaboracion(String tituloPropuesta, String nickColaborador, TipoRetorno tipoRetorno, float monto){
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
+    public void altaColaboracion( float monto, LocalDate fecha, TipoRetorno tipoRetorno, String tituloPropuesta, String nickColaborador){
+
+
+        // 🔑 Cargar propuesta con sus colaboraciones
         Propuesta p = mp.getPropuesta(tituloPropuesta);
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
+        if (p == null) throw new IllegalArgumentException("No existe la propuesta: " + tituloPropuesta);
+
+        // 🔑 Cargar colaborador con sus colaboraciones
         Colaborador c = (Colaborador) mu.buscarUsuario(nickColaborador);
-        Colaboracion colab = new Colaboracion(monto, LocalDate.now(), tipoRetorno, p, c);
-        c.addColaboracion(colab);
+        if (c == null) throw new IllegalArgumentException("No existe el colaborador: " + nickColaborador);
+
+        // Crear la colaboración
+        Colaboracion colab = new Colaboracion(monto, fecha, tipoRetorno, p, c);
+
+        // Asociar bidireccionalmente
         p.addColaboracion(colab);
+        c.addColaboracion(colab);
+
+        // Persistir colaboración
+        mcol.agregarColaboracion(colab);
     }
     
     @Override 
     public  ArrayList<String> getNickUsuarios() {
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         ArrayList<String> retorno = new ArrayList<>();
         for(Usuario u : mu.listarUsuarios()){
             retorno.add(u.getNickname());
@@ -277,7 +281,6 @@ public class Controlador implements IControlador{
     
     @Override 
     public  void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido {
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         
         Usuario seguidor = mu.buscarUsuario(nickSeguidor);
         Usuario seguido = mu.buscarUsuario(nickSeguido);
@@ -296,7 +299,6 @@ public class Controlador implements IControlador{
     
     @Override 
     public  void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido {
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         Usuario seguidor = mu.buscarUsuario(nickSeguidor);
         Usuario seguido = mu.buscarUsuario(nickSeguido);
         if(seguidor.getUsuariosSeguidos().contains(seguido)){
@@ -309,7 +311,6 @@ public class Controlador implements IControlador{
 
     @Override
     public DTUsuario getDTUsuario(String nickname) {
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         Usuario usu = mu.buscarUsuario(nickname);
         
         ArrayList<String> nickSeguidos = new ArrayList<>();
@@ -328,31 +329,36 @@ public class Controlador implements IControlador{
     
     @Override
     public void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador){
-//        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
-//        Propuesta p = mp.getPropuesta(tituloPropuesta);
-//        ManejadorUsuario mu = ManejadorUsuario.getInstance();
-//        Colaborador c = (Colaborador) mu.buscarUsuario(nickColaborador);
-//        
-//        for (Colaboracion colab : p.getColaboraciones()) {
-//            if (colab.getColaborador().equals(c)) {
-//                p.getColaboraciones().remove(colab);
-//                c.getColaboraciones().remove(colab);
-//                break;
-//            }
-//        }
+        Propuesta p = mp.getPropuesta(tituloPropuesta);
+        Colaborador c = (Colaborador) mu.buscarUsuario(nickColaborador);
+
+        Colaboracion colabAEliminar = null;
+        for (Colaboracion colab : p.getColaboraciones()) {
+            if (colab.getColaborador().equals(c)) {
+                colabAEliminar = colab;
+                break;
+            }
+        }
+
+        if (colabAEliminar != null) {
+            p.getColaboraciones().remove(colabAEliminar);
+            c.getColaboraciones().remove(colabAEliminar);
+            mcol.eliminarColaboracion(colabAEliminar.getId());
+        } else {
+            throw new IllegalArgumentException("El colaborador no tiene colaboración en esta propuesta");
+        }
     }
     
     
     @Override
     public ArrayList<DTColaboracion> getDTColaboracionesPropuestas(String nickColab){
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         Colaborador c = (Colaborador) mu.buscarUsuario(nickColab);
         
         ArrayList<DTColaboracion> ret = new ArrayList<>();
         
-//        for (Colaboracion colab : c.getColaboraciones()) {
-//            ret.add(new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno()));
-//        }
+        for (Colaboracion colab : c.getColaboraciones()) {
+            ret.add(new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno()));
+        }
         
         return ret;
     }
@@ -360,17 +366,16 @@ public class Controlador implements IControlador{
     @Override
     public DTColaboracion getDTColaboracionPropuesta(String nickColab, String tituloProp){
         
-//        for (DTColaboracion colab : this.getDTColaboracionesPropuestas(nickColab)) {
-//            if (colab.getPropuestaTitulo().equals(tituloProp)) {
-//                return colab;
-//            }
-//        }
+        for (DTColaboracion colab : this.getDTColaboracionesPropuestas(nickColab)) {
+            if (colab.getPropuestaTitulo().equals(tituloProp)) {
+                return colab;
+            }
+        }
         return null;
     }
     
     @Override
     public ArrayList<DTColaboracion> getDTColaboraciones(){
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         
         ArrayList<DTColaboracion> ret = new ArrayList<>();
         
@@ -384,7 +389,6 @@ public class Controlador implements IControlador{
     }
     @Override
     public void actualizarTituloProp(String tituloViejo, String tituloNuevo){
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         Propuesta p = mp.getPropuesta(tituloViejo);
         if (p != null) {
         mp.sacarPropuesta(p);
@@ -395,16 +399,12 @@ public class Controlador implements IControlador{
     
     @Override 
     public String getNickProponente(String tituloPropuesta){
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
         Propuesta p = mp.getPropuesta(tituloPropuesta);
         
         return p.getProponente().getNickname();
     }
     
     public void cargarDatosPrueba() throws CargaFallida{
-        ManejadorPropuesta mp = ManejadorPropuesta.getInstancia();
-        ManejadorCategoria mc = ManejadorCategoria.getInstancia();
-        ManejadorUsuario mu = ManejadorUsuario.getInstance();
         System.out.println("Agregando datos de prueba: ...");
         try {
             // Proponentes
@@ -746,25 +746,65 @@ public class Controlador implements IControlador{
                     "losBardo", "Stand-up"
             );
             
+            this.altaColaboracion(50000, LocalDate.of(2017, 5, 20), TipoRetorno.PORCENTAJEGANANCIA, "Cine en el Botánico", "novick");
+            this.altaColaboracion(50000, LocalDate.of(2017, 5, 24), TipoRetorno.PORCENTAJEGANANCIA, "Cine en el Botánico", "robinh");
+            this.altaColaboracion(50000, LocalDate.of(2017, 5, 30), TipoRetorno.PORCENTAJEGANANCIA, "Cine en el Botánico", "nicoJ");
+            this.altaColaboracion(200000, LocalDate.of(2017, 6, 30), TipoRetorno.PORCENTAJEGANANCIA, "Religiosamente", "marcelot");
+            this.altaColaboracion(500, LocalDate.of(2017, 7, 1), TipoRetorno.ENTRADAGRATIS, "Religiosamente", "Tiajaci");
+            this.altaColaboracion(600, LocalDate.of(2017, 7, 7), TipoRetorno.ENTRADAGRATIS, "Religiosamente", "Mengano");
+            this.altaColaboracion(50000, LocalDate.of(2017, 7, 10), TipoRetorno.PORCENTAJEGANANCIA, "Religiosamente", "novick");
+            this.altaColaboracion(50000, LocalDate.of(2017, 7, 15), TipoRetorno.PORCENTAJEGANANCIA, "Religiosamente", "sergiop");
+            this.altaColaboracion(200000, LocalDate.of(2017, 8, 1), TipoRetorno.PORCENTAJEGANANCIA, "El Pimiento Indomable", "marcelot");
+            this.altaColaboracion(80000, LocalDate.of(2017, 8, 3), TipoRetorno.PORCENTAJEGANANCIA, "El Pimiento Indomable", "sergiop");
+            this.altaColaboracion(50000, LocalDate.of(2017, 8, 5), TipoRetorno.ENTRADAGRATIS, "Pilsen Rock", "chino");
+            this.altaColaboracion(120000, LocalDate.of(2017, 8, 10), TipoRetorno.PORCENTAJEGANANCIA, "Pilsen Rock", "novick");
+            this.altaColaboracion(120000, LocalDate.of(2017, 8, 15), TipoRetorno.ENTRADAGRATIS, "Pilsen Rock", "tonyp");
+            this.altaColaboracion(100000, LocalDate.of(2017, 8, 13), TipoRetorno.PORCENTAJEGANANCIA, "Romeo y Julieta", "sergiop");
+            this.altaColaboracion(200000, LocalDate.of(2017, 8, 14), TipoRetorno.PORCENTAJEGANANCIA, "Romeo y Julieta", "marcelot");
+            this.altaColaboracion(30000, LocalDate.of(2017, 8, 15), TipoRetorno.ENTRADAGRATIS, "Un día de Julio", "tonyp");
+            this.altaColaboracion(150000, LocalDate.of(2017, 8, 17), TipoRetorno.PORCENTAJEGANANCIA, "Un día de Julio", "marcelot");
+
             
-//            Colaboracion col01 = new Colaboracion(50000, LocalDate.of(2017, 5, 20), TipoRetorno.PORCENTAJEGANANCIA, ceb, en);
-//            Colaboracion col02 = new Colaboracion(50000, LocalDate.of(2017, 5, 24), TipoRetorno.PORCENTAJEGANANCIA, ceb, rh);
-//            Colaboracion col03 = new Colaboracion(50000, LocalDate.of(2017, 5, 30), TipoRetorno.PORCENTAJEGANANCIA, ceb, nj);
-//            Colaboracion col04 = new Colaboracion(200000, LocalDate.of(2017, 6, 30), TipoRetorno.PORCENTAJEGANANCIA, mom, mt);
-//            Colaboracion col05 = new Colaboracion(500, LocalDate.of(2017, 7, 1), TipoRetorno.ENTRADAGRATIS, mom, tj);
-//            Colaboracion col06 = new Colaboracion(600, LocalDate.of(2017, 7, 7), TipoRetorno.ENTRADAGRATIS, mom, mg);
-//            Colaboracion col07 = new Colaboracion(50000, LocalDate.of(2017, 7, 10), TipoRetorno.PORCENTAJEGANANCIA, mom, en);
-//            Colaboracion col08 = new Colaboracion(50000, LocalDate.of(2017, 7, 15), TipoRetorno.PORCENTAJEGANANCIA, mom, sp);
-//            Colaboracion col09 = new Colaboracion(200000, LocalDate.of(2017, 8, 1), TipoRetorno.PORCENTAJEGANANCIA, pim, mt);
-//            Colaboracion col10 = new Colaboracion(80000, LocalDate.of(2017, 8, 3), TipoRetorno.PORCENTAJEGANANCIA, pim, sp);
-//            Colaboracion col11 = new Colaboracion(50000, LocalDate.of(2017, 8, 5), TipoRetorno.ENTRADAGRATIS, pil, ar);
-//            Colaboracion col12 = new Colaboracion(120000, LocalDate.of(2017, 8, 10), TipoRetorno.PORCENTAJEGANANCIA, pil, en);
-//            Colaboracion col13 = new Colaboracion(120000, LocalDate.of(2017, 8, 15), TipoRetorno.ENTRADAGRATIS, pil, ap);
-//            Colaboracion col14 = new Colaboracion(100000, LocalDate.of(2017, 8, 13), TipoRetorno.PORCENTAJEGANANCIA, ryj, sp);
-//            Colaboracion col15 = new Colaboracion(200000, LocalDate.of(2017, 8, 14), TipoRetorno.PORCENTAJEGANANCIA, ryj, mt);
-//            Colaboracion col16 = new Colaboracion(30000, LocalDate.of(2017, 8, 15), TipoRetorno.ENTRADAGRATIS, udj, ap);
-//            Colaboracion col17 = new Colaboracion(150000, LocalDate.of(2017, 8, 17), TipoRetorno.PORCENTAJEGANANCIA, udj, mt);
+            
+//            // Estados para CEB
+//            ceb.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 5, 15));
+//            ceb.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 5, 17));
+//            ceb.agregarEstado(TipoEstado.ENFINANCIACION, LocalDate.of(2017, 5, 20));
+//            ceb.agregarEstado(TipoEstado.FINANCIADA, LocalDate.of(2017, 5, 30));
+//            ceb.agregarEstado(TipoEstado.CANCELADA, LocalDate.of(2017, 6, 15));
+//            
+//            // Estados para MOM
+//            mom.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 6, 18));
+//            mom.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 6, 20));
+//            mom.agregarEstado(TipoEstado.ENFINANCIACION, LocalDate.of(2017, 6, 30));
+//            mom.agregarEstado(TipoEstado.FINANCIADA, LocalDate.of(2017, 7, 15));
+//            
+//            // Estados para PIM
+//            pim.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 7, 26));
+//            pim.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 7, 31));
+//            pim.agregarEstado(TipoEstado.ENFINANCIACION, LocalDate.of(2017, 8, 1));
+//            
+//            // Estados para PIL
+//            pil.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 7, 30));
+//            pil.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 1));
+//            pil.agregarEstado(TipoEstado.ENFINANCIACION, LocalDate.of(2017, 8, 5));
+//            
+//            // Estados para RYJ
+//            ryj.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 8, 4));
+//            ryj.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 10));
+//            
+//            // Estados para UDJ
+//            udj.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 8, 6));
+//            udj.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 12));
+//            
+//            // Estados para LDT
+//            ldt.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 8, 18));
+//            ldt.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 20));
+//            
+//            // Estados para BEF
+//            bef.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 8, 23));
 //
+
             
             System.out.println("Datos de prueba cargados exitosamente.");
         } catch (Exception e) {

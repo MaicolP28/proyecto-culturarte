@@ -16,7 +16,7 @@ public class ManejadorUsuario {
         emf = Persistence.createEntityManagerFactory("DBculturarte"); ;
     }
 
-    public static synchronized ManejadorUsuario getInstance() {
+    public static ManejadorUsuario getInstance() {
         if (instancia == null)
             instancia = new ManejadorUsuario();
         return instancia;

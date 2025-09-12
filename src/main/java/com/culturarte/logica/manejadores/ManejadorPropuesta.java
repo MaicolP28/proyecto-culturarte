@@ -16,8 +16,7 @@ public class ManejadorPropuesta {
         emf = Persistence.createEntityManagerFactory("DBculturarte");
     }
 
-    // Singleton thread-safe
-    public static synchronized ManejadorPropuesta getInstancia() {
+    public static ManejadorPropuesta getInstancia() {
         if (instancia == null) {
             instancia = new ManejadorPropuesta();
         }
@@ -39,7 +38,7 @@ public class ManejadorPropuesta {
         }
     }
 
-    // Buscar propuesta por título
+
     public Propuesta getPropuesta(String titulo) {
         if (titulo == null) return null;
 
@@ -47,9 +46,7 @@ public class ManejadorPropuesta {
         try {
             Propuesta p = em.find(Propuesta.class, titulo);
             if (p != null) {
-
-                p.getColaboraciones().size();  
-
+                forzarCargaLazy(p);
             }
             return p;
         } finally {
@@ -57,7 +54,6 @@ public class ManejadorPropuesta {
         }
     }
 
-    // Listar todas las propuestas
     public List<Propuesta> getPropuestas() {
         EntityManager em = emf.createEntityManager();
         try {
@@ -70,7 +66,6 @@ public class ManejadorPropuesta {
         }
     }
 
-    // Eliminar propuesta
     public void sacarPropuesta(Propuesta propuesta) {
         if (propuesta == null || propuesta.getTitulo() == null) return;
 
@@ -81,6 +76,20 @@ public class ManejadorPropuesta {
             if (p != null) {
                 em.remove(p);
             }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+    
+        public void actualizarPropuesta(Propuesta p) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(p);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();

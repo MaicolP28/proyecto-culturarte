@@ -4,18 +4,11 @@
  */
 package com.culturarte.logica.datatypes;
 
-import com.culturarte.logica.clases.Categoria;
-import com.culturarte.logica.clases.Colaborador;
-import com.culturarte.logica.clases.Estado;
 import com.culturarte.logica.enums.TipoEstado;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-/**
- *
- * @author pablo
- */
 public class DTPropuesta {
     private String titulo;
     private String descripcion;
@@ -25,7 +18,7 @@ public class DTPropuesta {
     private float montoNecesario;
     private float montoRecaudado; // Calculado
     private File imagen;
-    private ArrayList<String> colaboradores;
+    private ArrayList<String> colaboradores = new ArrayList<>();
     private TipoEstado estadoActual;
     private String categoria;
     private String nickProponente;

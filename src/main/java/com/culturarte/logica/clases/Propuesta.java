@@ -34,7 +34,7 @@ public class Propuesta {
     @OneToMany(mappedBy = "propuesta")
     private List<Colaboracion> colaboraciones;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Proponente proponente;
     
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)

@@ -37,6 +37,10 @@ public class Colaboracion {
         this.colaborador = colaborador;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public float getMonto() {
         return monto;
     }
