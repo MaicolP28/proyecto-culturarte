@@ -89,7 +89,7 @@ public class DTPropuesta {
     }
     
     public float getMontoRecaudado() {
-        return montoNecesario;
+        return montoRecaudado;
     }
 
     public File getImagen() {
@@ -112,7 +112,7 @@ public class DTPropuesta {
     }
     
     public void addColaborador(String nom) {
-        
+        this.colaboradores.add(nom);
     }
 
     public ArrayList<String> getNomColaboradores(){

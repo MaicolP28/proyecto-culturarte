@@ -196,10 +196,10 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
         tabla2.setRowCount(0);
         for (int i = 0; i < propuesta.size(); i++) {
             Object[] fila = {
-            propuesta.get(i).getTitulo(),         
-            proponente.get(i),                   
-            recaudacion.get(i),                  
-            estadoActual.get(i)                   
+            proponente.get(i),
+            propuesta.get(i).getTitulo(),
+            recaudacion.get(i),
+            estadoActual.get(i)                    
             };
         tabla2.addRow(fila);
         } 

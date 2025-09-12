@@ -17,6 +17,7 @@ import java.util.EnumSet;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.util.List;
+import org.hibernate.Hibernate;
 /**
  *
  * @author maicol
@@ -105,19 +106,36 @@ public class Controlador implements IControlador{
 
     @Override
     public DTColaborador getDTColaborador(String nickname) {
-       
-        Colaborador c =(Colaborador) mu.buscarUsuario(nickname);
-       
-        DTColaborador dtc = new DTColaborador(c.getNickname(), c.getNombre(), c.getApellido(), c.getEmail(), c.getFechaNacimiento(), c.getImagen());
-        
-        // TODO : ARREGLAR ESTO
-        
-//        for (Propuesta prop : c.getPropuestas()) {
-//            dtc.addPropuesta(new DTPropuesta(prop.getTitulo(), prop.getEstadoActual().getEstado() , prop.getProponenteNick(), prop.getMontoRecaudado(), prop.getMontoNecesario()));
-//        }
-       
+        Colaborador c = (Colaborador) mu.buscarUsuario(nickname); 
+
+        DTColaborador dtc = new DTColaborador(
+                c.getNickname(),
+                c.getNombre(),
+                c.getApellido(),
+                c.getEmail(),
+                c.getFechaNacimiento(),
+                c.getImagen()
+        );
+
+        for (Colaboracion colab : c.getColaboraciones()) {
+            Propuesta prop = ManejadorPropuesta.getInstancia().getPropuesta(colab.getPropuesta().getTitulo());
+            if (prop != null) {
+                DTPropuesta dtp = new DTPropuesta(
+                        prop.getTitulo(),
+                        prop.getEstadoActual().getEstado(),
+                        prop.getProponente().getNickname(),
+                        prop.getMontoRecaudado(),
+                        prop.getMontoNecesario()
+                );
+                dtc.addPropuesta(dtp);
+            }
+        }
+
         return dtc;
     }
+
+
+
 
     
     @Override
