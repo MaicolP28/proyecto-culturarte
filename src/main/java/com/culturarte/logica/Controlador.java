@@ -12,12 +12,13 @@ import com.culturarte.logica.enums.*;
 import com.culturarte.logica.manejadores.*;
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.util.List;
-import org.hibernate.Hibernate;
 /**
  *
  * @author maicol
@@ -238,14 +239,20 @@ public class Controlador implements IControlador{
     
     @Override
     public DTPropuesta getDTPropuesta(String titulo){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         Propuesta p = mp.getPropuesta(titulo);
         String nombreCategoria = "Sin categoría"; 
         DTPropuesta dtp = new DTPropuesta();
+        ArrayList histEstado = new ArrayList();
         if(p != null){
-    if (p.getCategoria() != null) {
-        nombreCategoria = p.getCategoria().getNombre();
-    }
-        dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), nombreCategoria);
+            if (p.getCategoria() != null) {
+                nombreCategoria = p.getCategoria().getNombre();
+            }
+            for (Estado est : p.getHistorialEstados()) {
+                histEstado.add(new DTEstado(est.getEstado().toString(), est.getFecha().toString(), est.getHora().format(formatter)));
+            }
+    
+            dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), nombreCategoria, histEstado);
         }
         return dtp;
     }
@@ -265,7 +272,7 @@ public class Controlador implements IControlador{
     }
     
     @Override 
-    public void altaColaboracion( float monto, LocalDate fecha, TipoRetorno tipoRetorno, String tituloPropuesta, String nickColaborador){
+    public void altaColaboracion( float monto, LocalDate fecha, LocalTime hora, TipoRetorno tipoRetorno, String tituloPropuesta, String nickColaborador){
 
 
         // 🔑 Cargar propuesta con sus colaboraciones
@@ -277,7 +284,7 @@ public class Controlador implements IControlador{
         if (c == null) throw new IllegalArgumentException("No existe el colaborador: " + nickColaborador);
 
         // Crear la colaboración
-        Colaboracion colab = new Colaboracion(monto, fecha, tipoRetorno, p, c);
+        Colaboracion colab = new Colaboracion(monto, fecha, hora, tipoRetorno, p, c);
 
         // Asociar bidireccionalmente
         p.addColaboracion(colab);
@@ -340,10 +347,6 @@ public class Controlador implements IControlador{
         
         return dtu;
     }
-     
-    
-        
-    
     
     @Override
     public void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador){
@@ -375,7 +378,7 @@ public class Controlador implements IControlador{
         ArrayList<DTColaboracion> ret = new ArrayList<>();
         
         for (Colaboracion colab : c.getColaboraciones()) {
-            ret.add(new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(),colab.getMonto(),colab.getTipoRetorno()));
+            ret.add(new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(), colab.getHoraAporte(),colab.getMonto(),colab.getTipoRetorno()));
         }
         
         return ret;
@@ -400,19 +403,17 @@ public class Controlador implements IControlador{
         for (Propuesta p : mp.getPropuestas()) {
             if (p.getColaboraciones() != null)
                 for(Colaboracion c : p.getColaboraciones()){
-                    ret.add(new DTColaboracion(c.getColaborador().getNickname(),c.getPropuesta().getTitulo(),c.getFechaAporte(),c.getMonto(),c.getTipoRetorno()));
+                    ret.add(new DTColaboracion(c.getColaborador().getNickname(),c.getPropuesta().getTitulo(),c.getFechaAporte(), c.getHoraAporte(),c.getMonto(),c.getTipoRetorno()));
                 }
         }
         return ret;
     }
+    
     @Override
-    public void actualizarTituloProp(String tituloViejo, String tituloNuevo){
-        Propuesta p = mp.getPropuesta(tituloViejo);
-        if (p != null) {
-        mp.sacarPropuesta(p);
-        p.setTitulo(tituloNuevo);
-        mp.agregarPropuesta(p);
-        }
+    public void nuevoEstadoPropuesta(String propuesta, TipoEstado estado, LocalDate fecha, LocalTime hora) {
+        Propuesta p = mp.getPropuesta(propuesta);
+        p.agregarEstado(estado, fecha, hora);
+        mp.actualizarPropuesta(p);
     }
     
     @Override 
@@ -764,64 +765,65 @@ public class Controlador implements IControlador{
                     "losBardo", "Stand-up"
             );
             
-            this.altaColaboracion(50000, LocalDate.of(2017, 5, 20), TipoRetorno.PORCENTAJEGANANCIA, "Cine en el Botánico", "novick");
-            this.altaColaboracion(50000, LocalDate.of(2017, 5, 24), TipoRetorno.PORCENTAJEGANANCIA, "Cine en el Botánico", "robinh");
-            this.altaColaboracion(50000, LocalDate.of(2017, 5, 30), TipoRetorno.PORCENTAJEGANANCIA, "Cine en el Botánico", "nicoJ");
-            this.altaColaboracion(200000, LocalDate.of(2017, 6, 30), TipoRetorno.PORCENTAJEGANANCIA, "Religiosamente", "marcelot");
-            this.altaColaboracion(500, LocalDate.of(2017, 7, 1), TipoRetorno.ENTRADAGRATIS, "Religiosamente", "Tiajaci");
-            this.altaColaboracion(600, LocalDate.of(2017, 7, 7), TipoRetorno.ENTRADAGRATIS, "Religiosamente", "Mengano");
-            this.altaColaboracion(50000, LocalDate.of(2017, 7, 10), TipoRetorno.PORCENTAJEGANANCIA, "Religiosamente", "novick");
-            this.altaColaboracion(50000, LocalDate.of(2017, 7, 15), TipoRetorno.PORCENTAJEGANANCIA, "Religiosamente", "sergiop");
-            this.altaColaboracion(200000, LocalDate.of(2017, 8, 1), TipoRetorno.PORCENTAJEGANANCIA, "El Pimiento Indomable", "marcelot");
-            this.altaColaboracion(80000, LocalDate.of(2017, 8, 3), TipoRetorno.PORCENTAJEGANANCIA, "El Pimiento Indomable", "sergiop");
-            this.altaColaboracion(50000, LocalDate.of(2017, 8, 5), TipoRetorno.ENTRADAGRATIS, "Pilsen Rock", "chino");
-            this.altaColaboracion(120000, LocalDate.of(2017, 8, 10), TipoRetorno.PORCENTAJEGANANCIA, "Pilsen Rock", "novick");
-            this.altaColaboracion(120000, LocalDate.of(2017, 8, 15), TipoRetorno.ENTRADAGRATIS, "Pilsen Rock", "tonyp");
-            this.altaColaboracion(100000, LocalDate.of(2017, 8, 13), TipoRetorno.PORCENTAJEGANANCIA, "Romeo y Julieta", "sergiop");
-            this.altaColaboracion(200000, LocalDate.of(2017, 8, 14), TipoRetorno.PORCENTAJEGANANCIA, "Romeo y Julieta", "marcelot");
-            this.altaColaboracion(30000, LocalDate.of(2017, 8, 15), TipoRetorno.ENTRADAGRATIS, "Un día de Julio", "tonyp");
-            this.altaColaboracion(150000, LocalDate.of(2017, 8, 17), TipoRetorno.PORCENTAJEGANANCIA, "Un día de Julio", "marcelot");
+            this.altaColaboracion(50000, LocalDate.of(2017, 5, 20), LocalTime.of(14,30), TipoRetorno.PORCENTAJEGANANCIA, "Cine en el Botánico", "novick");
+            this.altaColaboracion(50000, LocalDate.of(2017, 5, 24), LocalTime.of(17,25), TipoRetorno.PORCENTAJEGANANCIA, "Cine en el Botánico", "robinh");
+            this.altaColaboracion(50000, LocalDate.of(2017, 5, 30), LocalTime.of(18,30), TipoRetorno.PORCENTAJEGANANCIA, "Cine en el Botánico", "nicoJ");
+            this.altaColaboracion(200000, LocalDate.of(2017, 6, 30), LocalTime.of(14,25), TipoRetorno.PORCENTAJEGANANCIA, "Religiosamente", "marcelot");
+            this.altaColaboracion(500, LocalDate.of(2017, 7, 1), LocalTime.of(18,05), TipoRetorno.ENTRADAGRATIS, "Religiosamente", "Tiajaci");
+            this.altaColaboracion(600, LocalDate.of(2017, 7, 7), LocalTime.of(17,45), TipoRetorno.ENTRADAGRATIS, "Religiosamente", "Mengano");
+            this.altaColaboracion(50000, LocalDate.of(2017, 7, 10), LocalTime.of(14,35), TipoRetorno.PORCENTAJEGANANCIA, "Religiosamente", "novick");
+            this.altaColaboracion(50000, LocalDate.of(2017, 7, 15), LocalTime.of(9,45), TipoRetorno.PORCENTAJEGANANCIA, "Religiosamente", "sergiop");
+            this.altaColaboracion(200000, LocalDate.of(2017, 8, 1), LocalTime.of(7,40), TipoRetorno.PORCENTAJEGANANCIA, "El Pimiento Indomable", "marcelot");
+            this.altaColaboracion(80000, LocalDate.of(2017, 8, 3), LocalTime.of(9,25), TipoRetorno.PORCENTAJEGANANCIA, "El Pimiento Indomable", "sergiop");
+            this.altaColaboracion(50000, LocalDate.of(2017, 8, 5), LocalTime.of(16,50), TipoRetorno.ENTRADAGRATIS, "Pilsen Rock", "chino");
+            this.altaColaboracion(120000, LocalDate.of(2017, 8, 10), LocalTime.of(15,50), TipoRetorno.PORCENTAJEGANANCIA, "Pilsen Rock", "novick");
+            this.altaColaboracion(120000, LocalDate.of(2017, 8, 15), LocalTime.of(19,30), TipoRetorno.ENTRADAGRATIS, "Pilsen Rock", "tonyp");
+            this.altaColaboracion(100000, LocalDate.of(2017, 8, 13), LocalTime.of(4,58), TipoRetorno.PORCENTAJEGANANCIA, "Romeo y Julieta", "sergiop");
+            this.altaColaboracion(200000, LocalDate.of(2017, 8, 14), LocalTime.of(11,25), TipoRetorno.PORCENTAJEGANANCIA, "Romeo y Julieta", "marcelot");
+            this.altaColaboracion(30000, LocalDate.of(2017, 8, 15), LocalTime.of(04,48), TipoRetorno.ENTRADAGRATIS, "Un día de Julio", "tonyp");
+            this.altaColaboracion(150000, LocalDate.of(2017, 8, 17), LocalTime.of(15,30), TipoRetorno.PORCENTAJEGANANCIA, "Un día de Julio", "marcelot");
 
             
             
-//            // Estados para CEB
-//            ceb.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 5, 15));
-//            ceb.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 5, 17));
-//            ceb.agregarEstado(TipoEstado.ENFINANCIACION, LocalDate.of(2017, 5, 20));
-//            ceb.agregarEstado(TipoEstado.FINANCIADA, LocalDate.of(2017, 5, 30));
-//            ceb.agregarEstado(TipoEstado.CANCELADA, LocalDate.of(2017, 6, 15));
-//            
-//            // Estados para MOM
-//            mom.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 6, 18));
-//            mom.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 6, 20));
-//            mom.agregarEstado(TipoEstado.ENFINANCIACION, LocalDate.of(2017, 6, 30));
-//            mom.agregarEstado(TipoEstado.FINANCIADA, LocalDate.of(2017, 7, 15));
-//            
-//            // Estados para PIM
-//            pim.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 7, 26));
-//            pim.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 7, 31));
-//            pim.agregarEstado(TipoEstado.ENFINANCIACION, LocalDate.of(2017, 8, 1));
-//            
-//            // Estados para PIL
-//            pil.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 7, 30));
-//            pil.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 1));
-//            pil.agregarEstado(TipoEstado.ENFINANCIACION, LocalDate.of(2017, 8, 5));
-//            
-//            // Estados para RYJ
-//            ryj.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 8, 4));
-//            ryj.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 10));
-//            
-//            // Estados para UDJ
-//            udj.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 8, 6));
-//            udj.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 12));
-//            
-//            // Estados para LDT
-//            ldt.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 8, 18));
-//            ldt.agregarEstado(TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 20));
-//            
-//            // Estados para BEF
-//            bef.agregarEstado(TipoEstado.INGRESADA, LocalDate.of(2017, 8, 23));
-//
+            // Estados para CEB
+            this.nuevoEstadoPropuesta("Cine en el Botánico", TipoEstado.INGRESADA, LocalDate.of(2017, 5, 15), LocalTime.of(15, 30));
+            this.nuevoEstadoPropuesta("Cine en el Botánico", TipoEstado.PUBLICADA, LocalDate.of(2017, 5, 17), LocalTime.of(8, 30));
+            this.nuevoEstadoPropuesta("Cine en el Botánico", TipoEstado.ENFINANCIACION, LocalDate.of(2017, 5, 20), LocalTime.of(14, 30));
+            this.nuevoEstadoPropuesta("Cine en el Botánico", TipoEstado.FINANCIADA, LocalDate.of(2017, 5, 30), LocalTime.of(18, 30));
+            this.nuevoEstadoPropuesta("Cine en el Botánico", TipoEstado.CANCELADA, LocalDate.of(2017, 6, 15), LocalTime.of(14, 50));
+            
+            // Estados para MOM
+            this.nuevoEstadoPropuesta("Religiosamente",TipoEstado.INGRESADA, LocalDate.of(2017, 6, 18), LocalTime.of(4,28));
+            this.nuevoEstadoPropuesta("Religiosamente", TipoEstado.PUBLICADA, LocalDate.of(2017, 6, 20), LocalTime.of(4, 56));
+            this.nuevoEstadoPropuesta("Religiosamente", TipoEstado.ENFINANCIACION, LocalDate.of(2017, 6, 30), LocalTime.of(14, 25));
+            this.nuevoEstadoPropuesta("Religiosamente", TipoEstado.FINANCIADA, LocalDate.of(2017, 7, 15), LocalTime.of(9, 45));
+         
+            //Estados para PIM
+            this.nuevoEstadoPropuesta("El Pimiento Indomable", TipoEstado.INGRESADA, LocalDate.of(2017, 7, 26), LocalTime.of(15, 30));
+            this.nuevoEstadoPropuesta("El Pimiento Indomable", TipoEstado.PUBLICADA, LocalDate.of(2017, 7, 31), LocalTime.of(8, 30));
+            this.nuevoEstadoPropuesta("El Pimiento Indomable", TipoEstado.ENFINANCIACION, LocalDate.of(2017, 8, 1), LocalTime.of(7, 40));
+
+            //Estados para PIL
+            this.nuevoEstadoPropuesta("Pilsen Rock", TipoEstado.INGRESADA, LocalDate.of(2017, 7, 30), LocalTime.of(15, 40));
+            this.nuevoEstadoPropuesta("Pilsen Rock", TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 1), LocalTime.of(14, 30));
+            this.nuevoEstadoPropuesta("Pilsen Rock", TipoEstado.ENFINANCIACION, LocalDate.of(2017, 8, 5), LocalTime.of(16, 50));
+   
+            //Estados para RYJ
+            this.nuevoEstadoPropuesta("Romeo y Julieta", TipoEstado.INGRESADA, LocalDate.of(2017, 8, 4), LocalTime.of(12, 20));
+            this.nuevoEstadoPropuesta("Romeo y Julieta", TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 10), LocalTime.of(10, 25));
+            this.nuevoEstadoPropuesta("Romeo y Julieta", TipoEstado.ENFINANCIACION, LocalDate.of(2017, 8, 13), LocalTime.of(4, 58));
+
+            // Estados para UDJ
+            this.nuevoEstadoPropuesta("Un día de Julio", TipoEstado.INGRESADA, LocalDate.of(2017, 8, 6), LocalTime.of(2, 0));
+            this.nuevoEstadoPropuesta("Un día de Julio", TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 12), LocalTime.of(4, 50));
+            this.nuevoEstadoPropuesta("Un día de Julio", TipoEstado.ENFINANCIACION, LocalDate.of(2017, 8, 15), LocalTime.of(4, 48));
+         
+            //Estados para LDT
+            this.nuevoEstadoPropuesta("El Lazarillo de Tormes", TipoEstado.INGRESADA, LocalDate.of(2017, 8, 18), LocalTime.of(2, 40));
+            this.nuevoEstadoPropuesta("El Lazarillo de Tormes", TipoEstado.PUBLICADA, LocalDate.of(2017, 8, 20), LocalTime.of(21, 58));
+
+            // Estados para BEF
+            this.nuevoEstadoPropuesta("Bardo en la FING", TipoEstado.INGRESADA, LocalDate.of(2017, 8, 23), LocalTime.of(2, 12));
 
             
             System.out.println("Datos de prueba cargados exitosamente.");

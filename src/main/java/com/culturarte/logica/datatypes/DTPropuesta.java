@@ -8,6 +8,7 @@ import com.culturarte.logica.enums.TipoEstado;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DTPropuesta {
     private String titulo;
@@ -20,12 +21,13 @@ public class DTPropuesta {
     private File imagen;
     private ArrayList<String> colaboradores = new ArrayList<>();
     private TipoEstado estadoActual;
+    private List<DTEstado> histEstados = new ArrayList();
     private String categoria;
     private String nickProponente;
     
     public DTPropuesta(){}
     
-    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, File imagen, ArrayList<String> colaboradores, String nickProponente, TipoEstado estadoActual, String categoria){
+    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, File imagen, ArrayList<String> colaboradores, String nickProponente, TipoEstado estadoActual, String categoria, ArrayList<DTEstado> histEstados){
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.lugar = lugar;
@@ -37,6 +39,7 @@ public class DTPropuesta {
         this.estadoActual = estadoActual;
         this.categoria = categoria;
         this.nickProponente = nickProponente;
+        this.histEstados = histEstados;
     }
     
     public DTPropuesta(String titulo, TipoEstado estado, ArrayList<String> colaboradores, float montoRecaudado, float montoNecesario) {
@@ -62,6 +65,14 @@ public class DTPropuesta {
         this.fechaPrevista = fechaPrevista;
         this.precioEntrada = precioEntrada;
         this.montoNecesario = montoNecesario;
+    }
+
+    public List<DTEstado> getHistEstados() {
+        return histEstados;
+    }
+
+    public String getNickProponente() {
+        return nickProponente;
     }
 
     public String getTitulo() {
@@ -124,4 +135,5 @@ public class DTPropuesta {
         return retorno;
     }
 
+    
 }

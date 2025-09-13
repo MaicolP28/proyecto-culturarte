@@ -5,6 +5,7 @@
 package com.culturarte.logica.datatypes;
 import com.culturarte.logica.enums.TipoRetorno;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -14,16 +15,26 @@ public class DTColaboracion {
     
     private float monto;
     private LocalDate fecha;
+    private LocalTime hora;
     private TipoRetorno tipoRetorno;
     private String tituloPropuesta;
     private String nickColaborador;
     
-    public DTColaboracion(String nickColaborador,String tituloPropuesta, LocalDate fecha, float monto, TipoRetorno tipoRetorno) {
+    public DTColaboracion(String nickColaborador,String tituloPropuesta, LocalDate fecha, LocalTime hora, float monto, TipoRetorno tipoRetorno) {
         this.tituloPropuesta = tituloPropuesta;
         this.fecha = fecha;
         this.monto = monto;
         this.tipoRetorno = tipoRetorno;
         this.nickColaborador = nickColaborador;
+        this.hora = hora;
+    }
+
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public String getTituloPropuesta() {
+        return tituloPropuesta;
     }
 
     public String getPropuestaTitulo() {

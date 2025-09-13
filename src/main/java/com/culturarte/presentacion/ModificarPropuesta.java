@@ -53,11 +53,10 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         comboPropuestas = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaDatosPropuesta = new javax.swing.JTable();
         imagenPropuesta = new javax.swing.JLabel();
-        jButtonModificar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
         btnCargar = new javax.swing.JButton();
+        bntCancelar = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -73,32 +72,10 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             }
         });
 
-        tablaDatosPropuesta.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tablaDatosPropuesta.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tablaDatosPropuesta);
-
-        jButtonModificar.setText("Modificar");
-        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonModificarActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
@@ -109,41 +86,47 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             }
         });
 
+        bntCancelar.setText("Aceptar");
+        bntCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imagenPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(imagenPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCargar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(btnCargar)))
+                .addContainerGap(356, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bntCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(imagenPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonModificar)
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(imagenPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(227, 227, 227)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar)
+                    .addComponent(bntCancelar))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -153,7 +136,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         mostrarDatosPropuesta();
     }//GEN-LAST:event_comboPropuestasActionPerformed
 
-    private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String propuestaSeleccionada = (String) comboPropuestas.getSelectedItem();
         if(propuestaSeleccionada == null){
             JOptionPane.showMessageDialog(this, "Debe seleccionar una propuesta primero");
@@ -181,7 +164,6 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         try{
         switch(campoSeleccionado){
             case "Titulo":
-                controlador.actualizarTituloProp(p.getTitulo(), cambio);
                 break;
             case "Descripcion":
                 p.setDescripcion(cambio);
@@ -226,11 +208,15 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     dialog.setVisible(true);
         
         
-    }//GEN-LAST:event_jButtonModificarActionPerformed
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         cargarComboBox();
     }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void bntCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bntCancelarActionPerformed
 
     private void cargarComboBox(){
         ArrayList<String> tituloPropuestas = controlador.getTituloPropuestas();
@@ -241,37 +227,16 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     }
     
     private void mostrarDatosPropuesta(){
-        String[] columnas = {"Titulo", "Descripcion", "Lugar", "Fecha Prevista", "Precio Entrada", "Monto Necesario"};
-        DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
-        String propuestaSeleccionada = (String) comboPropuestas.getSelectedItem();
-        DTPropuesta dtp = controlador.getDTPropuesta(propuestaSeleccionada);
-            Object [] filas = {
-                dtp.getTitulo(),
-                dtp.getDescripcion(),
-                dtp.getLugar(),
-                dtp.getFechaPrevista(),
-                dtp.getPrecioEntrada(),
-                dtp.getMontoNecesario()
-            };
-            dtm.addRow(filas);
-            if(dtp.getImagen() != null){
-                ImageIcon foto = new ImageIcon(dtp.getImagen().getAbsolutePath());
-                Image img = foto.getImage().getScaledInstance(imagenPropuesta.getWidth(), imagenPropuesta.getHeight(), Image.SCALE_SMOOTH);
-                imagenPropuesta.setIcon(new ImageIcon(img));
-            }else
-                imagenPropuesta.setIcon(null);
-        tablaDatosPropuesta.setModel(dtm);
         
     }
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntCancelar;
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCargar;
     private javax.swing.JComboBox<String> comboPropuestas;
     private javax.swing.JLabel imagenPropuesta;
-    private javax.swing.JButton jButtonModificar;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaDatosPropuesta;
     // End of variables declaration//GEN-END:variables
 }

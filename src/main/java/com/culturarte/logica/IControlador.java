@@ -16,6 +16,7 @@ import com.culturarte.logica.datatypes.DTUsuario;
 import com.culturarte.logica.enums.*;
 import java.time.LocalDate;
 import java.io.File;
+import java.time.LocalTime;
 import java.util.EnumSet;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -39,11 +40,10 @@ public interface IControlador {
     public abstract ArrayList<String> getNomColaboradores();
     public abstract DTColaborador getDTColaborador(String nickname);
     public abstract ArrayList<DTPropuesta> getDTPropuestas();
-    public abstract void actualizarTituloProp(String tituloViejo, String tituloNuevo);//cu5
     public abstract ArrayList<String> getTituloPropuestas(); // cu6 y cu7
     public abstract DTPropuesta getDTPropuesta(String titulo); // cu6 y cu7
     public abstract ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado); // cu6 y cu7
-    public abstract void altaColaboracion( float monto, LocalDate fecha, TipoRetorno tipoRetorno, String tituloPropuesta, String nickColaborador) throws ColaboracionYaExiste; // cu9
+    public abstract void altaColaboracion( float monto, LocalDate fecha, LocalTime hora, TipoRetorno tipoRetorno, String tituloPropuesta, String nickColaborador) throws ColaboracionYaExiste; // cu9
     public abstract String getNickProponente(String tituloPropuesta); //cu9
     public abstract ArrayList<String> getNickUsuarios(); // cu12 y cu13
     public abstract void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido; // cu12
@@ -53,4 +53,6 @@ public interface IControlador {
     public abstract void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador);//cu11
     public abstract ArrayList<DTColaboracion> getDTColaboraciones();//cu11
     public abstract DTUsuario getDTUsuario(String nickname);
+    public abstract void nuevoEstadoPropuesta(String propuesta, TipoEstado estado, LocalDate fecha, LocalTime hora);
+    
 }

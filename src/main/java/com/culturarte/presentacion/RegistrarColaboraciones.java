@@ -5,6 +5,7 @@ import com.culturarte.logica.IControlador;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoRetorno;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -359,7 +360,7 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
         }
 
         try{
-            controlador.altaColaboracion(montoColaboracion, LocalDate.now(), tipoRetorno, titulo, nick);
+            controlador.altaColaboracion(montoColaboracion, LocalDate.now(), LocalTime.now(), tipoRetorno, titulo, nick);
         }catch(ColaboracionYaExiste e){
             JOptionPane.showMessageDialog(this, "La colaboracion ya existe" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             return; 

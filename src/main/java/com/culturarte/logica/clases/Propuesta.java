@@ -5,6 +5,7 @@ import com.culturarte.logica.enums.TipoRetorno;
 import jakarta.persistence.*;
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -61,9 +62,7 @@ public class Propuesta {
         this.proponente = proponente;
         this.categoria = categoria;
         this.colaboraciones = new ArrayList<>();
-
-        this.estadoActual = new Estado(LocalDate.now(), TipoEstado.INGRESADA);
-        this.historialEstados = new ArrayList<>(List.of(this.estadoActual));
+        this.historialEstados = new ArrayList<>();
 
     }
     
@@ -158,10 +157,6 @@ public class Propuesta {
     public List<Estado> getHistorialEstados() {
         return historialEstados;
     }
-
-    public void setHistorialEstados(List<Estado> historialEstados) {
-        this.historialEstados = historialEstados;
-    }
     
     public void addColaboracion(Colaboracion colab){
         this.colaboraciones.add(colab);
@@ -187,8 +182,8 @@ public class Propuesta {
         return montoRecuadado;
     }
     
-    public void agregarEstado(TipoEstado tipoEstado, LocalDate fecha) {
-        Estado nuevoEstado = new Estado(fecha, tipoEstado);
+    public void agregarEstado(TipoEstado tipoEstado, LocalDate fecha, LocalTime hora) {
+        Estado nuevoEstado = new Estado(fecha, hora, tipoEstado);
         this.estadoActual = nuevoEstado;
         this.historialEstados.add(nuevoEstado);
     }
