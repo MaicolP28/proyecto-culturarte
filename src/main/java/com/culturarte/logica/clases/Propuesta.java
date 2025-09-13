@@ -176,7 +176,7 @@ public class Propuesta {
     
     public float getMontoRecaudado() {
         float montoRecuadado = 0;
-        for(Colaboracion c : colaboraciones){
+        for(Colaboracion c : this.colaboraciones){
             montoRecuadado += c.getMonto();
         }
         return montoRecuadado;

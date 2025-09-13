@@ -252,7 +252,7 @@ public class Controlador implements IControlador{
                 histEstado.add(new DTEstado(est.getEstado().toString(), est.getFecha().toString(), est.getHora().format(formatter)));
             }
     
-            dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), nombreCategoria, histEstado);
+            dtp = new DTPropuesta(p.getTitulo(), p.getDescripcion(), p.getLugar(), p.getFechaPrevista(), p.getPrecioEntrada(), p.getMontoNecesario(), p.getImagen(), p.getNicknameColaboradores(), p.getProponenteNick(), p.getEstadoActual().getEstado(), nombreCategoria, histEstado, p.getMontoRecaudado());
         }
         return dtp;
     }
