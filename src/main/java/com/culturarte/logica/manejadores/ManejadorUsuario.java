@@ -37,7 +37,7 @@ public class ManejadorUsuario {
         }
     }
 
-    public Usuario buscarUsuario(String nick) {
+    public Usuario buscarUsuario(String nick) { 
         EntityManager em = emf.createEntityManager();
         try {
             Usuario u = em.find(Usuario.class, nick);
