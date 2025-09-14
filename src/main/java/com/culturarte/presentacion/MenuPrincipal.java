@@ -57,7 +57,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         try {
             IC.cargarDatosPrueba();
         } catch(CargaFallida e) {
-            JOptionPane.showMessageDialog(this, "Error","Error al cargar datos prueba", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al cargar datos prueba","Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(e);
         }
         

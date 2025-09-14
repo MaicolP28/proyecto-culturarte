@@ -108,9 +108,6 @@ public class ManejadorPropuesta {
         if (propuesta.getHistorialEstados() != null)
             propuesta.getHistorialEstados().size();
 
-        if (propuesta.getEstadoActual() != null)
-            propuesta.getEstadoActual().getId();
-
         if (propuesta.getProponente() != null)
             propuesta.getProponente().getNickname();
 

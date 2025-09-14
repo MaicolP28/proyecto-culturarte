@@ -78,6 +78,8 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         jlMontoNec = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tablaEstados = new javax.swing.JTable();
+        jLabel12 = new javax.swing.JLabel();
+        jlCategoria = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -172,6 +174,10 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         tablaEstados.setEnabled(false);
         jScrollPane5.setViewportView(tablaEstados);
 
+        jLabel12.setText("Categoria:");
+
+        jlCategoria.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,9 +217,11 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5)
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlCategoria)
                     .addComponent(jlMontoNec)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlMontoRec)
@@ -262,7 +270,11 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
                                             .addGap(18, 18, 18)
                                             .addComponent(jLabel4)
                                             .addGap(18, 18, 18)
-                                            .addComponent(jLabel5))))
+                                            .addComponent(jLabel5)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel12)
+                                        .addComponent(jlCategoria)))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jlProponente)
                                     .addGap(18, 18, 18)
@@ -316,6 +328,7 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         jlMontoRec.setText(String.valueOf(p.getMontoRecaudado()));
         jlMontoNec.setText(String.valueOf(p.getMontoNecesario()));
         jlProponente.setText(p.getProponente());
+        jlCategoria.setText(p.getCategoria());
         
         // Lista colaboradores
         DefaultListModel dlm = new DefaultListModel();
@@ -357,6 +370,7 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
     private javax.swing.JLabel fotoPropuesta;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -369,6 +383,7 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JLabel jlCategoria;
     private javax.swing.JList<String> jlColaboradores;
     private javax.swing.JLabel jlFecha;
     private javax.swing.JLabel jlLugar;

@@ -76,9 +76,11 @@
                       <Component id="jLabel3" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jLabel11" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
+                  <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jlCategoria" min="-2" max="-2" attributes="0"/>
                   <Component id="jlMontoNec" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
                   <Component id="jlMontoRec" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -137,6 +139,11 @@
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jlCategoria" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -346,5 +353,15 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel12">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Categoria:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jlCategoria">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel3"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

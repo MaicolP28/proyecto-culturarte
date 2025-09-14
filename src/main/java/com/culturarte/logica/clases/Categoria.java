@@ -10,7 +10,7 @@ public class Categoria {
     @Id
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "padre_nombre")
     private Categoria padre;
 
@@ -22,6 +22,15 @@ public class Categoria {
     public Categoria(String nombre, Categoria padre) {
         this.nombre = nombre;
         this.padre = padre;
+    }
+    
+    public String getNombreCompleto() {
+        if(this.getPadre() != null) {
+            return this.padre.getNombreCompleto() + ", " + this.getNombre();
+        } else {
+            return this.getNombre();
+        }
+        
     }
 
     public String getNombre() { return nombre; }

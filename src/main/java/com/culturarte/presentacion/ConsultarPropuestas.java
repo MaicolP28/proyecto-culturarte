@@ -68,6 +68,8 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
         tablaEstados = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         jlProponente = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jlCategoria = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -81,6 +83,8 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
                 listaPropuestaActionPerformed(evt);
             }
         });
+
+        jLabel1.setPreferredSize(new java.awt.Dimension(100, 100));
 
         jButton1.setText("Cargar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -162,6 +166,10 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
 
         jlProponente.setText("jLabel2");
 
+        jLabel12.setText("Categoria:");
+
+        jlCategoria.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -200,9 +208,11 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel5)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlCategoria)
                             .addComponent(jlMontoNec)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jlMontoRec)
@@ -220,7 +230,7 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9)
                         .addGap(108, 108, 108)
@@ -238,28 +248,34 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlTitulo)
-                                    .addComponent(jLabel11))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jlLugar)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jlTitulo)
+                                            .addComponent(jLabel11))
                                         .addGap(18, 18, 18)
-                                        .addComponent(jlFecha))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jlLugar)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jlFecha))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel4)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel5))))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
+                                        .addComponent(jlProponente)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel4)
+                                        .addComponent(jlPrecio)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel5))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlProponente)
+                                        .addComponent(jlMontoRec)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jlMontoNec)))
                                 .addGap(18, 18, 18)
-                                .addComponent(jlPrecio)
-                                .addGap(18, 18, 18)
-                                .addComponent(jlMontoRec)
-                                .addGap(18, 18, 18)
-                                .addComponent(jlMontoNec)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jlCategoria))))
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -294,6 +310,7 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
         jlMontoRec.setText(String.valueOf(p.getMontoRecaudado()));
         jlMontoNec.setText(String.valueOf(p.getMontoNecesario()));
         jlProponente.setText(p.getProponente());
+        jlCategoria.setText(p.getCategoria());
         
         // Lista colaboradores
         DefaultListModel dlm = new DefaultListModel();
@@ -322,7 +339,7 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
         if (imagenFile != null && imagenFile.exists()) {
             ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
            //escala la imagen al tamaño del JLabel
-            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_SMOOTH);
+            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getPreferredSize().width,jLabel1.getPreferredSize().height,Image.SCALE_SMOOTH);
             jLabel1.setIcon(new ImageIcon(imagenEscalada));
         }   
         else {
@@ -344,6 +361,7 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -355,6 +373,7 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel jlCategoria;
     private javax.swing.JList<String> jlColaboradores;
     private javax.swing.JLabel jlFecha;
     private javax.swing.JLabel jlLugar;
