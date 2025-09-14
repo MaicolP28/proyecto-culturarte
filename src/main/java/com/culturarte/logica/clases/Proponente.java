@@ -64,5 +64,9 @@ public class Proponente extends Usuario {
     public void addPropuestas(Propuesta propuesta) {
         this.propuestas.add(propuesta);
     }
+    
+    public void removePropuesta(Propuesta propuesta) {
+        this.propuestas.remove(propuesta);
+    }
 
 }

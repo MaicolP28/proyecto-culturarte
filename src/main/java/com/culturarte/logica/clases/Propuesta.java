@@ -38,10 +38,10 @@ public class Propuesta {
     @ManyToOne(fetch = FetchType.EAGER)
     private Proponente proponente;
     
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Estado> historialEstados;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Estado estadoActual;
     
     @ManyToOne
@@ -65,6 +65,12 @@ public class Propuesta {
         this.historialEstados = new ArrayList<>();
 
     }
+
+    public void setImagen(File imagen) {
+        this.imagen = imagen;
+    }
+    
+    
     
     public String getTitulo() {
         return titulo;
@@ -123,7 +129,7 @@ public class Propuesta {
     }
 
     public Estado getEstadoActual() {
-        return estadoActual;
+        return historialEstados.get(historialEstados.size() - 1);
     }
 
     public void setEstadoActual(Estado estadoActual) {
@@ -182,9 +188,8 @@ public class Propuesta {
         return montoRecuadado;
     }
     
-    public void agregarEstado(TipoEstado tipoEstado, LocalDate fecha, LocalTime hora) {
-        Estado nuevoEstado = new Estado(fecha, hora, tipoEstado);
-        this.estadoActual = nuevoEstado;
-        this.historialEstados.add(nuevoEstado);
+    public void agregarEstado(Estado estado) {
+        this.historialEstados.add(estado);
+        this.estadoActual = estado;
     }
 }

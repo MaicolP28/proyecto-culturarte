@@ -34,7 +34,6 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         initComponents();
         controlador = IC;
         jLTipoRet.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        this.jTipoEsp.setModel(controlador.listarCategorias());
         cargarComboBox();
     }
 
@@ -256,6 +255,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) jTipoEsp.getSelectionPath().getLastPathComponent();
         Object cat = nodo.getUserObject();
         String tipoEsp = cat.toString();
+        if (tipoEsp.equals("Categorias")) tipoEsp = null;
         
         List<TipoRetorno> seleccionados = jLTipoRet.getSelectedValuesList();
         EnumSet<TipoRetorno> tipoRet = EnumSet.copyOf(seleccionados);

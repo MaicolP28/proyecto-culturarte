@@ -2,6 +2,7 @@ package com.culturarte.logica;
 
 import com.culturarte.exepciones.CargaFallida;
 import com.culturarte.exepciones.CategoriaYaExiste;
+import com.culturarte.exepciones.DatosIncorrectos;
 import com.culturarte.exepciones.UsuarioYaExiste;
 import com.culturarte.exepciones.PropuestaYaExiste;
 import com.culturarte.exepciones.UsuarioNoSeguido;
@@ -119,7 +120,7 @@ public class Controlador implements IControlador{
         );
 
         for (Colaboracion colab : c.getColaboraciones()) {
-            Propuesta prop = ManejadorPropuesta.getInstancia().getPropuesta(colab.getPropuesta().getTitulo());
+            Propuesta prop = mp.getPropuesta(colab.getPropuesta().getTitulo());
             if (prop != null) {
                 DTPropuesta dtp = new DTPropuesta(
                         prop.getTitulo(),
@@ -246,7 +247,7 @@ public class Controlador implements IControlador{
         ArrayList histEstado = new ArrayList();
         if(p != null){
             if (p.getCategoria() != null) {
-                nombreCategoria = p.getCategoria().getNombre();
+                nombreCategoria = p.getCategoria().getNombreCompleto();
             }
             for (Estado est : p.getHistorialEstados()) {
                 histEstado.add(new DTEstado(est.getEstado().toString(), est.getFecha().toString(), est.getHora().format(formatter)));
@@ -411,8 +412,9 @@ public class Controlador implements IControlador{
     
     @Override
     public void nuevoEstadoPropuesta(String propuesta, TipoEstado estado, LocalDate fecha, LocalTime hora) {
+        Estado nuevoEstado = new Estado(fecha, hora, estado);
         Propuesta p = mp.getPropuesta(propuesta);
-        p.agregarEstado(estado, fecha, hora);
+        p.agregarEstado(nuevoEstado);
         mp.actualizarPropuesta(p);
     }
     
@@ -422,6 +424,54 @@ public class Controlador implements IControlador{
         
         return p.getProponente().getNickname();
     }
+    
+    public void modificarPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, 
+            Float montoNecesario, File imagen, String proponente, String categoria, String nuevoEstado) throws DatosIncorrectos {
+        
+        if(titulo.isEmpty()) throw new DatosIncorrectos("El titulo no puede ser vacío");
+        if(lugar.isEmpty()) throw new DatosIncorrectos("El lugar no puede ser vacío");
+        if(fechaPrevista == null) throw new DatosIncorrectos("La fecha no puede ser vacía");
+        if(proponente.isEmpty()) throw new DatosIncorrectos("El proponente no puede ser vacío");
+        if(categoria.isEmpty()) throw new DatosIncorrectos("La categoría no puede ser vacía");
+        if(nuevoEstado.isEmpty()) throw new DatosIncorrectos("El estado no puede ser vacío");
+        
+        Propuesta p = mp.getPropuesta(titulo);
+        if (p == null) {
+            throw new DatosIncorrectos("La propuesta no existe");
+        }
+        
+        //Datos básicos
+        p.setDescripcion(descripcion);
+        p.setLugar(lugar);
+        p.setFechaPrevista(fechaPrevista);
+        p.setPrecioEntrada(precioEntrada);
+        p.setMontoNecesario(montoNecesario);
+        p.setImagen(imagen);
+        
+        // Proponente
+        Proponente viejoProponente = p.getProponente();
+        if(!viejoProponente.getNickname().equals(proponente)) {
+            Proponente nuevoProponente = mu.getProponenteConPropuestas(proponente);
+            viejoProponente.removePropuesta(p);
+            nuevoProponente.addPropuestas(p);
+            p.setProponente(nuevoProponente);
+        }
+        
+        // Categoria
+        if(!p.getCategoria().getNombre().equals(categoria)) {
+            Categoria nuevaCat = mc.buscar(categoria);
+            p.setCategoria(nuevaCat);
+        }
+        
+        // Estado
+        if(!p.getEstadoActual().toString().equals(nuevoEstado)) {
+            nuevoEstadoPropuesta(p.getTitulo(), TipoEstado.valueOf(nuevoEstado), LocalDate.now(), LocalTime.now());
+        }
+        
+        mp.actualizarPropuesta(p);
+        
+    }
+  
     
     public void cargarDatosPrueba() throws CargaFallida{
         System.out.println("Agregando datos de prueba: ...");
