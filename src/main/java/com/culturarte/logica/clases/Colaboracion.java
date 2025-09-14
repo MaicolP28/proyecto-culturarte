@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 public class Colaboracion {
@@ -20,6 +21,7 @@ public class Colaboracion {
     
     private float monto;
     private LocalDate fechaAporte;
+    private LocalTime horaAporte;
     @Enumerated(EnumType.STRING)
     private TipoRetorno tipoRetorno;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -29,12 +31,21 @@ public class Colaboracion {
    
     public Colaboracion(){}
 
-    public Colaboracion(float monto, LocalDate fechaAporte, TipoRetorno tipoRetorno, Propuesta propuesta, Colaborador colaborador) {
+    public Colaboracion(float monto, LocalDate fechaAporte, LocalTime horaAporte, TipoRetorno tipoRetorno, Propuesta propuesta, Colaborador colaborador) {
         this.monto = monto;
         this.fechaAporte = fechaAporte;
         this.tipoRetorno = tipoRetorno;
         this.propuesta = propuesta;
         this.colaborador = colaborador;
+        this.horaAporte = horaAporte;
+    }
+
+    public LocalTime getHoraAporte() {
+        return horaAporte;
+    }
+
+    public void setHoraAporte(LocalTime horaAporte) {
+        this.horaAporte = horaAporte;
     }
 
     public int getId() {

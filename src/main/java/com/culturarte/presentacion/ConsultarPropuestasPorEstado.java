@@ -5,9 +5,11 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
+import com.culturarte.logica.datatypes.DTEstado;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoEstado;
 import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -53,24 +55,29 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaPropuestas = new javax.swing.JList<>();
         fotoPropuesta = new javax.swing.JLabel();
-        jlLugar = new javax.swing.JLabel();
-        jlFecha = new javax.swing.JLabel();
-        jlPrecio = new javax.swing.JLabel();
-        jlTitulo = new javax.swing.JLabel();
-        jlMontoRec = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jlColaboradores = new javax.swing.JList<>();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jlMontoNec = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtaDesc = new javax.swing.JTextPane();
+        jLabel10 = new javax.swing.JLabel();
+        jlTitulo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jlLugar = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jlFecha = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jlPrecio = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jlMontoRec = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jlColaboradores = new javax.swing.JList<>();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jlProponente = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jlMontoNec = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tablaEstados = new javax.swing.JTable();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -92,19 +99,30 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
 
         jScrollPane2.setViewportView(listaPropuestas);
 
-        jlLugar.setText("jLabel2");
+        jtaDesc.setEditable(false);
+        jScrollPane3.setViewportView(jtaDesc);
 
-        jlFecha.setText("jLabel2");
-
-        jlPrecio.setText("jLabel2");
+        jLabel10.setText("Hist. Estados:");
 
         jlTitulo.setText("jLabel2");
 
-        jlMontoRec.setText("jLabel2");
+        jLabel3.setText("Precio Entrada:");
+
+        jlLugar.setText("jLabel2");
+
+        jLabel4.setText("Monto Recaudado:");
+
+        jlFecha.setText("jLabel2");
 
         jLabel5.setText("Monto Necesario:");
 
+        jlPrecio.setText("jLabel2");
+
         jLabel6.setText("Titulo:");
+
+        jlMontoRec.setText("jLabel2");
+
+        jLabel7.setText("Lugar:");
 
         jlColaboradores.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -113,21 +131,46 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jlColaboradores);
 
-        jLabel7.setText("Lugar:");
+        jLabel8.setText("Fecha:");
+
+        jLabel11.setText("Proponente: ");
+
+        jLabel9.setText("Descripcion:");
+
+        jlProponente.setText("jLabel2");
 
         jLabel2.setText("Colaboradores:");
 
         jlMontoNec.setText("jLabel3");
 
-        jLabel8.setText("Fecha:");
+        tablaEstados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Estado", "Fecha", "Hora"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
-        jLabel9.setText("Descripcion:");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        jScrollPane3.setViewportView(jtaDesc);
-
-        jLabel3.setText("Precio:");
-
-        jLabel4.setText("Monto Recaudado:");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaEstados.setEnabled(false);
+        jScrollPane5.setViewportView(tablaEstados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,87 +178,105 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboEstadoProp, 0, 165, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jlFecha))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jlLugar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jlTitulo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlLugar)
+                                    .addComponent(jlFecha)
+                                    .addComponent(jlTitulo))))
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlMontoRec)
                     .addComponent(jlMontoNec)
-                    .addComponent(jlPrecio))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jlMontoRec)
+                    .addComponent(jlPrecio)
+                    .addComponent(jlProponente))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jlTitulo)
-                                    .addComponent(jlPrecio)
-                                    .addComponent(jLabel3)
+                        .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addGap(108, 108, 108)
+                        .addComponent(jLabel10))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane2))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel6)
-                                    .addComponent(jLabel9))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel7)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel8)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jlTitulo)
+                                        .addComponent(jLabel11))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
                                             .addComponent(jlLugar)
-                                            .addComponent(jlMontoRec)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jlFecha))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addGap(18, 18, 18)
                                             .addComponent(jLabel4)
-                                            .addComponent(jLabel7))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jlFecha)
-                                            .addComponent(jlMontoNec)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel8)))
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(fotoPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(comboEstadoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(339, Short.MAX_VALUE))
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jLabel5))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jlProponente)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jlPrecio)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jlMontoRec)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jlMontoNec)))
+                            .addGap(15, 15, 15)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -245,9 +306,8 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
     
     private void cargarTabla(){   
         DTPropuesta p = controlador.getDTPropuesta(listaPropuestas.getSelectedValue());
-        ArrayList<String> nomColaboradores = p.getNomColaboradores();
-        String colaboradores = nomColaboradores.isEmpty() ? "Sin Colaboradores" : String.join(", ", nomColaboradores);
-       
+        ArrayList<String> nomColab = p.getNomColaboradores();
+        
         jlTitulo.setText(p.getTitulo());
         jtaDesc.setText(p.getDescripcion());
         jlLugar.setText(p.getLugar());
@@ -255,23 +315,48 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         jlPrecio.setText(String.valueOf(p.getPrecioEntrada()));
         jlMontoRec.setText(String.valueOf(p.getMontoRecaudado()));
         jlMontoNec.setText(String.valueOf(p.getMontoNecesario()));
+        jlProponente.setText(p.getProponente());
+        
+        // Lista colaboradores
         DefaultListModel dlm = new DefaultListModel();
         dlm.clear();
-        dlm.addElement(colaboradores);
+        if (nomColab.isEmpty()) {
+            dlm.addElement("Sin colaboradores");
+        } else {
+            for (String colab : nomColab) {
+                dlm.addElement(colab);
+            }
+        }
         jlColaboradores.setModel(dlm);
+        
+        // Historial Estados
+        
+        DefaultTableModel dtm = new DefaultTableModel(new String[]{"Estado", "Fecha", "Hora"}, 0);
+        for (DTEstado e : p.getHistEstados()) {
+            dtm.addRow(new String[]{e.getEstado(),e.getFecha(),e.getHora()});
+        }
+        tablaEstados.setModel(dtm);
+        
+        // Imagen
 
-        if(p.getImagen() != null){
-            ImageIcon foto = new ImageIcon(p.getImagen().getAbsolutePath());
-            Image img = foto.getImage().getScaledInstance(fotoPropuesta.getWidth(), fotoPropuesta.getHeight(), Image.SCALE_SMOOTH);
-            fotoPropuesta.setIcon(new ImageIcon(img));
-        }else{
-            fotoPropuesta.setIcon(null);
+       File imagenFile = p.getImagen();
+        
+        if (imagenFile != null && imagenFile.exists()) {
+            ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
+           //escala la imagen al tamaño del JLabel
+            Image imagenEscalada = icon.getImage().getScaledInstance(fotoPropuesta.getWidth(),fotoPropuesta.getHeight(),Image.SCALE_SMOOTH);
+            fotoPropuesta.setIcon(new ImageIcon(imagenEscalada));
+        }   
+        else {
+            fotoPropuesta.setIcon(null); // limpia si no hay imagen
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboEstadoProp;
     private javax.swing.JLabel fotoPropuesta;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -283,14 +368,17 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JList<String> jlColaboradores;
     private javax.swing.JLabel jlFecha;
     private javax.swing.JLabel jlLugar;
     private javax.swing.JLabel jlMontoNec;
     private javax.swing.JLabel jlMontoRec;
     private javax.swing.JLabel jlPrecio;
+    private javax.swing.JLabel jlProponente;
     private javax.swing.JLabel jlTitulo;
     private javax.swing.JTextPane jtaDesc;
     private javax.swing.JList<String> listaPropuestas;
+    private javax.swing.JTable tablaEstados;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@ import com.culturarte.logica.IControlador;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.enums.TipoRetorno;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -31,7 +32,6 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jlPropuesta = new javax.swing.JLabel();
-        jlIcono = new javax.swing.JLabel();
         comboPropuestas = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -41,24 +41,30 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         comboColaboradores = new javax.swing.JComboBox<>();
-        jlTitulo = new javax.swing.JLabel();
-        jlDescripcion = new javax.swing.JLabel();
-        jlLugar = new javax.swing.JLabel();
-        jlFechaPrevista = new javax.swing.JLabel();
-        jlPrecioEntrada = new javax.swing.JLabel();
-        jlMontoNecesario = new javax.swing.JLabel();
-        jlMontoRecaudado = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jlTipoRet = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaTipoRet = new javax.swing.JList<>();
         btnAceptar = new javax.swing.JButton();
+        jlPrecio = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jlMontoRec = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jlMontoNec = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtaDesc = new javax.swing.JTextPane();
+        jLabel12 = new javax.swing.JLabel();
+        jlTitulo = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jlProponente = new javax.swing.JLabel();
+        jlLugar = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jlFecha = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jlEstadoActual = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -119,36 +125,6 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
             }
         });
 
-        jlTitulo.setText("jLabel4");
-
-        jlDescripcion.setText("jLabel4");
-
-        jlLugar.setText("jLabel4");
-
-        jlFechaPrevista.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlFechaPrevista.setText("jLabel4");
-
-        jlPrecioEntrada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlPrecioEntrada.setText("jLabel4");
-
-        jlMontoNecesario.setText("jLabel4");
-
-        jlMontoRecaudado.setText("jLabel4");
-
-        jLabel4.setText("Monto Recaudado:");
-
-        jLabel5.setText("Fecha Prevista:");
-
-        jLabel6.setText("Precio Entrada:");
-
-        jLabel7.setText("Monto Necesario:");
-
-        jLabel8.setText("Titulo:");
-
-        jLabel9.setText("Descripcion:");
-
-        jLabel10.setText("Lugar:");
-
         jlTipoRet.setText("Tipo de Retorno");
 
         jScrollPane1.setViewportView(listaTipoRet);
@@ -160,6 +136,43 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
             }
         });
 
+        jlPrecio.setText("jLabel2");
+
+        jLabel6.setText("Titulo:");
+
+        jlMontoRec.setText("jLabel2");
+
+        jLabel7.setText("Lugar:");
+
+        jLabel8.setText("Fecha:");
+
+        jLabel9.setText("Descripcion:");
+
+        jlMontoNec.setText("jLabel3");
+
+        jtaDesc.setEditable(false);
+        jScrollPane2.setViewportView(jtaDesc);
+
+        jLabel12.setText("Proponente: ");
+
+        jlTitulo.setText("jLabel2");
+
+        jLabel13.setText("Precio Entrada:");
+
+        jlProponente.setText("jLabel2");
+
+        jlLugar.setText("jLabel2");
+
+        jLabel4.setText("Monto Recaudado:");
+
+        jlFecha.setText("jLabel2");
+
+        jLabel5.setText("Monto Necesario:");
+
+        jLabel10.setText("Estado actual:");
+
+        jlEstadoActual.setText("jLabel3");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -167,71 +180,70 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(117, 117, 117)
-                                        .addComponent(jLabel2))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(72, 72, 72)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jlTipoRet)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jlMontoColab))))
-                                .addGap(28, 28, 28)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtMontoColaboracion)
-                                    .addComponent(comboColaboradores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlLugar)
+                                    .addComponent(jlFecha)
+                                    .addComponent(jlTitulo))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlMontoNec)
+                                    .addComponent(jlMontoRec)
+                                    .addComponent(jlPrecio)
+                                    .addComponent(jlProponente))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2))
+                            .addComponent(jlEstadoActual)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jlMontoColab)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jtMontoColaboracion, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(105, 105, 105)
+                                .addComponent(comboColaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jlTipoRet)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(btnAceptar)
                                         .addGap(56, 56, 56)
                                         .addComponent(btnCancelar))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(134, 190, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jlPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jlIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlTitulo)
-                                    .addComponent(jlFechaPrevista)
-                                    .addComponent(jlLugar)
-                                    .addComponent(jlDescripcion))))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel7))
-                                        .addGap(24, 24, 24)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jlMontoNecesario)
-                                            .addComponent(jlPrecioEntrada)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jlMontoRecaudado)))
-                                .addGap(79, 79, 79))))))
+                        .addComponent(jlPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
+                .addGap(59, 59, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,52 +253,65 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
                     .addComponent(jlPropuesta)
                     .addComponent(comboPropuestas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jlTitulo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel6)
-                                .addComponent(jlPrecioEntrada)))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jlFechaPrevista)
-                            .addComponent(jLabel7)
-                            .addComponent(jlMontoNecesario))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel10)
-                                .addComponent(jlLugar))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jlMontoRecaudado)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jlDescripcion))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jlIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(comboColaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addGap(86, 86, 86))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlTitulo)
+                                    .addComponent(jLabel12))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5)
+                                        .addGap(17, 17, 17)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel10)
+                                            .addComponent(jlEstadoActual)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jlLugar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jlFecha)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jlProponente)
+                                .addGap(18, 18, 18)
+                                .addComponent(jlPrecio)
+                                .addGap(18, 18, 18)
+                                .addComponent(jlMontoRec)
+                                .addGap(18, 18, 18)
+                                .addComponent(jlMontoNec)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboColaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlMontoColab)
                     .addComponent(jtMontoColaboracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jlTipoRet)
@@ -311,7 +336,7 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -325,15 +350,6 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
         cargarCombo();
     }//GEN-LAST:event_jPanel1ComponentShown
 
-    private void comboColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboColaboradoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboColaboradoresActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.jtMontoColaboracion.setText("");
-        this.setVisible(false);
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String titulo = (String) comboPropuestas.getSelectedItem();
         String tipoRetornoStr = (String) listaTipoRet.getSelectedValue();
@@ -344,29 +360,37 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
             montoColaboracion = Float.parseFloat(montoC);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El monto no puede ser texto", "ERROR", JOptionPane.ERROR_MESSAGE);
-     
+
             return;
         }
-        
-        
+
         String nick = (String) comboColaboradores.getSelectedItem();
         if (nick == null || nick.isBlank()) {
-            JOptionPane.showMessageDialog(this, 
+            JOptionPane.showMessageDialog(this,
                 "Debe seleccionar un colaborador válido",
-                "Error", 
+                "Error",
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try{
-            controlador.altaColaboracion(montoColaboracion, LocalDate.now(), tipoRetorno, titulo, nick);
+            controlador.altaColaboracion(montoColaboracion, LocalDate.now(), LocalTime.now(), tipoRetorno, titulo, nick);
         }catch(ColaboracionYaExiste e){
             JOptionPane.showMessageDialog(this, "La colaboracion ya existe" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-            return; 
+            return;
         }
         JOptionPane.showMessageDialog(this, "Colaboracion registrada correctamente." + titulo + " " + nick);
         btnCancelarActionPerformed(evt);
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void comboColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboColaboradoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboColaboradoresActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.jtMontoColaboracion.setText("");
+        this.setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jtMontoColaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtMontoColaboracionActionPerformed
         // TODO add your handling code here:
@@ -407,12 +431,14 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
         String titulo = propuestaSeleccionada.split(" - ")[0];
         DTPropuesta p = controlador.getDTPropuesta(titulo);
         jlTitulo.setText(p.getTitulo());
-        jlDescripcion.setText(p.getDescripcion());
+        jtaDesc.setText(p.getDescripcion());
         jlLugar.setText(p.getLugar());
-        jlFechaPrevista.setText(p.getFechaPrevista().toString());
-        jlPrecioEntrada.setText(String.valueOf(p.getPrecioEntrada()));
-        jlMontoNecesario.setText(String.valueOf(p.getMontoNecesario()));
-        jlMontoRecaudado.setText(String.valueOf(p.getMontoRecaudado()));
+        jlFecha.setText(p.getFechaPrevista().toString());
+        jlPrecio.setText(String.valueOf(p.getPrecioEntrada()));
+        jlMontoNec.setText(String.valueOf(p.getMontoNecesario()));
+        jlMontoRec.setText(String.valueOf(p.getMontoRecaudado()));
+        jlProponente.setText(p.getProponente());
+        jlEstadoActual.setText(p.getEstadoActual().toString());
         // Agregar aca el nombre del proponente **********************************+++
         }
     }
@@ -425,6 +451,9 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -435,18 +464,20 @@ public class RegistrarColaboraciones extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel jlDescripcion;
-    private javax.swing.JLabel jlFechaPrevista;
-    private javax.swing.JLabel jlIcono;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel jlEstadoActual;
+    private javax.swing.JLabel jlFecha;
     private javax.swing.JLabel jlLugar;
     private javax.swing.JLabel jlMontoColab;
-    private javax.swing.JLabel jlMontoNecesario;
-    private javax.swing.JLabel jlMontoRecaudado;
-    private javax.swing.JLabel jlPrecioEntrada;
+    private javax.swing.JLabel jlMontoNec;
+    private javax.swing.JLabel jlMontoRec;
+    private javax.swing.JLabel jlPrecio;
+    private javax.swing.JLabel jlProponente;
     private javax.swing.JLabel jlPropuesta;
     private javax.swing.JLabel jlTipoRet;
     private javax.swing.JLabel jlTitulo;
     private javax.swing.JTextField jtMontoColaboracion;
+    private javax.swing.JTextPane jtaDesc;
     private javax.swing.JList<String> listaTipoRet;
     // End of variables declaration//GEN-END:variables
 }

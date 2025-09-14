@@ -16,7 +16,7 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
 
     private IControlador controlador;
     private DefaultTableModel tabla1;
-    private DefaultTableModel tabla3;
+    private DefaultTableModel tabla2;
     
     /**
      * Creates new form ConsultarColaboraciones
@@ -24,9 +24,13 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
     public ConsultarColaboraciones(IControlador IC) {
         initComponents();
         controlador = IC;
-        cargarComboBox();
-        tabla1=(DefaultTableModel)jTable1.getModel();
-        tabla3=(DefaultTableModel)jTable3.getModel();
+        tabla1=(DefaultTableModel)jtColaboraciones.getModel();
+        tabla2=(DefaultTableModel)jtInfo.getModel();
+        jtColaboraciones.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                mostrarInfoColaboracion();
+            }
+        });
     }
 
     /**
@@ -42,15 +46,11 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
         jTable2 = new javax.swing.JTable();
         jCcolaboradores = new javax.swing.JComboBox<>();
         jBcerrar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jCcolaboracion = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jtInfo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jBselec = new javax.swing.JButton();
-        jBselec2 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtColaboraciones = new javax.swing.JTable();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,43 +90,19 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null}
             },
             new String [] {
-                "Nickname", "Colaboraciones"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        jCcolaboracion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCcolaboracionActionPerformed(evt);
-            }
-        });
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null}
-            },
-            new String [] {
-                "Fecha", "Monto", "Tipo de Retorno"
+                "Fecha", "Hora", "Monto", "Tipo de Retorno"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Float.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -137,81 +113,74 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(jtInfo);
 
         jLabel1.setText("Colaboradores");
 
-        jLabel2.setText("Colaboracion");
+        jtColaboraciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Propuesta", "NickColaborador"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
-        jBselec.setText("Seleccionar");
-        jBselec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBselecActionPerformed(evt);
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-
-        jBselec2.setText("Seleccionar");
-        jBselec2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBselec2ActionPerformed(evt);
-            }
-        });
+        jScrollPane4.setViewportView(jtColaboraciones);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(74, 74, 74))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(32, 32, 32)))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jBcerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(jCcolaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(jBselec))
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCcolaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(209, 209, 209)
+                                .addComponent(jBcerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCcolaboracion, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jBselec2)))
-                .addContainerGap(88, Short.MAX_VALUE))
+                        .addGap(104, 104, 104)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCcolaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jBselec))
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCcolaboracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jBselec2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jBcerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -222,77 +191,65 @@ public class ConsultarColaboraciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void jCcolaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCcolaboradoresActionPerformed
-
+                                               
+        Object seleccionado = jCcolaboradores.getSelectedItem();
+        tabla2.setRowCount(0);
+        if (seleccionado != null) {
+            mostrarColaboraciones(seleccionado.toString());
+        }
     }//GEN-LAST:event_jCcolaboradoresActionPerformed
-
-    private void jCcolaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCcolaboracionActionPerformed
-        
-    }//GEN-LAST:event_jCcolaboracionActionPerformed
 
     private void jBcerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcerrarActionPerformed
         tabla1.setRowCount(0);
-        tabla3.setRowCount(0);
-        this.jCcolaboradores.removeAllItems();
-        this.jCcolaboracion.removeAllItems();
+        tabla2.setRowCount(0);
         setVisible(false);
     }//GEN-LAST:event_jBcerrarActionPerformed
 
-    private void jBselecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBselecActionPerformed
-        String colaboradorSeleccionado = (String) jCcolaboradores.getSelectedItem();
-        mostrarColaboraciones(colaboradorSeleccionado);
-    }//GEN-LAST:event_jBselecActionPerformed
-
-    private void jBselec2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBselec2ActionPerformed
-        String colaboracionSeleccionada = (String) jCcolaboracion.getSelectedItem();
-        String colaboradorSeleccionado = (String) jCcolaboradores.getSelectedItem();
-        mostrarColaboracion(colaboracionSeleccionada,colaboradorSeleccionado);
-    }//GEN-LAST:event_jBselec2ActionPerformed
-
     private void mostrarColaboraciones(String nick){
-        ArrayList<DTColaboracion> colaboraciones= controlador.getDTColaboracionesPropuestas(nick);
-       
-        this.jCcolaboracion.removeAllItems();
-        for(DTColaboracion c:colaboraciones){
+        if (nick != null) {
+            ArrayList<DTColaboracion> colaboraciones= controlador.getDTColaboracionesPropuestas(nick);
             tabla1.setRowCount(0);
-            Object[] fila = {nick, c.getPropuestaTitulo().trim()};
-            tabla1.addRow(fila);
-            this.jCcolaboracion.addItem(c.getPropuestaTitulo());
-        }
-    }
-    
-    private void mostrarColaboracion(String colab,String nick){
-        DTColaboracion c= controlador.getDTColaboracionPropuesta(nick,colab);
-       
-        tabla3.setRowCount(0);
-        if(c!=null){
-            Object[] fila = {c.getFecha(),c.getMonto(),c.getTipoRetorno()};
-            tabla3.addRow(fila);
+            for(DTColaboracion c: colaboraciones){
+                Object[] fila = {c.getPropuestaTitulo(),c.getNickColaborador()};
+                tabla1.addRow(fila);
+            }
         }
     }
     
     private void cargarComboBox() {
         this.jCcolaboradores.removeAllItems();
-        this.jCcolaboracion.removeAllItems();
         
         ArrayList<String> nomColab = controlador.getNickColaboradores();
         for (String p : nomColab) {
             this.jCcolaboradores.addItem(p);
         }   
     }
+    
+    private void mostrarInfoColaboracion(){
+       
+        int filaSel = jtColaboraciones.getSelectedRow();
+        if (filaSel == -1) {
+            return;
+        }
+
+        String propuesta = (String) tabla1.getValueAt(filaSel, 0);
+        String nick = (String) tabla1.getValueAt(filaSel, 1);
+        DTColaboracion c = controlador.getDTColaboracionPropuesta(nick, propuesta);
+    
+        tabla2.setRowCount(0);
+        Object[] fila = {c.getFecha(), c.getHora(), c.getMonto(), c.getTipoRetorno()};
+        tabla2.addRow(fila);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBcerrar;
-    private javax.swing.JButton jBselec;
-    private javax.swing.JButton jBselec2;
-    private javax.swing.JComboBox<String> jCcolaboracion;
     private javax.swing.JComboBox<String> jCcolaboradores;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jtColaboraciones;
+    private javax.swing.JTable jtInfo;
     // End of variables declaration//GEN-END:variables
 }

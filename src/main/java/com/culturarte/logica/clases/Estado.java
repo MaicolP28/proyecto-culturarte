@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 public class Estado {
@@ -18,15 +19,17 @@ public class Estado {
     private int id;
  
     private LocalDate fecha;
+    private LocalTime hora;
     
     @Enumerated(EnumType.STRING)
     private TipoEstado estado;
 
     public Estado() {}
 
-    public Estado(LocalDate fecha, TipoEstado estado) {
+    public Estado(LocalDate fecha, LocalTime hora, TipoEstado estado) {
         this.fecha = fecha;
         this.estado = estado;
+        this.hora = hora;
     }
 
     public int getId() {
@@ -53,4 +56,14 @@ public class Estado {
         this.estado = estado;
     }
 
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
+    }
+
+    
+    
 }

@@ -6,10 +6,12 @@ package com.culturarte.presentacion;
 
 import com.culturarte.logica.IControlador;
 import com.culturarte.exepciones.PropuestaYaExiste;
+import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.enums.TipoRetorno;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.io.*;
+import java.time.LocalTime;
 import javax.swing.*;
 import java.util.EnumSet;
 import javax.swing.filechooser.*;
@@ -261,6 +263,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
 
         try {
             controlador.altaPropuesta(titulo, descripcion, lugar, fechaPrev, montoE, montoN, tipoRet, imagen, proponente,tipoEsp);
+            controlador.nuevoEstadoPropuesta(titulo, TipoEstado.INGRESADA, LocalDate.now(), LocalTime.now());
             JOptionPane.showMessageDialog(this, "Propuesta registrada correctamente.");
         } catch (PropuestaYaExiste e) {
             JOptionPane.showMessageDialog(this, "La propuesta ya existe: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
