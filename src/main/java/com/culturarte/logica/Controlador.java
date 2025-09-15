@@ -480,7 +480,7 @@ public class Controlador implements IControlador{
             this.altaProponente(
                     "hrubino", "Horacio", "Rubino",
                     "horacio.rubino@guambia.com.uy", LocalDate.of(1962, 2, 25),
-                    new File("imagenes/hr.png"),
+                    new File(getClass().getClassLoader().getResource("Imagenes/HR.jpeg").toURI()),
                     "18 de Julio 1234",
                     "https://twitter.com/horaciorubino",
                     "Actor y conductor"
@@ -488,7 +488,7 @@ public class Controlador implements IControlador{
             this.altaProponente(
                     "mbusca", "Martín", "Buscaglia",
                     "martin.bus@agadu.org.uy", LocalDate.of(1972, 6, 14),
-                    new File("imagenes/mb.png"),
+                    new File(getClass().getClassLoader().getResource("Imagenes/MB.jpg").toURI()),
                     "Colonia 4321",
                     "http://www.martinbuscaglia.com/",
                     "Músico uruguayo"
@@ -544,7 +544,7 @@ public class Controlador implements IControlador{
             this.altaProponente(
                     "losBardo", "Los", "Bardo",
                     "losbardo@bardocientifico.com", LocalDate.of(1980, 10, 31),
-                    new File("imagenes/lb.png"),
+                    new File(getClass().getClassLoader().getResource("Imagenes/LB.jpg").toURI()),
                     "8 de Octubre 1429",
                     "https://bardocientifico.com/",
                     "Divulgación científica"
@@ -568,7 +568,7 @@ public class Controlador implements IControlador{
             this.altaColaborador(
                     "sergiop", "Sergio", "Puglia",
                     "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28),
-                    new File("imagenes/sp.png")
+                    new File(getClass().getClassLoader().getResource("Imagenes/SP.jpg").toURI())
             );
             this.altaColaborador(
                     "chino", "Alvaro", "Recoba",
@@ -578,12 +578,12 @@ public class Controlador implements IControlador{
             this.altaColaborador(
                     "tonyp", "Antonio", "Pacheco",
                     "tonyp@manya.org.uy", LocalDate.of(1955, 2, 14),
-                    new File("imagenes/ap.png")
+                    new File(getClass().getClassLoader().getResource("Imagenes/AP.jpg").toURI())
             );
             this.altaColaborador(
                     "nicoJ", "Nicolás", "Jodal",
                     "jodal@artech.com.uy", LocalDate.of(1960, 8, 9),
-                    new File("imagenes/nj.png")
+                    new File(getClass().getClassLoader().getResource("Imagenes/NJ.jpg").toURI())
             );
             this.altaColaborador(
                     "juanP", "Juan", "Perez",
@@ -756,7 +756,7 @@ public class Controlador implements IControlador{
                     LocalDate.of(2017, 10, 19),
                     (float)400, (float)400000,
                     EnumSet.of(TipoRetorno.PORCENTAJEGANANCIA),
-                    new File("imagenes/pim.png"),
+                    new File(getClass().getClassLoader().getResource("Imagenes/PIM.jpg").toURI()),
                     "mbusca", "Concierto"
             );
             
@@ -767,7 +767,7 @@ public class Controlador implements IControlador{
                     LocalDate.of(2017, 10, 21),
                     (float)1000, (float)900000,
                     EnumSet.of(TipoRetorno.ENTRADAGRATIS, TipoRetorno.PORCENTAJEGANANCIA),
-                    new File("imagenes/pil.png"),
+                    new File(getClass().getClassLoader().getResource("Imagenes/PIL.jpg").toURI()),
                     "kairoh", "Festival"
             );
             
@@ -789,7 +789,7 @@ public class Controlador implements IControlador{
                     LocalDate.of(2017, 11, 16),
                     (float)650, (float)300000,
                     EnumSet.of(TipoRetorno.ENTRADAGRATIS, TipoRetorno.PORCENTAJEGANANCIA),
-                    new File("imagenes/udj.png"),
+                    new File(getClass().getClassLoader().getResource("Imagenes/UDJ.jpg").toURI()),
                     "tabarec", "Murga"
             );
             
