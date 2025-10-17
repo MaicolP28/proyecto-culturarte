@@ -352,17 +352,19 @@ public class ConsultarPropuestasPorEstado extends javax.swing.JInternalFrame {
         
         // Imagen
 
-       File imagenFile = p.getImagen();
-        
-        if (imagenFile != null && imagenFile.exists()) {
-            ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
-           //escala la imagen al tamaño del JLabel
-            Image imagenEscalada = icon.getImage().getScaledInstance(fotoPropuesta.getWidth(),fotoPropuesta.getHeight(),Image.SCALE_SMOOTH);
+        String rutaImagen = p.getImagen();
+
+        if (rutaImagen != null && !rutaImagen.isEmpty()) {
+            ImageIcon icon = new ImageIcon(rutaImagen);
+            // Escala la imagen al tamaño del JLabel
+            Image imagenEscalada = icon.getImage().getScaledInstance(
+                    fotoPropuesta.getWidth(), fotoPropuesta.getHeight(), Image.SCALE_SMOOTH
+            );
             fotoPropuesta.setIcon(new ImageIcon(imagenEscalada));
-        }   
-        else {
+        } else {
             fotoPropuesta.setIcon(null); // limpia si no hay imagen
         }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -143,8 +143,8 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
     private void listarSeguidos(String nickname){
         DTUsuario u = controlador.getDTUsuario(nickname);
         DefaultListModel<String> dlm = new DefaultListModel<>();
-        for(String n : u.getUsuariosSeguidos()){
-            dlm.addElement(n);
+        for(DTUsuario n : u.getUsuariosSeguidos()){
+            dlm.addElement(String.valueOf(n));
         }
         listaSeguidos.setModel(dlm);
     }

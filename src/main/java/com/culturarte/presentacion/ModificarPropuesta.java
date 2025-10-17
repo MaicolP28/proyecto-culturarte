@@ -566,7 +566,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         float montoN = Float.parseFloat(montoNS); 
         LocalDate fechaPrev = jDfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String proponente = (String) jcModProponente.getSelectedItem();
-        File imagen = new File(jTimagen.getText());
+        String imagen = jTimagen.getText();
         
         DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) jtreeCategoria.getSelectionPath().getLastPathComponent();
         Object cat = nodo.getUserObject();
@@ -628,12 +628,12 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         modLugar.setText(p.getLugar());
         modPrecioEntrada.setText(String.valueOf(p.getPrecioEntrada()));
         modMontoNec.setText(String.valueOf(p.getMontoNecesario()));
-        
+
         // imagen
         if (p.getImagen() != null) {
-            jTimagen.setText(p.getImagen().getAbsolutePath()); 
+            jTimagen.setText(p.getImagen());
         }
-        
+
         cargarComponentesMod();
         // seleccionar auto proponente
         jcModProponente.setSelectedItem(p.getProponente());
@@ -712,18 +712,15 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         tablaEstados.setModel(dtm);
         
         // Imagen
-        
-        File imagenFile = p.getImagen();
-        
-        if (imagenFile != null && imagenFile.exists()) {
-            ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
-           //escala la imagen al tamaño del JLabel
-            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getPreferredSize().width,jLabel1.getPreferredSize().height,Image.SCALE_SMOOTH);
+        String rutaImagen = p.getImagen();
+        if (rutaImagen != null && !rutaImagen.isEmpty()) {
+            ImageIcon icon = new ImageIcon(rutaImagen);
+            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
             jLabel1.setIcon(new ImageIcon(imagenEscalada));
-        }   
-        else {
-            jLabel1.setIcon(null); // limpia si no hay imagen
+        } else {
+            jLabel1.setIcon(null);
         }
+
     }
     
     

@@ -207,20 +207,18 @@ public class ConsultarColaboradores extends javax.swing.JInternalFrame {
             recaudacion.add(p.getMontoRecaudado());
             estadoActual.add(p.getEstadoActual());
         }
-        
-       
-        File imagenFile = c.getImagen();
-        
-        if (imagenFile != null && imagenFile.exists()) {
-            ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
-           //escala la imagen al tamaño del JLabel
-            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_SMOOTH);
+
+
+        String rutaImagen = c.getImagen();
+        if (rutaImagen != null && !rutaImagen.isEmpty()) {
+            ImageIcon icon = new ImageIcon(rutaImagen);
+            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
             jLabel1.setIcon(new ImageIcon(imagenEscalada));
-        }   
-        else {
-            jLabel1.setIcon(null); // limpia si no hay imagen
+        } else {
+            jLabel1.setIcon(null);
         }
-        
+
+
         jLabel2.setText(c.getNickname());
         jLabel3.setText(c.getNombre());
         jLabel4.setText(c.getApellido());

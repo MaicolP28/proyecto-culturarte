@@ -333,18 +333,16 @@ public class ConsultarPropuestas extends javax.swing.JInternalFrame {
         tablaEstados.setModel(dtm);
         
         // Imagen
-        
-        File imagenFile = p.getImagen();
-        
-        if (imagenFile != null && imagenFile.exists()) {
-            ImageIcon icon = new ImageIcon(imagenFile.getAbsolutePath());
-           //escala la imagen al tamaño del JLabel
-            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getPreferredSize().width,jLabel1.getPreferredSize().height,Image.SCALE_SMOOTH);
+
+        String rutaImagen = p.getImagen();
+        if (rutaImagen != null && !rutaImagen.isEmpty()) {
+            ImageIcon icon = new ImageIcon(rutaImagen);
+            Image imagenEscalada = icon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
             jLabel1.setIcon(new ImageIcon(imagenEscalada));
-        }   
-        else {
-            jLabel1.setIcon(null); // limpia si no hay imagen
+        } else {
+            jLabel1.setIcon(null);
         }
+
     }
     
     private void cargarLista() {

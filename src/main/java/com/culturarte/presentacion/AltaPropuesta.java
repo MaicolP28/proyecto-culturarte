@@ -259,10 +259,10 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         
         List<TipoRetorno> seleccionados = jLTipoRet.getSelectedValuesList();
         EnumSet<TipoRetorno> tipoRet = EnumSet.copyOf(seleccionados);
-        File imagen = new File(jTimagen.getText());
+        String imagen = jTimagen.getText();
 
         try {
-            controlador.altaPropuesta(titulo, descripcion, lugar, fechaPrev, montoE, montoN, tipoRet, imagen, proponente,tipoEsp);
+            controlador.altaPropuesta(titulo, descripcion, lugar, fechaPrev, montoE, montoN, tipoRet, imagen, proponente,tipoEsp,LocalDate.now(), LocalTime.now());
             controlador.nuevoEstadoPropuesta(titulo, TipoEstado.INGRESADA, LocalDate.now(), LocalTime.now());
             JOptionPane.showMessageDialog(this, "Propuesta registrada correctamente.");
         } catch (PropuestaYaExiste e) {

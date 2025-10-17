@@ -114,6 +114,33 @@ public class ManejadorPropuesta {
         if (propuesta.getCategoria() != null)
             propuesta.getCategoria().getNombre();
     }
-    
+
+    public List<Propuesta> buscarPropuestas(String texto) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "SELECT p FROM Propuesta p";
+
+            if (texto != null && !texto.trim().isEmpty()) {
+                jpql += " WHERE LOWER(p.titulo) LIKE :texto " +
+                        "OR LOWER(p.descripcion) LIKE :texto " +
+                        "OR LOWER(p.lugar) LIKE :texto";
+            }
+
+            TypedQuery<Propuesta> query = em.createQuery(jpql, Propuesta.class);
+
+            if (texto != null && !texto.trim().isEmpty()) {
+                query.setParameter("texto", "%" + texto.toLowerCase() + "%");
+            }
+
+            List<Propuesta> resultados = query.getResultList();
+            resultados.forEach(this::forzarCargaLazy);
+
+            return resultados;
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
 

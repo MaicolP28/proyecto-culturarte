@@ -1,11 +1,7 @@
 package com.culturarte.logica.clases;
-
-import com.culturarte.logica.enums.TipoEstado;
 import com.culturarte.logica.enums.TipoRetorno;
 import jakarta.persistence.*;
-import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -30,7 +26,7 @@ public class Propuesta {
     @Enumerated(EnumType.STRING)
     private Set<TipoRetorno> tipoRetornos = EnumSet.noneOf(TipoRetorno.class);
 
-    private File imagen;
+    private String imagen;
     
     @OneToMany(mappedBy = "propuesta")
     private List<Colaboracion> colaboraciones;
@@ -47,10 +43,13 @@ public class Propuesta {
     @ManyToOne
     private Categoria categoria;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comentario> comentarios;
+
     public Propuesta() {
     }
 
-    public Propuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, Proponente proponente, Categoria categoria) {
+    public Propuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, String imagen, Proponente proponente, Categoria categoria) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.lugar = lugar;
@@ -63,10 +62,11 @@ public class Propuesta {
         this.categoria = categoria;
         this.colaboraciones = new ArrayList<>();
         this.historialEstados = new ArrayList<>();
+        this.comentarios = new ArrayList<>();
 
     }
 
-    public void setImagen(File imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
     
@@ -129,7 +129,7 @@ public class Propuesta {
     }
 
     public Estado getEstadoActual() {
-        return historialEstados.get(historialEstados.size() - 1);
+        return historialEstados.getLast();
     }
 
     public void setEstadoActual(Estado estadoActual) {
@@ -144,7 +144,7 @@ public class Propuesta {
         this.categoria = categoria;
     }
     
-    public File getImagen(){
+    public String getImagen(){
         return imagen;
     }
     
@@ -191,5 +191,16 @@ public class Propuesta {
     public void agregarEstado(Estado estado) {
         this.historialEstados.add(estado);
         this.estadoActual = estado;
+    }
+
+    public void agregarComentario(Comentario comentario) {
+        if (this.comentarios == null) {
+            this.comentarios = new ArrayList<>();
+        }
+        this.comentarios.add(comentario);
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
     }
 }

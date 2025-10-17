@@ -95,7 +95,26 @@ public class ManejadorUsuario {
             em.close();
         }
     }
-    
+
+    public List<Usuario> buscarUsuarios(String nick) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "SELECT u FROM Usuario u WHERE LOWER(u.nickname) LIKE LOWER(CONCAT('%', :nick, '%'))";
+            TypedQuery<Usuario> query = em.createQuery(jpql, Usuario.class);
+            query.setParameter("nick", nick);
+
+            List<Usuario> usuarios = query.getResultList();
+
+            // Forzar carga de colecciones si son lazy
+            usuarios.forEach(u -> u.getUsuariosSeguidos().size());
+
+            return usuarios;
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
 
 

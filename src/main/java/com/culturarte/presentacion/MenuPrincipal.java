@@ -53,15 +53,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Fabrica fab = Fabrica.getInstancia();
         IC = fab.getIControlador();
         
-        // Cargando datos de prueba
-        try {
-            IC.cargarDatosPrueba();
-        } catch(CargaFallida e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar datos prueba","Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println(e);
-        }
-        
-        
         // Creando InternalFrames
         iframeAltaCategoria = new AltaCategoria(IC);
         iframeAltaCategoria.setVisible(false);

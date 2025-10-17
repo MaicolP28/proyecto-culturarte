@@ -5,7 +5,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToMany;
-import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,7 @@ import java.util.List;
 public abstract class Usuario {
     @Id
     private String nickname;
+    private String password;
     private String nombre;
     private String apellido;
     private String email;
@@ -23,12 +23,15 @@ public abstract class Usuario {
     private List<Propuesta> propuestasSeguidas;
     @ManyToMany
     private List<Usuario> usuariosSeguidos;
-    private File imagen;
+    @ManyToMany
+    private List<Usuario> usuariosSeguidores;
+    private String imagen;
 
     public Usuario() { }
 
-    public Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen) {
+    public Usuario(String nickname,String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
         this.nickname = nickname;
+        this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -36,13 +39,14 @@ public abstract class Usuario {
         this.imagen = imagen;
         this.propuestasSeguidas = new ArrayList<>();
         this.usuariosSeguidos = new ArrayList<>();
+        this.usuariosSeguidores = new ArrayList<>();
     }
 
-    public File getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(File imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 
@@ -98,10 +102,57 @@ public abstract class Usuario {
         return nickname;
     }
 
+    public String getPassword() {return password;}
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-    
+
+    public void setUsuariosSeguidos(List<Usuario> usuariosSeguidos) {
+        this.usuariosSeguidos = usuariosSeguidos;
+    }
+
+    public void setPropuestasSeguidas(List<Propuesta> propuestasSeguidas) {
+        this.propuestasSeguidas = propuestasSeguidas;
+    }
+
+    public List<Usuario> getUsuariosSeguidores() {
+        return usuariosSeguidores;
+    }
+
+    public void setUsuariosSeguidores(List<Usuario> usuariosSeguidores) {
+        this.usuariosSeguidores = usuariosSeguidores;
+    }
+
+    public void addUsuarioSeguidor(Usuario usuario) {
+        this.usuariosSeguidores.add(usuario);
+    }
+
+    public void agregarPropuestaFavorita(Propuesta propuesta) {
+        if (this.propuestasSeguidas == null) {
+            this.propuestasSeguidas= new ArrayList<>();
+        }
+
+        for (Propuesta fav : this.propuestasSeguidas) {
+            if (fav.getTitulo().equals(propuesta.getTitulo())) {
+                throw new IllegalArgumentException("La propuesta ya está en favoritos");
+            }
+        }
+
+        this.propuestasSeguidas.add(propuesta);
+    }
+
+    public void sacarPropuestaFavorita(Propuesta propuesta) {
+        if (this.propuestasSeguidas == null) {
+            this.propuestasSeguidas= new ArrayList<>();
+        }
+
+        if( this.propuestasSeguidas.contains(propuesta)) {
+            this.propuestasSeguidas.remove(propuesta);
+        }
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -7,17 +7,17 @@ package com.culturarte.logica;
 import com.culturarte.exepciones.*;
 import com.culturarte.logica.datatypes.DTProponente;
 import java.util.ArrayList;
-import com.culturarte.exepciones.PropuestaYaExiste;
-import com.culturarte.exepciones.UsuarioYaSeguido;
+
 import com.culturarte.logica.datatypes.DTColaborador;
 import com.culturarte.logica.datatypes.DTPropuesta;
 import com.culturarte.logica.datatypes.DTColaboracion;
 import com.culturarte.logica.datatypes.DTUsuario;
 import com.culturarte.logica.enums.*;
 import java.time.LocalDate;
-import java.io.File;
 import java.time.LocalTime;
 import java.util.EnumSet;
+import java.util.List;
+
 import javax.swing.tree.DefaultTreeModel;
 
 /**
@@ -25,17 +25,14 @@ import javax.swing.tree.DefaultTreeModel;
  * @author maicol
  */
 public interface IControlador {
-    
-    // carga de datos
-    public abstract void cargarDatosPrueba() throws CargaFallida;
-    
-    public abstract void altaColaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen) throws UsuarioYaExiste;
-    public abstract void altaProponente(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen, String direccion, String linkWeb, String bibliografia) throws UsuarioYaExiste;
+
+    public abstract void altaColaborador(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) throws UsuarioYaExiste;
+    public abstract void altaProponente(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen, String direccion, String linkWeb, String bibliografia) throws UsuarioYaExiste;
     public abstract ArrayList<String> getNomProponentes();
     public abstract DTProponente getDTProponente(String nickname);
     public abstract void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste;
     public abstract DefaultTreeModel listarCategorias();
-    public abstract void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, File imagen, String proponente, String categoria) throws PropuestaYaExiste;
+    public abstract void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, String imagen, String proponente, String categoria, LocalDate fechaActual, LocalTime horaActual) throws PropuestaYaExiste;
     public abstract ArrayList<String> getNickColaboradores();
     public abstract ArrayList<String> getNomColaboradores();
     public abstract DTColaborador getDTColaborador(String nickname);
@@ -54,6 +51,17 @@ public interface IControlador {
     public abstract ArrayList<DTColaboracion> getDTColaboraciones();//cu11
     public abstract DTUsuario getDTUsuario(String nickname);
     public abstract void nuevoEstadoPropuesta(String propuesta, TipoEstado estado, LocalDate fecha, LocalTime hora);
-    public abstract void modificarPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, File imagen, String proponente, String categoria, String nuevoEstado) throws DatosIncorrectos;
-    
+    public abstract void modificarPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, String imagen, String proponente, String categoria, String nuevoEstado) throws DatosIncorrectos;
+    public abstract ArrayList<DTPropuesta> getDTPropuestasWeb();
+    public abstract boolean verificarPassword(String password, String nick);
+    public abstract List<String> listarCategoriasWeb();
+    public abstract List<String> listarCategoriasWebCompletas();
+    public abstract List<DTPropuesta> buscarPropuestas(String texto);
+    public abstract String[] getTiposRetorno();
+    public abstract void extenderFinanciacion(String tituloPropuesta, LocalDate nuevaFecha);
+    public abstract void agregarComentario(String texto, String nickColaborador, String tituloPropuesta);
+    public abstract List<DTUsuario> buscarUsuarios(String nombre);
+    public abstract void agregarPropuestaFavorita(String nickname, String tituloPropuesta);
+    public abstract void sacarPropuestaFavorita(String nickname, String tituloPropuesta);
+    public abstract boolean colaboradorPuedeComentar(String colaborador, String tituloPropuesta);
 }

@@ -303,7 +303,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         String apellido = JTapellido.getText().trim();
         String email = JTEmail.getText().trim();
         LocalDate fechaNac = jDateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        File imagen = new File(JTarchivo.getText());
+        String imagen = JTarchivo.getText();
 
         if(!email.contains("@")){
             JOptionPane.showMessageDialog(this, "Correo Incorrecto", "EROR", JOptionPane.ERROR_MESSAGE);
@@ -316,11 +316,11 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 String web = JTlinkweb.getText().trim();
                 String biografia = JTbiografia.getText().trim();
 
-                controlador.altaProponente(nick, nombre, apellido, email, fechaNac, imagen, direccion, web, biografia);
+                controlador.altaProponente(nick,"", nombre, apellido, email, fechaNac, imagen, direccion, web, biografia);
                 JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.");
 
             } else if (JRBcolaborador.isSelected()) {
-                controlador.altaColaborador(nick, nombre, apellido, email, fechaNac, imagen);
+                controlador.altaColaborador(nick,"", nombre, apellido, email, fechaNac, imagen);
                 JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.");
             } else {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un rol (Proponente o Colaborador)");

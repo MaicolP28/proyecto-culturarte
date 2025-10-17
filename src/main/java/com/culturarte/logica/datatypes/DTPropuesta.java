@@ -4,8 +4,9 @@
  */
 package com.culturarte.logica.datatypes;
 
+import com.culturarte.logica.clases.Comentario;
+import com.culturarte.logica.clases.Propuesta;
 import com.culturarte.logica.enums.TipoEstado;
-import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,18 @@ public class DTPropuesta {
     private float precioEntrada;
     private float montoNecesario;
     private float montoRecaudado; // Calculado
-    private File imagen;
+    private String imagen;
     private ArrayList<String> colaboradores = new ArrayList<>();
     private TipoEstado estadoActual;
-    private List<DTEstado> histEstados = new ArrayList();
+    private List<DTEstado> histEstados = new ArrayList<>();
     private String categoria;
     private String nickProponente;
+    private int cantColaboradores;
+    private List<DTComentario> comentarios = new ArrayList<>();
     
     public DTPropuesta(){}
-    
-    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, File imagen, ArrayList<String> colaboradores, String nickProponente, TipoEstado estadoActual, String categoria, ArrayList<DTEstado> histEstados, float montoRecaudado){
+
+    public DTPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, float precioEntrada, float montoNecesario, String imagen, ArrayList<String> colaboradores, String nickProponente, TipoEstado estadoActual, String categoria, ArrayList<DTEstado> histEstados, float montoRecaudado, List<DTComentario> comentarios) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.lugar = lugar;
@@ -41,6 +44,7 @@ public class DTPropuesta {
         this.nickProponente = nickProponente;
         this.histEstados = histEstados;
         this.montoRecaudado = montoRecaudado;
+        this.comentarios = comentarios;
     }
     
     public DTPropuesta(String titulo, TipoEstado estado, ArrayList<String> colaboradores, float montoRecaudado, float montoNecesario) {
@@ -49,6 +53,18 @@ public class DTPropuesta {
         this.colaboradores = colaboradores;
         this.montoRecaudado = montoRecaudado;
         this.montoNecesario = montoNecesario;
+    }
+
+    public DTPropuesta(String titulo, String descripcion, TipoEstado estado, int cantColaboradores, float montoRecaudado, float montoNecesario, LocalDate fechaPrevista, String imagen, String categoria, String nickProponente) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.estadoActual = estado;
+        this.cantColaboradores = cantColaboradores;
+        this.montoRecaudado = montoRecaudado;
+        this.montoNecesario = montoNecesario;
+        this.fechaPrevista = fechaPrevista;
+        this.imagen = imagen;
+        this.categoria= categoria;
     }
     
     public DTPropuesta(String titulo, TipoEstado estado, String nickProponente, float montoRecaudado, float montoNecesario) {
@@ -66,6 +82,17 @@ public class DTPropuesta {
         this.fechaPrevista = fechaPrevista;
         this.precioEntrada = precioEntrada;
         this.montoNecesario = montoNecesario;
+    }
+
+    public DTPropuesta(Propuesta propuesta) {
+        this.titulo = propuesta.getTitulo();
+        this.descripcion = propuesta.getDescripcion();
+        this.lugar = propuesta.getLugar();
+        this.fechaPrevista = propuesta.getFechaPrevista();
+        this.montoNecesario = propuesta.getMontoNecesario();
+        this.imagen = propuesta.getImagen();
+        this.estadoActual= propuesta.getHistorialEstados().getLast().getEstado();
+        this.categoria=propuesta.getCategoria().getNombre();
     }
 
     public List<DTEstado> getHistEstados() {
@@ -104,7 +131,7 @@ public class DTPropuesta {
         return montoRecaudado;
     }
 
-    public File getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
@@ -136,5 +163,30 @@ public class DTPropuesta {
         return retorno;
     }
 
-    
+    public int getCantColaboradores() {
+        return cantColaboradores;
+    }
+
+    public void setCantColaboradores(int cantColaboradores) {
+        this.cantColaboradores = cantColaboradores;
+    }
+
+    public List<DTComentario> getComentarios() {
+        if (this.comentarios == null) {
+            this.comentarios = new ArrayList<>();
+        }
+        return comentarios;
+    }
+
+    public void setComentarios(List<DTComentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public void agregarComentario(DTComentario comentario) {
+        if (this.comentarios == null) {
+            this.comentarios = new ArrayList<>();
+        }
+        this.comentarios.add(comentario);
+    }
 }
+

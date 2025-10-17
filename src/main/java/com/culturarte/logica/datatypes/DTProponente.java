@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.culturarte.logica.datatypes;
-
-import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -15,11 +13,12 @@ import java.util.ArrayList;
  */
 public class DTProponente {
     private String nickname;
+    private String password;
     private String nombre; 
     private String apellido;
     private String email;
     private LocalDate fechaNacimiento;
-    private File imagen;
+    private String imagen;
     private String direccion;
     private String biografia;
     private String linkWeb;
@@ -27,8 +26,9 @@ public class DTProponente {
     
     public DTProponente() {}
     
-    public DTProponente(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen, String direccion, String linkWeb, String biografia) {
+    public DTProponente(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen, String direccion, String linkWeb, String biografia) {
         this.nickname = nickname;
+        this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -61,7 +61,7 @@ public class DTProponente {
         return fechaNacimiento;
     }
     
-    public File getImagen() {
+    public String getImagen() {
         return imagen;
     }
     
@@ -102,7 +102,7 @@ public class DTProponente {
         this.fechaNacimiento = fechaNacimiento;
     }
     
-    public void setImagen(File imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
     

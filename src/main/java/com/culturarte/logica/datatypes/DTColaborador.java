@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.culturarte.logica.datatypes;
-
-import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -14,15 +12,18 @@ import java.util.ArrayList;
  */
 public class DTColaborador {
     private String nickname;
+    private String password;
     private String nombre;
     private String apellido;
     private String email;
     private LocalDate fechaNacimiento;
-    private File imagen;
+    private String imagen;
     private ArrayList<DTPropuesta> propuestas;
+    private ArrayList<DTColaboracion> colaboraciones;
 
-    public DTColaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, File imagen) {
+    public DTColaborador(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
         this.nickname = nickname;
+        this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -51,7 +52,7 @@ public class DTColaborador {
         return fechaNacimiento;
     }
 
-    public File getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
@@ -62,7 +63,48 @@ public class DTColaborador {
     public void addPropuesta(DTPropuesta p) {
         this.propuestas.add(p);
     }
-    
-    
-    
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public void setPropuestas(ArrayList<DTPropuesta> propuestas) {
+        this.propuestas = propuestas;
+    }
+
+    public ArrayList<DTColaboracion> getColaboraciones() {
+        return colaboraciones;
+    }
+
+    public void setColaboraciones(ArrayList<DTColaboracion> colaboraciones) {
+        this.colaboraciones = colaboraciones;
+    }
 }
