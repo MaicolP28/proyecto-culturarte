@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="3.1"
-             xmlns="https://jakarta.ee/xml/ns/persistence"
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd">
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                                 https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
 
     <persistence-unit name="DBculturarte" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        
+        <class>com.culturarte.logica.clases.Categoria</class>
+        <class>com.culturarte.logica.clases.Colaboracion</class>
+        <class>com.culturarte.logica.clases.Comentario</class>
+        <class>com.culturarte.logica.clases.Estado</class>
+        <class>com.culturarte.logica.clases.Propuesta</class>
+        <class>com.culturarte.logica.clases.Colaborador</class>
+        <class>com.culturarte.logica.clases.Proponente</class>
+        <class>com.culturarte.logica.clases.Usuario</class>
+
 
         <properties>
-            <!-- 🔗 Conexión JDBC -->
-            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <!-- Conexión a la base de datos -->
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:mysql://127.0.0.1:3306/culturarte?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC"/>
-            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.user" value="jaruser"/>
             <property name="jakarta.persistence.jdbc.password" value="root"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 
-            <!-- 🧱 Configuración Hibernate -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <!-- Opciones de Hibernate -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-
-            <!-- ⚠️ Evita uso de cache de segundo nivel -->
-            <property name="hibernate.cache.use_second_level_cache" value="false"/>
         </properties>
+
     </persistence-unit>
 </persistence>
