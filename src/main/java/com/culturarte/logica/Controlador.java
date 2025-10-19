@@ -1,5 +1,5 @@
 package com.culturarte.logica;
-
+import org.springframework.stereotype.Service;
 import com.culturarte.exepciones.CargaFallida;
 import com.culturarte.exepciones.CategoriaYaExiste;
 import com.culturarte.exepciones.DatosIncorrectos;
@@ -11,7 +11,6 @@ import com.culturarte.logica.clases.*;
 import com.culturarte.logica.datatypes.*;
 import com.culturarte.logica.enums.*;
 import com.culturarte.logica.manejadores.*;
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -22,24 +21,26 @@ import javax.swing.tree.DefaultTreeModel;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+import org.springframework.transaction.annotation.Transactional;
+/**
+ *
+ * @author maicol
+ */
+@Service
 public class Controlador implements IControlador{
-
+    
     private final ManejadorPropuesta mp;
     private final ManejadorUsuario mu;
     private final ManejadorCategoria mc;
     private final ManejadorColaboracion mcol;
 
-
-    public Controlador() {
-        this.mp = ManejadorPropuesta.getInstancia();
-        this.mc = ManejadorCategoria.getInstancia();
-        this.mcol = ManejadorColaboracion.getInstancia();
-        this.mu = ManejadorUsuario.getInstance();
+    public Controlador(ManejadorPropuesta mp, ManejadorUsuario mu, ManejadorCategoria mc, ManejadorColaboracion mcol) {
+        this.mp = mp;
+        this.mu = mu;
+        this.mc = mc;
+        this.mcol = mcol;
     }
-
-
-
+    
     @Override
     public void altaColaborador(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen)
             throws UsuarioYaExiste {
@@ -49,7 +50,7 @@ public class Controlador implements IControlador{
         }
         mu.agregarUsuario(new Colaborador(nickname, password, nombre, apellido, email, fechaNacimiento, imagen));
     }
-
+    
     @Override
     public void altaProponente(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen, String direccion, String linkWeb, String bibliografia)
             throws UsuarioYaExiste {
@@ -59,33 +60,33 @@ public class Controlador implements IControlador{
         }
         mu.agregarUsuario(new Proponente(nickname, password, nombre, apellido, email, fechaNacimiento, imagen, direccion, linkWeb, bibliografia));
     }
-
+        
     @Override
     public ArrayList<String> getNickColaboradores(){
         ArrayList<String> retorno = new ArrayList<>();
-
+        
         for (Usuario usu : mu.listarUsuarios()) {
             if (usu instanceof Colaborador) {
                 retorno.add(usu.getNickname());
             }
         }
-
+        
         retorno.sort(String.CASE_INSENSITIVE_ORDER); // Ordena la lista
-        return retorno;
+        return retorno;   
     }
 
     @Override
     public ArrayList<String> getNomProponentes(){
         ArrayList<String> retorno = new ArrayList<>();
-
+        
         for (Usuario usu : mu.listarUsuarios()) {
             if (usu instanceof Proponente) {
                 retorno.add(usu.getNickname());
             }
         }
-
+        
         retorno.sort(String.CASE_INSENSITIVE_ORDER); // Ordena la lista
-        return retorno;
+        return retorno;        
     }
 
     @Override
@@ -102,7 +103,7 @@ public class Controlador implements IControlador{
 
     @Override
     public DTColaborador getDTColaborador(String nickname) {
-        Colaborador c = (Colaborador) mu.buscarUsuario(nickname);
+        Colaborador c = (Colaborador) mu.buscarUsuario(nickname); 
 
         DTColaborador dtc = new DTColaborador(
                 c.getNickname(),
@@ -126,19 +127,19 @@ public class Controlador implements IControlador{
         dtc.setColaboraciones(colaboraciones);
         return dtc;
     }
-
+    
     @Override
     public DTProponente getDTProponente(String nickname){
         // Datos usuario, datos proponente, Propuestas (nombre, estado, lista colaboradores, monto recaudado, monto necesario)
-
+       
         Proponente p = mu.getProponenteConPropuestas(nickname);
-
+        
         DTProponente dtp = new DTProponente(p.getNickname(), p.getPassword(), p.getNombre(), p.getApellido(), p.getEmail(), p.getFechaNacimiento(), p.getImagen(), p.getDireccion(), p.getLinkWeb(), p.getBiografia());
-
+        
         for (Propuesta prop : p.getPropuestas()) {
             dtp.addPropuesta(new DTPropuesta(prop));
         }
-
+       
         return dtp;
     }
 
@@ -154,7 +155,7 @@ public class Controlador implements IControlador{
             mc.agregarSubcategoria(nombre, catPadre);
         }
     }
-
+    
     @Override
     public List<String> listarCategoriasWeb() {
         List<Categoria> categoriasRaiz = mc.getCategoriasRaizConSubcategorias();
@@ -173,10 +174,10 @@ public class Controlador implements IControlador{
         for (Categoria cat : categoriasRaiz) {
             nombres.add(cat.getNombre());
             subCategorias = cat.getSubCategorias();
-            for (Categoria subCat : subCategorias) {
-                nombres.add(subCat.getNombre());
-                nombres.addAll(getSubCategorias(subCat));
-            }
+                for (Categoria subCat : subCategorias) {
+                    nombres.add(subCat.getNombre());
+                    nombres.addAll(getSubCategorias(subCat));
+                }
         }
         return nombres;
     }
@@ -200,10 +201,10 @@ public class Controlador implements IControlador{
         List<Categoria> categoriasRaiz = mc.getCategoriasRaizConSubcategorias();
         for (Categoria cat : categoriasRaiz) {
             raiz.add(crearNodo(cat));
-        }
+        }   
         return model;
     }
-
+    
     private DefaultMutableTreeNode crearNodo(Categoria cat) {
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(cat.getNombre());
 
@@ -219,16 +220,16 @@ public class Controlador implements IControlador{
 
     @Override
     public void altaPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, EnumSet<TipoRetorno> tipoRetornos, String imagen, String proponente, String categoria, LocalDate fechaActual, LocalTime horaActual)
-            throws PropuestaYaExiste {
+    throws PropuestaYaExiste {
 
         if (mp.getPropuesta(titulo) != null) {
             throw new PropuestaYaExiste("Ya existe esta Propuesta");
         }
-
+        
         Proponente u = (Proponente) mu.buscarUsuario(proponente);
-
+        
         Categoria c = mc.buscar(categoria);
-
+        
         Propuesta p = new Propuesta(titulo,descripcion,lugar,fechaPrevista, precioEntrada, montoNecesario, tipoRetornos, imagen, u,c);
 
         // INGRESADA
@@ -239,15 +240,15 @@ public class Controlador implements IControlador{
 
     @Override
     public ArrayList<String> getTituloPropuestas(){
-
-        ArrayList<String> retorno = new ArrayList<>();
-        for (Propuesta p : mp.getPropuestas()){
-            retorno.add(p.getTitulo());
-        }
-        retorno.sort(String.CASE_INSENSITIVE_ORDER);
-        return retorno;
+        
+       ArrayList<String> retorno = new ArrayList<>();
+       for (Propuesta p : mp.getPropuestas()){
+        retorno.add(p.getTitulo());
     }
-
+       retorno.sort(String.CASE_INSENSITIVE_ORDER);
+       return retorno;
+    }
+     
     @Override
     public ArrayList<DTPropuesta> getDTPropuestas(){
         ArrayList<DTPropuesta> retorno = new ArrayList<>();
@@ -354,22 +355,22 @@ public class Controlador implements IControlador{
         }
         return true;
     }
-
-
+        
+    
     @Override
     public ArrayList<String> getTituloPropuestasPorEstado(TipoEstado estado){
 
         ArrayList<String> retorno = new ArrayList<>();
-
+        
         for (Propuesta p : mp.getPropuestas()) {
             if (p.getEstadoActual().getEstado() == estado)
                 retorno.add(p.getTitulo());
         }
-
+        
         return retorno;
     }
-
-    @Override
+    
+    @Override 
     public void altaColaboracion( float monto, LocalDate fecha, LocalTime hora, TipoRetorno tipoRetorno, String tituloPropuesta, String nickColaborador){
 
         // 🔑 Cargar propuesta con sus colaboraciones
@@ -402,7 +403,7 @@ public class Controlador implements IControlador{
 
     }
 
-    @Override
+    @Override 
     public  ArrayList<String> getNickUsuarios() {
         ArrayList<String> retorno = new ArrayList<>();
         for(Usuario u : mu.listarUsuarios()){
@@ -411,28 +412,28 @@ public class Controlador implements IControlador{
         retorno.sort(String.CASE_INSENSITIVE_ORDER);//Ordena la lista
         return retorno;
     }
-
-    @Override
+    
+    @Override 
     public  void seguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioYaSeguido {
-
+        
         Usuario seguidor = mu.buscarUsuario(nickSeguidor);
         Usuario seguido = mu.buscarUsuario(nickSeguido);
-
+        
         if (seguidor == null || seguido == null) {
             throw new UsuarioYaSeguido("Uno de los usuarios no existe.");
         }
-
+        
         if(seguidor.getUsuariosSeguidos().contains(seguido)){
             throw new UsuarioYaSeguido("El usuario con nickname: " + nickSeguidor + "\nYa está siguiendo a usuario con nickname: " + nickSeguido);
         }
-
+        
         seguidor.addUsuariosSeguidos(seguido);
         seguido.addUsuarioSeguidor(seguidor);
         mu.actualizarUsuario(seguidor);
         mu.actualizarUsuario(seguido);
     }
-
-    @Override
+    
+    @Override 
     public  void dejarDeSeguirUsuario(String nickSeguidor, String nickSeguido) throws UsuarioNoSeguido {
         Usuario seguidor = mu.buscarUsuario(nickSeguidor);
         Usuario seguido = mu.buscarUsuario(nickSeguido);
@@ -502,7 +503,7 @@ public class Controlador implements IControlador{
         }
 
     }
-
+    
     @Override
     public void cancelarColaboracionPropuesta(String tituloPropuesta, String nickColaborador){
         Propuesta p = mp.getPropuesta(tituloPropuesta);
@@ -528,19 +529,19 @@ public class Controlador implements IControlador{
     @Override
     public ArrayList<DTColaboracion> getDTColaboracionesPropuestas(String nickColab){
         Colaborador c = (Colaborador) mu.buscarUsuario(nickColab);
-
+        
         ArrayList<DTColaboracion> ret = new ArrayList<>();
-
+        
         for (Colaboracion colab : c.getColaboraciones()) {
             ret.add(new DTColaboracion(colab.getColaborador().getNickname(),colab.getPropuesta().getTitulo(),colab.getFechaAporte(), colab.getHoraAporte(),colab.getMonto(),colab.getTipoRetorno()));
         }
-
+        
         return ret;
     }
-
+    
     @Override
     public DTColaboracion getDTColaboracionPropuesta(String nickColab, String tituloProp){
-
+        
         for (DTColaboracion colab : this.getDTColaboracionesPropuestas(nickColab)) {
             if (colab.getPropuestaTitulo().equals(tituloProp)) {
                 return colab;
@@ -548,12 +549,12 @@ public class Controlador implements IControlador{
         }
         return null;
     }
-
+    
     @Override
     public ArrayList<DTColaboracion> getDTColaboraciones(){
-
+        
         ArrayList<DTColaboracion> ret = new ArrayList<>();
-
+        
         for (Propuesta p : mp.getPropuestas()) {
             if (p.getColaboraciones() != null)
                 for(Colaboracion c : p.getColaboraciones()){
@@ -562,7 +563,7 @@ public class Controlador implements IControlador{
         }
         return ret;
     }
-
+    
     @Override
     public void nuevoEstadoPropuesta(String propuesta, TipoEstado estado, LocalDate fecha, LocalTime hora) {
         Estado nuevoEstado = new Estado(fecha, hora, estado);
@@ -570,11 +571,11 @@ public class Controlador implements IControlador{
         p.agregarEstado(nuevoEstado);
         mp.actualizarPropuesta(p);
     }
-
-    @Override
+    
+    @Override 
     public String getNickProponente(String tituloPropuesta){
         Propuesta p = mp.getPropuesta(tituloPropuesta);
-
+        
         return p.getProponente().getNickname();
     }
 
@@ -610,21 +611,21 @@ public class Controlador implements IControlador{
     }
 
     @Override
-    public void modificarPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada,
-                                   Float montoNecesario, String imagen, String proponente, String categoria, String nuevoEstado) throws DatosIncorrectos {
-
+    public void modificarPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, 
+            Float montoNecesario, String imagen, String proponente, String categoria, String nuevoEstado) throws DatosIncorrectos {
+        
         if(titulo.isEmpty()) throw new DatosIncorrectos("El titulo no puede ser vacío");
         if(lugar.isEmpty()) throw new DatosIncorrectos("El lugar no puede ser vacío");
         if(fechaPrevista == null) throw new DatosIncorrectos("La fecha no puede ser vacía");
         if(proponente.isEmpty()) throw new DatosIncorrectos("El proponente no puede ser vacío");
         if(categoria.isEmpty()) throw new DatosIncorrectos("La categoría no puede ser vacía");
         if(nuevoEstado.isEmpty()) throw new DatosIncorrectos("El estado no puede ser vacío");
-
+        
         Propuesta p = mp.getPropuesta(titulo);
         if (p == null) {
             throw new DatosIncorrectos("La propuesta no existe");
         }
-
+        
         //Datos básicos
         p.setDescripcion(descripcion);
         p.setLugar(lugar);
@@ -632,7 +633,7 @@ public class Controlador implements IControlador{
         p.setPrecioEntrada(precioEntrada);
         p.setMontoNecesario(montoNecesario);
         p.setImagen(imagen);
-
+        
         // Proponente
         Proponente viejoProponente = p.getProponente();
         if(!viejoProponente.getNickname().equals(proponente)) {
@@ -641,18 +642,18 @@ public class Controlador implements IControlador{
             nuevoProponente.addPropuestas(p);
             p.setProponente(nuevoProponente);
         }
-
+        
         // Categoria
         if(!p.getCategoria().getNombre().equals(categoria)) {
             Categoria nuevaCat = mc.buscar(categoria);
             p.setCategoria(nuevaCat);
         }
-
+        
         // Estado
         if(!p.getEstadoActual().toString().equals(nuevoEstado)) {
             nuevoEstadoPropuesta(p.getTitulo(), TipoEstado.valueOf(nuevoEstado), LocalDate.now(), LocalTime.now());
         }
-
+        
         mp.actualizarPropuesta(p);
     }
 
@@ -694,4 +695,5 @@ public class Controlador implements IControlador{
         u.sacarPropuestaFavorita(p);
         mu.actualizarUsuario(u);
     }
+
 }

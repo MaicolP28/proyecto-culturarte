@@ -1,117 +1,88 @@
 package com.culturarte.logica.manejadores;
 import com.culturarte.logica.clases.Proponente;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
 import com.culturarte.logica.clases.Usuario;
 import java.util.List;
-import jakarta.persistence.TypedQuery;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 public class ManejadorUsuario {
-    private static ManejadorUsuario instancia = null;
-    private EntityManagerFactory emf;
-    
-    private ManejadorUsuario() {
-        emf = Persistence.createEntityManagerFactory("DBculturarte"); ;
-    }
 
-    public static ManejadorUsuario getInstance() {
-        if (instancia == null)
-            instancia = new ManejadorUsuario();
-        return instancia;
-    }
+    @PersistenceContext
+    private EntityManager em;
 
+    @Transactional
     public void agregarUsuario(Usuario usuario) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(usuario);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive())
-                em.getTransaction().rollback();
-            throw e;
-        } finally {
-            em.close();
-        }
+        em.persist(usuario);
     }
 
-    public Usuario buscarUsuario(String nick) { 
-        EntityManager em = emf.createEntityManager();
+    public Usuario buscarUsuario(String nick) {
+        Usuario u = em.find(Usuario.class, nick);
+        if (u != null) {
+            u.getUsuariosSeguidos().size();
+        }
+        return u;
+    }
+
+    public Usuario buscarUsuarioPorEmail(String email) {
         try {
-            Usuario u = em.find(Usuario.class, nick);
+            Usuario u = em.createQuery("SELECT u FROM Usuario u WHERE u.email = :email", Usuario.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            // Inicializar la colección si es lazy
             if (u != null) {
-                // Fuerza la carga de la colección
                 u.getUsuariosSeguidos().size();
             }
             return u;
-        } finally {
-            em.close();
+        } catch (NoResultException e) {
+            return null;
         }
     }
+
+
     
     public Proponente getProponenteConPropuestas(String nick) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            Proponente p = em.find(Proponente.class, nick);
-
-            // 🔑 inicializa antes de cerrar el EntityManager
-            p.getPropuestas().forEach(propuesta -> 
-                propuesta.getColaboraciones().size()
+        Proponente p = em.find(Proponente.class, nick);
+        if (p != null) {
+            p.getPropuestas().forEach(propuesta ->
+                    propuesta.getColaboraciones().size()
             );
-
-            return p; 
-        } finally {
-            em.close();
         }
+        return p;
     }
 
     public List<Usuario> listarUsuarios() {
-        EntityManager em = emf.createEntityManager();
-        try {
-            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u", Usuario.class);
-            List<Usuario> usuarios = query.getResultList();
-
-            // Forzar carga de colecciones si son lazy
-            usuarios.forEach(u -> u.getUsuariosSeguidos().size());
-
-            return usuarios;
-        } finally {
-            em.close();
-        }
+        TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u", Usuario.class);
+        List<Usuario> usuarios = query.getResultList();
+        usuarios.forEach(u -> u.getUsuariosSeguidos().size());
+        return usuarios;
     }
-    
+
+    @Transactional
     public void actualizarUsuario(Usuario usuario) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.merge(usuario);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
-            throw e;
-        } finally {
-            em.close();
-        }
+        em.merge(usuario);
     }
 
-    public List<Usuario> buscarUsuarios(String nick) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            String jpql = "SELECT u FROM Usuario u WHERE LOWER(u.nickname) LIKE LOWER(CONCAT('%', :nick, '%'))";
-            TypedQuery<Usuario> query = em.createQuery(jpql, Usuario.class);
-            query.setParameter("nick", nick);
+    public List<Usuario> buscarUsuarios(String nombre) {
+        String jpql = "SELECT u FROM Usuario u";
+        TypedQuery<Usuario> query;
 
-            List<Usuario> usuarios = query.getResultList();
-
-            // Forzar carga de colecciones si son lazy
-            usuarios.forEach(u -> u.getUsuariosSeguidos().size());
-
-            return usuarios;
-        } finally {
-            em.close();
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            jpql += " WHERE LOWER(u.nombre) LIKE LOWER(CONCAT('%', :nombre, '%')) " +
+                    "OR LOWER(u.nickname) LIKE LOWER(CONCAT('%', :nombre, '%'))";
+            query = em.createQuery(jpql, Usuario.class);
+            query.setParameter("nombre", nombre);
+        } else {
+            query = em.createQuery(jpql, Usuario.class);
         }
+
+        List<Usuario> usuarios = query.getResultList();
+
+        usuarios.forEach(u -> u.getUsuariosSeguidos().size());
+
+        return usuarios;
     }
 
 

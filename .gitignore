@@ -1,43 +1,33 @@
-# ============================
-# Archivos compilados de Java
-# ============================
-*.class
-*.jar
-*.war
-*.ear
-
-# ============================
-# Directorios de build
-# ============================
+HELP.md
 target/
-build/
-dist/
-out/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# ============================
-# Archivos de NetBeans
-# ============================
-nbproject/private/
-nbbuild/
-nbdist/
-.nb-gradle/
-*.nb-gradle.xml
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
-# ============================
-# Archivos de configuración del IDE
-# ============================
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
-.idea/
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
 .vscode/
-
-# ============================
-# Archivos temporales / logs
-# ============================
-*.log
-*.tmp
-*.bak
-*.swp
-
-
-.DS_Store
-docker/docker/mysql/data

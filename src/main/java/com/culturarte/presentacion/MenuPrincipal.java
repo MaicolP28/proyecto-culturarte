@@ -5,7 +5,6 @@
 package com.culturarte.presentacion;
 
 import com.culturarte.exepciones.CargaFallida;
-import com.culturarte.logica.Fabrica;
 import com.culturarte.logica.IControlador;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -48,10 +47,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setContentPane(desktop);
 
         this.setLocationRelativeTo(null);
-        
-        // Pidiendo Controlador
-        Fabrica fab = Fabrica.getInstancia();
-        IC = fab.getIControlador();
         
         // Creando InternalFrames
         iframeAltaCategoria = new AltaCategoria(IC);
