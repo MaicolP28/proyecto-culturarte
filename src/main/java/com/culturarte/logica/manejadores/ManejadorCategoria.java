@@ -26,21 +26,21 @@ public class ManejadorCategoria {
             em.persist(nueva);
         }
     }
-
+    
+    @Transactional
     public Categoria buscar(String nombre) {
         return em.find(Categoria.class, nombre);
     }
-
+    
+    @Transactional
     public List<Categoria> getCategoriasRaizConSubcategorias() {
-        TypedQuery<Categoria> q = em.createQuery(
-                "SELECT DISTINCT c FROM Categoria c LEFT JOIN FETCH c.subCategorias WHERE c.padre IS NULL",
-                Categoria.class
-        );
-        List<Categoria> raiz = q.getResultList();
-        raiz.forEach(this::cargarSubcategorias);
-        return raiz;
+        List<Categoria> categorias = em.createQuery("SELECT c FROM Categoria c", Categoria.class)
+            .getResultList();
+        categorias.forEach(c -> c.getSubCategorias().size()); // inicializa lazy
+        return categorias;
     }
 
+    @Transactional
     private void cargarSubcategorias(Categoria cat) {
         cat.getSubCategorias().size(); // fuerza carga
         for (Categoria sub : cat.getSubCategorias()) {

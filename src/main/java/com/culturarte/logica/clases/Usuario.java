@@ -1,6 +1,7 @@
 package com.culturarte.logica.clases;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -19,11 +20,11 @@ public abstract class Usuario {
     private String apellido;
     private String email;
     private LocalDate fechaNacimiento;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Propuesta> propuestasSeguidas;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Usuario> usuariosSeguidos;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Usuario> usuariosSeguidores;
     private String imagen;
 

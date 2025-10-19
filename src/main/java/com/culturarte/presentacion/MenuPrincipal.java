@@ -8,6 +8,8 @@ import com.culturarte.exepciones.CargaFallida;
 import com.culturarte.logica.IControlador;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -19,7 +21,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuPrincipal.class.getName());
     
     // Controlador
-    private IControlador IC;
+    private final IControlador IC;
     private JDesktopPane desktop;
     private AltaCategoria iframeAltaCategoria;
     private AltaPropuesta iframeAltaPropuesta;
@@ -37,15 +39,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     
     // InternalFrames
     
-    
-    /**
-     * Creates new form MenuPrincipal
-     */
-    public MenuPrincipal() {
+    public MenuPrincipal(IControlador ctrl) {
+        this.IC = ctrl;
+        
         initComponents();
         desktop = new JDesktopPane();
         setContentPane(desktop);
-
+        
         this.setLocationRelativeTo(null);
         
         // Creando InternalFrames
@@ -324,32 +324,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void miAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAltaCategoriaActionPerformed
         iframeAltaCategoria.setVisible(true);
     }//GEN-LAST:event_miAltaCategoriaActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MenuPrincipal().setVisible(true));
-    }
-
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

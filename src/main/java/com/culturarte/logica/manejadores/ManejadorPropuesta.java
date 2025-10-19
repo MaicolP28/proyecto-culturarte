@@ -2,7 +2,7 @@ package com.culturarte.logica.manejadores;
 
 import com.culturarte.logica.clases.Propuesta;
 import jakarta.persistence.*;
-
+import org.hibernate.Hibernate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,16 +21,20 @@ public class ManejadorPropuesta {
     }
 
 
-    public Propuesta getPropuesta(String titulo) {
-        if (titulo == null) return null;
 
+    @Transactional
+    public Propuesta getPropuesta(String titulo) {
         Propuesta p = em.find(Propuesta.class, titulo);
         if (p != null) {
-            forzarCargaLazy(p);
+            Hibernate.initialize(p.getComentarios());
+            Hibernate.initialize(p.getColaboraciones());
+            Hibernate.initialize(p.getHistorialEstados());
         }
         return p;
     }
 
+    
+    @Transactional
     public List<Propuesta> getPropuestas() {
         TypedQuery<Propuesta> query = em.createQuery("SELECT p FROM Propuesta p", Propuesta.class);
         List<Propuesta> propuestas = query.getResultList();

@@ -17,7 +17,8 @@ public class ManejadorUsuario {
     public void agregarUsuario(Usuario usuario) {
         em.persist(usuario);
     }
-
+    
+    @Transactional
     public Usuario buscarUsuario(String nick) {
         Usuario u = em.find(Usuario.class, nick);
         if (u != null) {
@@ -53,9 +54,11 @@ public class ManejadorUsuario {
         return p;
     }
 
+    @Transactional
     public List<Usuario> listarUsuarios() {
-        TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u", Usuario.class);
-        List<Usuario> usuarios = query.getResultList();
+        List<Usuario> usuarios = em.createQuery("SELECT u FROM Usuario u", Usuario.class)
+                                   .getResultList();
+        // inicializar lazy si querés:
         usuarios.forEach(u -> u.getUsuariosSeguidos().size());
         return usuarios;
     }

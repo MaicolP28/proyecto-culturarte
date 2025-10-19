@@ -1,5 +1,4 @@
 package com.culturarte.logica;
-import org.springframework.stereotype.Service;
 import com.culturarte.exepciones.CargaFallida;
 import com.culturarte.exepciones.CategoriaYaExiste;
 import com.culturarte.exepciones.DatosIncorrectos;
@@ -20,12 +19,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
-import org.springframework.transaction.annotation.Transactional;
-/**
- *
- * @author maicol
- */
+
+
 @Service
 public class Controlador implements IControlador{
     
