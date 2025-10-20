@@ -26,8 +26,8 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public interface IControlador {
     
-    public abstract void altaColaborador(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) throws UsuarioYaExiste;
-    public abstract void altaProponente(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen, String direccion, String linkWeb, String bibliografia) throws UsuarioYaExiste;
+    public abstract void altaColaborador(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) throws UsuarioYaExiste, EmailYaExiste;
+    public abstract void altaProponente(String nickname, String password, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen, String direccion, String linkWeb, String bibliografia) throws UsuarioYaExiste, EmailYaExiste;
     public abstract ArrayList<String> getNomProponentes();
     public abstract DTProponente getDTProponente(String nickname);
     public abstract void altaCategoria(String nombre, String catPadre) throws CategoriaYaExiste;
@@ -53,7 +53,6 @@ public interface IControlador {
     public abstract void nuevoEstadoPropuesta(String propuesta, TipoEstado estado, LocalDate fecha, LocalTime hora);
     public abstract void modificarPropuesta(String titulo, String descripcion, String lugar, LocalDate fechaPrevista, Float precioEntrada, Float montoNecesario, String imagen, String proponente, String categoria, String nuevoEstado) throws DatosIncorrectos;
     public abstract ArrayList<DTPropuesta> getDTPropuestasWeb();
-    public abstract boolean verificarPassword(String password, String nick);
     public abstract List<String> listarCategoriasWeb();
     public abstract List<String> listarCategoriasWebCompletas();
     public abstract List<DTPropuesta> buscarPropuestas(String texto);
@@ -64,4 +63,6 @@ public interface IControlador {
     public abstract void agregarPropuestaFavorita(String nickname, String tituloPropuesta);
     public abstract void sacarPropuestaFavorita(String nickname, String tituloPropuesta);
     public abstract boolean colaboradorPuedeComentar(String colaborador, String tituloPropuesta);
+    public abstract boolean verificarPassword(String password, String nick);
 }
+
