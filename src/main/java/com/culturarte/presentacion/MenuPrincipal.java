@@ -36,6 +36,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private ModificarPropuesta iframeModificarPropuesta;
     private RegistrarColaboraciones iframeRegistrarColaboraciones;
     private SeguirUsuario iframeSeguirUsuario;
+    private EvaluarPropuesta iframeEvaluarPropuesta;
     
     // InternalFrames
     
@@ -75,6 +76,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         iframeRegistrarColaboraciones.setVisible(false);
         iframeSeguirUsuario = new SeguirUsuario(IC);
         iframeSeguirUsuario.setVisible(false);
+        iframeEvaluarPropuesta = new EvaluarPropuesta(IC);
+        iframeEvaluarPropuesta.setVisible(false);
         
         // Añadiendo al ContentPane
         this.getContentPane().add(iframeAltaCategoria);
@@ -90,6 +93,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         this.getContentPane().add(iframeModificarPropuesta);
         this.getContentPane().add(iframeRegistrarColaboraciones);
         this.getContentPane().add(iframeSeguirUsuario);
+        this.getContentPane().add(iframeEvaluarPropuesta);
+        
         
     }
 
@@ -114,6 +119,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         miModificarPropuesta = new javax.swing.JMenuItem();
         miConsultarPropuesta = new javax.swing.JMenuItem();
         miConsultarPropPorEstado = new javax.swing.JMenuItem();
+        miEvaluarPropuesta = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         miRegistrarColaboracion = new javax.swing.JMenuItem();
         miConsultarColaboracion = new javax.swing.JMenuItem();
@@ -210,6 +216,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(miConsultarPropPorEstado);
+
+        miEvaluarPropuesta.setText("Evaluar");
+        miEvaluarPropuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miEvaluarPropuestaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miEvaluarPropuesta);
 
         jMenuBar1.add(jMenu2);
 
@@ -324,6 +338,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void miAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAltaCategoriaActionPerformed
         iframeAltaCategoria.setVisible(true);
     }//GEN-LAST:event_miAltaCategoriaActionPerformed
+
+    private void miEvaluarPropuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miEvaluarPropuestaActionPerformed
+        iframeEvaluarPropuesta.setVisible(true);
+    }//GEN-LAST:event_miEvaluarPropuestaActionPerformed
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
@@ -341,6 +359,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miConsultarProponente;
     private javax.swing.JMenuItem miConsultarPropuesta;
     private javax.swing.JMenuItem miDejarDeSeguir;
+    private javax.swing.JMenuItem miEvaluarPropuesta;
     private javax.swing.JMenuItem miModificarPropuesta;
     private javax.swing.JMenuItem miRegistrarColaboracion;
     private javax.swing.JMenuItem miSeguirUsuario;
